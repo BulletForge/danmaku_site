@@ -2,3 +2,5 @@ log/*.log
 tmp/**/*
 doc/api
 doc/app
+nbproject/*
+db/schema.rb

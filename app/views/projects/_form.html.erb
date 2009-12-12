@@ -1,0 +1,16 @@
+<% form_for @project do |f| %>
+  <table>
+    <tr>
+      <td><%= f.label :title, "Title" %></td>
+      <td><%= f.text_field :title %></td>
+    </tr>
+    <tr>
+      <td><%= f.label :description, "Description" %></td>
+      <td><%= f.text_area :description, :rows => 10 %></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><%= submit_tag %></td>
+    </tr>
+  </table>
+<% end %>

@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>BulletForge</title>
+</head>
+<body>
+  <div id="header" class="container">
+	<% if current_user %>
+      Logged in as <%= link_to current_user.login, user_path(current_user) %><br/>
+      <%= link_to "Log Out", logout_path%> |
+      <%= link_to "New Project", new_user_project_path(current_user)%>
+    <% else %>
+      <%= link_to "Login", login_path %> |
+      <%= link_to "Register", new_user_path%>
+    <% end %>
+
+  </div>
+
+  <div id="content">
+      <% if flash[:notice] %>
+      <div class="flash notice"><%= flash[:notice] %></div>
+      <% end %>
+      <% if flash[:error] %>
+      <div class="flash errors"><%= flash[:error] %></div>
+      <% end %>
+      <%= yield %>
+    </div>
+</body>
+</html>

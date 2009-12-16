@@ -1,16 +1,8 @@
-<% form_for @project do |f| %>
-  <table>
-    <tr>
-      <td><%= f.label :title, "Title" %></td>
-      <td><%= f.text_field :title %></td>
-    </tr>
-    <tr>
-      <td><%= f.label :description, "Description" %></td>
-      <td><%= f.text_area :description, :rows => 10 %></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td><%= submit_tag %></td>
-    </tr>
-  </table>
-<% end %>
+<%= f.hidden_field :user_id, :value => current_user.id %>
+<%= f.label :title, "Title" %><br/>
+<%= f.text_field :title %><br/>
+<br/>
+<%= f.label :description, "Description" %><br/>
+<%= f.text_area :description %><br/>
+<br/>
+<%= f.submit "Submit" %>

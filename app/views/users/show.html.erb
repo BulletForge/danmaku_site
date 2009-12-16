@@ -1,0 +1,8 @@
+<h1><%= @user.login %></h1>
+<%= link_to "Edit Account", edit_user_path(@user) if current_user==@user%>
+
+<h2><%= @user.login %>'s Projects</h2>
+<% @user.projects.each do |p| %>
+  <%= link_to p.title, user_project_path(@user, p) %><br />
+  <br />
+<% end %>

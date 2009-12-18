@@ -1,5 +1,5 @@
 <h1>Editing New Project</h1>
 
-<% form_for @project do |f| %>
+<% form_for @project, :url => user_project_path(@user, @project) do |f| %>
 <%= render :partial => "form", :locals => {:f => f} %>
 <% end %>

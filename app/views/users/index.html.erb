@@ -2,3 +2,5 @@
 <% @users.each do |user| %>
   <%= link_to user.login, user_path(user) %><br/>
 <% end %>
+
+<%= will_paginate @users %>

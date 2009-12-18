@@ -1,0 +1,19 @@
+<h1><%= p.title %></h1>
+<h2>Version <%= v.version_number %></h2>
+
+<% if current_user && current_user.is_owner_of(p) %>	
+  <%= link_to "New Version", new_user_project_version_path(u, p) %> |
+  <%= link_to "Edit Version", edit_user_project_version_path(u, p, v) %> |
+  <%= link_to "Delete Version", user_project_version_path(u, p, v), :method => :delete, :confirm => "Are you sure you want to delete this version?" %>
+  <br />
+  <%= link_to "Edit Project", edit_user_project_path(u, p) %> |
+  <%= link_to "Delete Project", user_project_path(u, p), :method => :delete, :confirm => "Are you sure you want to delete this project?"%>
+<% end %>
+
+<p><%= v.description %></p>
+
+<h3>Versions</h3>
+<% p.versions.last(5).reverse.each do |version| %>
+  <%= link_to p.title+' v'+version.version_number, user_project_version_path(u, p, version) %><br />
+<% end %>
+  <%= link_to "See all versions", user_project_versions_path(u, p) %>

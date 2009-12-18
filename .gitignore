@@ -5,3 +5,4 @@ doc/app
 nbproject/*
 db/schema.rb
 db/development.sqlite3
+public/system/*

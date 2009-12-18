@@ -24,6 +24,8 @@ class UsersController < ApplicationController
   # Find by permalink instead of by id
   def object
     @object ||= end_of_association_chain.find_by_permalink(param)
+    raise ActiveRecord::RecordNotFound if @object.nil?
+    @object
   end
   
   # Require current user to be the user

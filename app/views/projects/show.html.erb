@@ -8,5 +8,5 @@
 
   <p>No versions have been added to this project yet.</p>
 <% else %>
-  <%= render :partial => 'shared/version', :locals => {:u => @user, :p => @project, :v => @project.versions.last} %>
+  <%= render :partial => 'shared/version', :locals => {:user => @user, :project => @project, :version => @project.versions.last} %>
 <% end %>

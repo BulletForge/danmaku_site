@@ -1,7 +1,7 @@
 <h1>Creating New Version</h1>
 
 <% form_for @version, :url => user_project_versions_path(@user, @project), :html => { :multipart => true, :method => :post } do |f| %>
-<%= f.error_messages %>
+<%= error_messages_for :version %>
 <%= f.label :script_bundle, "Attachment" %><br />
 <%= f.file_field :script_bundle %><br />
 <br />

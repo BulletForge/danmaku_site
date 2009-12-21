@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   has_many :projects
+  has_many :versions
   
   acts_as_authentic
   has_permalink :login, :update => true, :unique => true

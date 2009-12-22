@@ -16,7 +16,25 @@ File size: <%= number_to_human_size(version.script_bundle.size) %><br />
 <p><%= version.description %></p>
 
 <h3>Versions</h3>
-<% project.versions.last(5).reverse.each do |v| %>
+<% project.versions.all(:order => 'created_at DESC').first(5).each do |v| %>
   <%= link_to project.title+' v'+v.version_number, user_project_version_path(user, project, v) %><br />
 <% end %>
-  <%= link_to "See all versions", user_project_versions_path(user, project) %>
+<%= link_to "See all versions", user_project_versions_path(user, project) %>
+
+<h3>Comments for this version</h3>
+<% version.comments.all(:order => 'created_at DESC').first(10).each do |comment| %>
+  <%= render :partial => 'shared/comment', :locals => {:comment => comment} %>
+<% end %>
+<%= link_to "See all comments ("+version.comments.count.to_s+")", user_project_version_comments_path(user, project, version)%>
+
+<% if current_user %>
+  <% form_for :comment, :url => user_project_version_comments_path(user, project, version) do |f| %>
+    <%= f.hidden_field :author_id, :value => current_user.id %>
+    <%= f.hidden_field :commentable_type, :value => 'Version' %>
+    <%= f.hidden_field :commentable_id, :value => version.id %>
+    <%= f.text_area :content %><br />
+    <%= f.submit 'Post Comment' %>
+  <% end %>
+<% else %>
+  <p>You must be logged in to comment or rate.</p>
+<% end %>

@@ -1,6 +1,7 @@
 class Version < ActiveRecord::Base
   belongs_to :project
-  has_one :user, :through => :project
+  has_one    :user, :through => :project
+  has_many   :comments, :as => :commentable
   
   validates_presence_of :version_number, :message => "You must input a version number."
   validates_uniqueness_of :version_number, :case_sensitive => false, :scope => :project_id, :message => "You are already using that version number for this project."

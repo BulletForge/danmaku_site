@@ -1,0 +1,13 @@
+<h1>Comments for
+  <% if @version %>
+    <%= link_to @project.title + " v" + @version.version_number, user_project_version_path(@user, @project, @version) %>
+  <% elsif @project %>
+    <%= link_to @project.title, user_project_path (@user, @project) %>
+  <% elsif @user %>
+    <%= link_to @user.login, user_path(@user) %>
+  <% end %>
+</h1>
+
+<% @comments.all(:order => 'created_at ASC').each do |comment| %>
+  <%= render :partial => 'shared/comment', :locals => {:comment => comment} %>
+<% end %>

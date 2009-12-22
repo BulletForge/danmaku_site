@@ -7,3 +7,21 @@
 <% end %>
 <br />
 <%= link_to "See all of "+@user.login+"'s projects", user_projects_path(@user) %>
+
+<h3>User comments</h3>
+<% @user.comments.all(:order => 'created_at DESC').first(10).each do |comment| %>
+  <%= render :partial => 'shared/comment', :locals => {:comment => comment} %>
+<% end %>
+<%= link_to "See all comments ("+@user.comments.count.to_s+")", user_comments_path(@user)%>
+
+<% if current_user %>
+  <% form_for :comment, :url => user_comments_path(@user) do |f| %>
+    <%= f.hidden_field :author_id, :value => current_user.id %>
+    <%= f.hidden_field :commentable_type, :value => 'User' %>
+    <%= f.hidden_field :commentable_id, :value => @user.id %>
+    <%= f.text_area :content %><br />
+    <%= f.submit 'Post Comment' %>
+  <% end %>
+<% else %>
+  <p>You must be logged in to comment.</p>
+<% end %>

@@ -1,5 +1,5 @@
 <h1>Listing all versions of <%= @project.title %></h1>
 
-<% @versions.reverse.each do |version| %>
+<% @versions.all(:order => 'created_at DESC').each do |version| %>
   <%= link_to @project.title+' v'+version.version_number, user_project_version_path(@user, @project, version) %><br />
 <% end %>

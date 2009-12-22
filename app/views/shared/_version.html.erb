@@ -23,7 +23,7 @@ File size: <%= number_to_human_size(version.script_bundle.size) %><br />
 
 <h3>Comments for this version</h3>
 <% version.comments.all(:order => 'created_at DESC').first(10).each do |comment| %>
-  <%= render :partial => 'shared/comment', :locals => {:comment => comment} %>
+  <%= render :partial => 'shared/comment', :locals => {:user => user, :project => project, :version => version, :comment => comment, :destroy_path => 'version'} %>
 <% end %>
 <%= link_to "See all comments ("+version.comments.count.to_s+")", user_project_version_comments_path(user, project, version)%>
 

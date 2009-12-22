@@ -10,7 +10,7 @@
 
 <h3>User comments</h3>
 <% @user.comments.all(:order => 'created_at DESC').first(10).each do |comment| %>
-  <%= render :partial => 'shared/comment', :locals => {:comment => comment} %>
+  <%= render :partial => 'shared/comment', :locals => {:user => @user, :comment => comment, :destroy_path => 'user'} %>
 <% end %>
 <%= link_to "See all comments ("+@user.comments.count.to_s+")", user_comments_path(@user)%>
 

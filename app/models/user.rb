@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   end
   
   def can_destroy(comment)
-    self == comment.author || self == comment.commentable || self.is_owner_of(comment.commentable)
+    self == comment.author || self == comment.commentable || is_owner_of(comment.commentable)
   end
   
   def to_param

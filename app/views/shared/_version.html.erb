@@ -1,7 +1,9 @@
 <h1><%= project.title %></h1>
 <h2>Version <%= version.version_number %></h2>
-<%= link_to "Download "+version.script_bundle_file_name, version.script_bundle.url %><br />
+<%= link_to "Download "+version.script_bundle_file_name, user_project_download_path(user, project, version) %><br />
 File size: <%= number_to_human_size(version.script_bundle.size) %><br />
+Downloads this version: <%= version.download_count %><br />
+Total downloads: <%= download_count project %><br />
 <br />
 
 <% if current_user && current_user.is_owner_of(project) %>	

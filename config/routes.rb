@@ -8,6 +8,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users, :as => 'u' do |users|
     users.resources :comments, :only => [:index, :create, :destroy]
     users.resources :projects, :as => 'p' do |projects|
+      projects.download '/versions/:id/download', :controller => 'versions', :action => 'download'
       projects.resources :versions, :as => 'v' do |versions|
         versions.resources :comments, :only => [:index, :create, :destroy]
       end

@@ -1,11 +1,24 @@
 class VersionsController < ApplicationController
-  before_filter :require_user, :except => [:index, :show]
+  before_filter :require_user, :except => [:index, :show, :download]
   before_filter :require_owner, :only => [:edit, :update, :destroy]
 
   resource_controller
   belongs_to :project 
 
   destroy.wants.html {redirect_to user_project_path(@user, @project)}
+  
+  def download
+    @user = User.find_by_permalink params[:user_id]
+    raise ActiveRecord::RecordNotFound if @user.nil?    
+    @project = @user.projects.find_by_permalink params[:project_id]
+    raise ActiveRecord::RecordNotFound if @project.nil?
+    @version = @project.versions.find_by_permalink params[:id]
+    raise ActiveRecord::RecordNotFound if @version.nil?
+    
+    @version.download_count += 1
+    @version.save
+    redirect_to @version.script_bundle.url
+  end
 
   private
   

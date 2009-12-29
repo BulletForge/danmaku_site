@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   end
   
   def can_destroy(comment)
+    return false if comment.class != Comment
     self == comment.author || self == comment.commentable || is_owner_of(comment.commentable)
   end
   

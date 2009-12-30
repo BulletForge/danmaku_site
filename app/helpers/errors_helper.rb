@@ -23,7 +23,7 @@ module ErrorsHelper
 
       I18n.with_options :locale => options[:locale], :scope => [:activerecord, :errors, :template] do |locale|
         #header_message = if options.include?(:header_message)
-        header_message = "Please correct the following errors:"
+        header_message = "You screwed up somewhere over here:"
         #  options[:header_message]
         #else
         #  object_name = options[:object_name].to_s.gsub('_', ' ')

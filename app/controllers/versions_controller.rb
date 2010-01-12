@@ -6,6 +6,31 @@ class VersionsController < ApplicationController
   belongs_to :project 
 
   destroy.wants.html {redirect_to user_project_path(@user, @project)}
+
+  def upload_script_bundle
+    @script_bundle = Asset.new(:attachment => swf_upload_data)
+    if @script_bundle.save
+      render :js => "uploadSuccess(#{@script_bundle.id})"
+    else
+      render :js => "uploadFailed('#{@script_bundle.error.full_message}')"
+    end
+
+  end
+
+  create.before do
+    puts object.errors
+    asset_id = params[:asset_id]
+    puts asset_id
+    object.errors.add_to_base("Attach a file!") if asset_id.blank?
+    puts asset_id.blank?
+    puts object.errors
+  end
+  create.after do
+    asset_id = params[:version][:asset_id]
+    @script_bundle = Asset.find(asset_id)
+    @script_bundle.attachable = object
+    @script_bundle.save
+  end
   
   def download
     @user = User.find_by_permalink params[:user_id]
@@ -17,7 +42,31 @@ class VersionsController < ApplicationController
     
     @version.download_count += 1
     @version.save
-    redirect_to @version.script_bundle.url
+    redirect_to @version.asset.attachment.url
+  end
+
+  def vote_up
+    @user = User.find_by_permalink params[:user_id]
+    raise ActiveRecord::RecordNotFound if @user.nil?
+    @project = @user.projects.find_by_permalink params[:project_id]
+    raise ActiveRecord::RecordNotFound if @project.nil?
+    @version = @project.versions.find_by_permalink params[:id]
+    raise ActiveRecord::RecordNotFound if @version.nil?
+
+    current_user.vote_for @version
+    redirect_to user_project_version_path(@user, @project, @version)
+  end
+
+  def vote_down
+    @user = User.find_by_permalink params[:user_id]
+    raise ActiveRecord::RecordNotFound if @user.nil?
+    @project = @user.projects.find_by_permalink params[:project_id]
+    raise ActiveRecord::RecordNotFound if @project.nil?
+    @version = @project.versions.find_by_permalink params[:id]
+    raise ActiveRecord::RecordNotFound if @version.nil?
+
+    current_user.vote_against @version
+    redirect_to user_project_version_path(@user, @project, @version)
   end
 
   private

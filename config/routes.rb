@@ -4,11 +4,14 @@ ActionController::Routing::Routes.draw do |map|
 
   map.login  '/login',  :controller => 'user_sessions', :action => 'new'
   map.logout '/logout', :controller => 'user_sessions', :action => 'destroy'
+  map.upload_script '/upload-script', :controller => 'versions', :action => 'upload_script_bundle'
 
   map.resources :users, :as => 'u' do |users|
     users.resources :comments, :only => [:index, :create, :destroy]
     users.resources :projects, :as => 'p' do |projects|
-      projects.download '/versions/:id/download', :controller => 'versions', :action => 'download'
+      projects.download '/v/:id/download', :controller => 'versions', :action => 'download'
+      projects.vote_up '/v/:id/vote_up', :controller => 'versions', :action => 'vote_up'
+      projects.vote_down '/v/:id/vote_down', :controller => 'versions', :action => 'vote_down'
       projects.resources :versions, :as => 'v' do |versions|
         versions.resources :comments, :only => [:index, :create, :destroy]
       end

@@ -12,4 +12,20 @@ class Project < ActiveRecord::Base
   def to_param
     permalink
   end
+
+  def total_combined_votes
+    count = 0
+    versions.each do |v|
+      count += v.combined_votes
+    end
+    count
+  end
+
+  def total_votes_count
+    count = 0
+    versions.each do |v|
+      count += v.votes_count
+    end
+    count
+  end
 end

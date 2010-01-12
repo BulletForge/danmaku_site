@@ -1,9 +1,21 @@
 <h1><%= project.title %></h1>
 <h2>Version <%= version.version_number %></h2>
-<%= link_to "Download "+version.script_bundle_file_name, user_project_download_path(user, project, version) %><br />
-File size: <%= number_to_human_size(version.script_bundle.size) %><br />
+<%= link_to "Download "+version.asset.attachment_file_name, user_project_download_path(user, project, version) %><br />
+File size: <%= number_to_human_size(version.asset.attachment.size) %><br />
+<br />
 Downloads this version: <%= version.download_count %><br />
 Total downloads: <%= download_count project %><br />
+<br />
+Rating this version: <%= version.combined_votes %> (out of <%= version.votes_count %> votes)<br />
+Total rating: <%= project.total_combined_votes %> (out of <%= project.total_votes_count %> votes)<br />
+<% if current_user %>
+  <% if !current_user.voted_for?(version) %>
+    <%= link_to "Vote Up", user_project_vote_up_path(user, project, version) %> |
+    <%= link_to "Vote Down", user_project_vote_down_path(user, project, version) %><br />
+  <% else %>
+    You have already voted.<br />
+  <% end %>
+<% end %>
 <br />
 
 <% if current_user && current_user.is_owner_of(project) %>	

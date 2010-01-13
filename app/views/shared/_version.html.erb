@@ -6,15 +6,17 @@ File size: <%= number_to_human_size(version.asset.attachment.size) %><br />
 Downloads this version: <%= version.download_count %><br />
 Total downloads: <%= download_count project %><br />
 <br />
-Rating this version: <%= version.combined_votes %> (out of <%= version.votes_count %> votes)<br />
-Total rating: <%= project.total_combined_votes %> (out of <%= project.total_votes_count %> votes)<br />
+Rating this version: <%= version.combined_votes %> (<%= version.votes_count %> votes)<br />
+Total rating: <%= project.total_combined_votes %> (<%= project.total_votes_count %> votes)<br />
 <% if current_user %>
-  <% if !current_user.voted_for?(version) %>
+  <% if !current_user.voted_on?(version) %>
     <%= link_to "Vote Up", user_project_vote_up_path(user, project, version) %> |
     <%= link_to "Vote Down", user_project_vote_down_path(user, project, version) %><br />
   <% else %>
     You have already voted.<br />
   <% end %>
+<% else %>
+  Please log in to vote.
 <% end %>
 <br />
 

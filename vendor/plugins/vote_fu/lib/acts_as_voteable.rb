@@ -57,7 +57,7 @@ module Juixe
             at_least  = sanitize_sql(["COUNT(#{Vote.table_name}.id) >= ?", options.delete(:at_least)]) if options[:at_least]
             at_most   = sanitize_sql(["COUNT(#{Vote.table_name}.id) <= ?", options.delete(:at_most)]) if options[:at_most]
             having    = [at_least, at_most].compact.join(' AND ')
-            group_by  = "#{Vote.table_name}.voteable_id HAVING COUNT(#{Vote.table_name}.id) > 0"
+            group_by  = "#{Vote.table_name}.voteable_id, #{column_names_for_tally}"
             group_by << " AND #{having}" unless having.blank?
 
             { :select     => "#{table_name}.*, COUNT(#{Vote.table_name}.id) AS count", 
@@ -66,6 +66,9 @@ module Juixe
               :group      => group_by
             }.update(options)          
         end
+      end
+      def column_names_for_tally
+        column_names.map { |column| "#{table_name}.#{column}" }.join(", ")
       end
       
       # This module contains instance methods

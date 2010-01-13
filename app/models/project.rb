@@ -1,6 +1,6 @@
 class Project < ActiveRecord::Base
   belongs_to :user
-  has_many   :versions
+  has_many   :versions, :dependent => :destroy
   has_many   :comments, :through => :versions
 
   validates_presence_of :title, :message => "Nameless project, eh?"

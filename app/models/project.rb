@@ -13,6 +13,14 @@ class Project < ActiveRecord::Base
     permalink
   end
 
+  def download_count
+    downloads = 0
+    versions.each do |version|
+      downloads += version.download_count
+    end
+    downloads
+  end
+
   def total_combined_votes
     count = 0
     versions.each do |v|

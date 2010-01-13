@@ -1,10 +1,18 @@
 <h1><%= project.title %></h1>
 <h2>Version <%= version.version_number %></h2>
-<%= link_to "Download "+version.asset.attachment_file_name, user_project_download_path(user, project, version) %><br />
-File size: <%= number_to_human_size(version.asset.attachment.size) %><br />
+<% if version.asset %>
+  <%= link_to "Download "+version.asset.attachment_file_name, user_project_download_path(user, project, version) %><br />
+  File size: <%= number_to_human_size(version.asset.attachment.size) %><br />
+<% elsif current_user && current_user.is_owner_of(project) %>
+  This version does not have an attached script yet.<br />
+  <%= link_to "Upload one now!", user_project_upload_path(user, project, version) %><br />
+<% else %>
+  The author has not uploaded a script for this version.<br />
+  Please check back later.<br />
+<% end %>
 <br />
 Downloads this version: <%= version.download_count %><br />
-Total downloads: <%= download_count project %><br />
+Total downloads: <%= project.download_count %><br />
 <br />
 Rating this version: <%= version.combined_votes %> (<%= version.votes_count %> votes)<br />
 Total rating: <%= project.total_combined_votes %> (<%= project.total_votes_count %> votes)<br />

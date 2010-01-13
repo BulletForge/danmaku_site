@@ -2,12 +2,6 @@
 
 <% form_for @version, :url => user_project_versions_path(@user, @project), :html => { :multipart => true, :method => :post } do |f| %>
 <%= error_messages_for :version %>
-<%= swf_upload_area "Attach script", :url => upload_script_path,
-  :filetypes => "*.zip; *.rar; *.7z; *.tar",
-  :button_style => "font-family: Arial, sans-serif; font-size: 14pt; font-weight:bold;",
-  :single_file => true,
-  :file_size_limit => "300 MB" %>
-<%= f.hidden_field :asset_id, :value => nil %>
 <%= f.hidden_field :project_id, :value => @project.id %>
 <%= f.hidden_field :user_id, :value => @user.id %>
 <br />

@@ -1,35 +1,39 @@
 class VersionsController < ApplicationController
   before_filter :require_user, :except => [:index, :show, :download]
-  before_filter :require_owner, :only => [:edit, :update, :destroy]
+  before_filter :require_owner, :only => [:edit, :update, :destroy, :upload, :upload_script_bundle]
 
   resource_controller
   belongs_to :project 
 
   destroy.wants.html {redirect_to user_project_path(@user, @project)}
+  create.wants.html {redirect_to user_project_upload_path(@user, @project, @version)}
+
+  def upload
+    @user = User.find_by_permalink params[:user_id]
+    raise ActiveRecord::RecordNotFound if @user.nil?
+    @project = @user.projects.find_by_permalink params[:project_id]
+    raise ActiveRecord::RecordNotFound if @project.nil?
+    @version = @project.versions.find_by_permalink params[:id]
+    raise ActiveRecord::RecordNotFound if @version.nil?
+  end
 
   def upload_script_bundle
+    @user = User.find_by_permalink params[:user_id]
+    raise ActiveRecord::RecordNotFound if @user.nil?
+    @project = @user.projects.find_by_permalink params[:project_id]
+    raise ActiveRecord::RecordNotFound if @project.nil?
+    @version = @project.versions.find_by_permalink params[:id]
+    raise ActiveRecord::RecordNotFound if @version.nil?
+
     @script_bundle = Asset.new(:attachment => swf_upload_data)
+    @script_bundle.attachable = @version
     if @script_bundle.save
-      render :js => "uploadSuccess(#{@script_bundle.id})"
+      render :update do |page|
+        page.redirect_to :action => 'show'
+      end
     else
       render :js => "uploadFailed('#{@script_bundle.error.full_message}')"
     end
-
-  end
-
-  create.before do
-    puts object.errors
-    asset_id = params[:asset_id]
-    puts asset_id
-    object.errors.add_to_base("Attach a file!") if asset_id.blank?
-    puts asset_id.blank?
-    puts object.errors
-  end
-  create.after do
-    asset_id = params[:version][:asset_id]
-    @script_bundle = Asset.find(asset_id)
-    @script_bundle.attachable = object
-    @script_bundle.save
   end
   
   def download

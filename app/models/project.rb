@@ -1,13 +1,16 @@
 class Project < ActiveRecord::Base
   belongs_to :user
+  belongs_to :category
   has_many   :versions, :dependent => :destroy
   has_many   :comments, :through => :versions
 
   validates_presence_of :title, :message => "Nameless project, eh?"
-  validates_uniqueness_of :title, :case_sensitive => false, :scope => :user_id, :message => "You're using that title for another project already, remember?"
 
   acts_as_taggable_on :tags
+  
   has_permalink :title, :update => true, :unique => false
+  validates_exclusion_of :permalink, :in => ["new"], :message => "Stop trying to mess with the website. Who names their projects new anyway?"
+  validates_uniqueness_of :permalink, :scope => :user_id, :message => "You're using that title for another project already, remember?"
   
   def to_param
     permalink

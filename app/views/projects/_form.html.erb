@@ -3,4 +3,10 @@
 <%= f.label :title, "Title" %><br/>
 <%= f.text_field :title %><br/>
 <br/>
+<%= f.label :category_id, "Category" %><br/>
+<%= f.select :category_id, Category.select_array %><br/>
+<br/>
+<%= f.label :tag_list, "Tags" %><br/>
+<%= f.text_field :tag_list %><br/>
+<br/>
 <%= f.submit "Submit" %>

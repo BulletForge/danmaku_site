@@ -4,17 +4,25 @@
   <title>BulletForge</title>
   <%= javascript_include_tag :defaults, :swf_upload %>
 </head>
+
 <body>
   <div id="header" class="container">
-	<% if current_user %>
+    <% if current_user %>
       Logged in as <%= link_to current_user.login, user_path(current_user) %><br/>
       <%= link_to "Log Out", logout_path%> |
-      <%= link_to "New Project", new_user_project_path(current_user)%>
+      <%= link_to "New Project", new_user_project_path(current_user)%><br />
     <% else %>
       <%= link_to "Login", login_path %> |
-      <%= link_to "Register", new_user_path%>
+      <%= link_to "Register", new_user_path%><br />
     <% end %>
 
+    <% form_tag projects_path, :method => 'get' do %>
+      <%= label_tag :search, "Keyword" %>
+      <%= text_field_tag :search, params[:search] %><br />
+      <%= label_tag :search_type, "Search by:" %>
+      <%= select_tag :search_type, options_for_select([['Title', 1], ['Username', 2], ['Tags', 3]], params[:search_type].to_i) %><br />
+      <%= submit_tag "Search" %>
+    <% end %>
   </div>
 
   <div id="content">

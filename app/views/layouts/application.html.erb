@@ -16,12 +16,14 @@
       <%= link_to "Register", new_user_path%><br />
     <% end %>
 
-    <% form_tag projects_path, :method => 'get' do %>
-      <%= label_tag :search, "Keyword" %>
-      <%= text_field_tag :search, params[:search] %><br />
+    <% form_for :search, :url => projects_path do |f| %>
+      <%= f.label :title_like, "Keyword" %>
+      <%= f.hidden_field :title_like %>
+      <%= f.hidden_field :user_login_like %>
+      <%= f.hidden_field :tagged_with %><br />
       <%= label_tag :search_type, "Search by:" %>
-      <%= select_tag :search_type, options_for_select([['Title', 1], ['Username', 2], ['Tags', 3]], params[:search_type].to_i) %><br />
-      <%= submit_tag "Search" %>
+      <%= select_tag :search_type, options_for_select([['Title', 'title'], ['Username', 'username'], ['Tags', 'tags']], params[:search_type]) %><br />
+      <%= f.submit "Search" %>
     <% end %>
   </div>
 

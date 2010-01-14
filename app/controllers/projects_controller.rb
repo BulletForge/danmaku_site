@@ -13,18 +13,9 @@ class ProjectsController < ApplicationController
 
   # Paginate the projects collection  
   def collection
-    if params[:search_type] == '1'
-      @search = Project.search(:title_like => params[:search])
-    elsif params[:search_type] == '2'
-      @search = Project.search(:user_login_like => params[:search])
-    elsif params[:search_type] == '3'
-      @search = Project.search(:tags_name_like => params[:search])
-    else
-      @search = Project.search
-    end
+    @search = Project.search(params[:search])
     @collection ||= @search.paginate :per_page => 10,
-                                     :page => params[:page], 
-                                     :order => 'created_at DESC'
+                                     :page => params[:page]
   end
 
   # Find by permalink instead of by id

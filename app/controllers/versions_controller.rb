@@ -46,6 +46,8 @@ class VersionsController < ApplicationController
     
     @version.download_count += 1
     @version.save
+    @project.downloads = @project.download_count
+    @project.save
     redirect_to @version.asset.attachment.url
   end
 
@@ -58,6 +60,8 @@ class VersionsController < ApplicationController
     raise ActiveRecord::RecordNotFound if @version.nil?
 
     current_user.vote_for @version
+    @project.rating = @project.total_combined_votes
+    @project.save
     redirect_to user_project_version_path(@user, @project, @version)
   end
 
@@ -70,6 +74,8 @@ class VersionsController < ApplicationController
     raise ActiveRecord::RecordNotFound if @version.nil?
 
     current_user.vote_against @version
+    @project.rating = @project.total_combined_votes
+    @project.save
     redirect_to user_project_version_path(@user, @project, @version)
   end
 

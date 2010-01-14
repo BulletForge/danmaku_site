@@ -12,10 +12,10 @@
 <% end %>
 <br />
 Downloads this version: <%= version.download_count %><br />
-Total downloads: <%= project.download_count %><br />
+Total downloads: <%= project.downloads %><br />
 <br />
 Rating this version: <%= version.combined_votes %> (<%= version.votes_count %> votes)<br />
-Total rating: <%= project.total_combined_votes %> (<%= project.total_votes_count %> votes)<br />
+Total rating: <%= project.rating %> (<%= project.total_votes_count %> votes)<br />
 <% if current_user %>
   <% if !current_user.voted_on?(version) %>
     <%= link_to "Vote Up", user_project_vote_up_path(user, project, version) %> |

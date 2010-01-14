@@ -2,6 +2,12 @@
 
 <%= will_paginate @projects %>
 
+Order by:
+<%= order @search, :by => :created_at, :as => "Date" %> |
+<%= order @search, :by => :title, :as => "Title" %> |
+<%= order @search, :by => :rating, :as => "Rating" %> |
+<%= order @search, :by => :downloads, :as => "Downloads" %><br />
+<br />
 <% @projects.each do |p| %>
   <%= render :partial => 'shared/project', :locals => {:p => p} %>
 <% end %>

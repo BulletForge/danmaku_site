@@ -1,5 +1,5 @@
 <%= link_to p.title, user_project_path(p.user, p) %><br />
 by <%= link_to p.user.login, user_path(p.user) %><br />
-Downloads: <%= p.download_count %><br />
-Rating: <%= p.total_combined_votes %><br />
+Downloads: <%= p.downloads %><br />
+Rating: <%= p.rating %><br />
 <br />

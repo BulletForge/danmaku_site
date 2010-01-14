@@ -11,7 +11,7 @@ class Project < ActiveRecord::Base
   has_permalink :title, :update => true, :unique => false
   validates_exclusion_of :permalink, :in => ["new"], :message => "Stop trying to mess with the website. Who names their projects new anyway?"
   validates_uniqueness_of :permalink, :scope => :user_id, :message => "You're using that title for another project already, remember?"
-  
+
   def to_param
     permalink
   end

@@ -13,7 +13,7 @@ class ProjectsController < ApplicationController
 
   # Paginate the projects collection  
   def collection
-    @search = Project.search(params[:search])
+    @search = end_of_association_chain.search(params[:search])
     @collection ||= @search.paginate :per_page => 10,
                                      :page => params[:page]
   end

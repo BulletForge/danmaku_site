@@ -451,18 +451,27 @@ body h2 { text-align: center; }
 #header #login-bar { text-align: right; height: 35px; }
 #header #search-form { text-align: center; }
 
+.bar { width: 500px; height: 10px; border: solid 1px black; }
+.bar .progress { background: red; height: 100%; }
+
+.imageUploader { padding: 20px; }
+.imageUploader .uploader { margin-top: 20px; }
+.imageUploader li { float: left; margin: 10px; }
+
 .project-index-block { background: #DDDDDD; padding: 12px; border: solid 1px black; margin-top: 8px; }
 .project-index-block .project-left { float: left; width: 300px; }
 .project-index-block .project-right { float: left; width: 600px; }
 
 .version-number { color: #CCCCCC; vertical-align: top; font-size: 0.5em; }
 
-#project-show-block { background: #DDDDDD; border: solid 1px black; padding: 6px; }
-#project-show-block #download { text-align: center; margin-bottom: 6px; }
-#project-show-block #project-left { float: left; width: 463px; }
-#project-show-block #project-right { float: right; width: 463px; padding-left: 8px; }
-
-#youtube-video { text-align: center; }
-
 #author-options { border: solid 1px black; background: #DDDDDD; padding: 8px; margin-bottom: 8px; }
 #author-options #author-options-heading { font-size: 1.5em; }
+
+#project-show #project-show-left { float: left; width: 460px; }
+#project-show #project-show-left #general { background: #DDDDDD; padding: 8px; border: solid 1px black; margin-bottom: 12px; }
+#project-show #project-show-left #images { background: #DDDDDD; padding: 8px; border: solid 1px black; margin-bottom: 12px; }
+#project-show #project-show-left #youtube { background: #DDDDDD; padding: 8px; border: solid 1px black; margin-bottom: 12px; }
+#project-show #project-show-right { float: right; width: 460px; }
+#project-show #project-show-right #download { background: #DDDDDD; padding: 8px; border: solid 1px black; margin-bottom: 12px; }
+#project-show #project-show-right #statistics { background: #DDDDDD; padding: 8px; border: solid 1px black; margin-bottom: 12px; }
+#project-show #project-show-right #versions { background: #DDDDDD; padding: 8px; border: solid 1px black; margin-bottom: 12px; }

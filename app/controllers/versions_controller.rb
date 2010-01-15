@@ -129,6 +129,10 @@ class VersionsController < ApplicationController
     end
     raise ActiveRecord::RecordNotFound
   end
+
+  def collection
+    @collection ||= end_of_association_chain.descend_by_created_at
+  end
   
   # Require the current user to be the owner of the version
   def require_owner

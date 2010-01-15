@@ -1,9 +1,12 @@
 <% if @project.versions.count == 0 %>
   <h1><%= @project.title %></h1>
   <% if current_user && current_user.is_owner_of(@project) %>
-    <%= link_to "Edit", edit_user_project_path(@user, @project) %> |
-    <%= link_to "Delete", user_project_path(@user, @project), :method => :delete, :confirm => "Are you sure you want to delete this project?" %> |
-    <%= link_to "New Version", new_user_project_version_path(@user, @project) %>
+    <div id="author-options">
+      <span id="author-options-heading">Author's options</span><br/>
+      <%= link_to "Edit Project", edit_user_project_path(@user, @project) %> |
+      <%= link_to "Delete Project", user_project_path(@user, @project), :method => :delete, :confirm => "Are you sure you want to delete this project?" %><br/>
+      <%= link_to "New Version", new_user_project_version_path(@user, @project) %>
+    </div>
   <% end %>
 
   <p>No versions have been added to this project yet.</p>

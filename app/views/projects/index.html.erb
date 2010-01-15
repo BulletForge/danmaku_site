@@ -1,13 +1,11 @@
-<h1>Index of Projects</h1>
-
 <%= will_paginate @projects %>
 
-Order by:
-<%= order @search, :by => :created_at, :as => "Date" %> |
-<%= order @search, :by => :title, :as => "Title" %> |
-<%= order @search, :by => :rating, :as => "Rating" %> |
-<%= order @search, :by => :downloads, :as => "Downloads" %><br />
-<br />
+<div id ="order-projects">Order by:
+  <%= order @search, :by => :created_at, :as => "Date" %> |
+  <%= order @search, :by => :title, :as => "Title" %> |
+  <%= order @search, :by => :rating, :as => "Rating" %> |
+  <%= order @search, :by => :downloads, :as => "Downloads" %>
+</div>
 <% @projects.each do |p| %>
   <%= render :partial => 'shared/project', :locals => {:p => p} %>
 <% end %>

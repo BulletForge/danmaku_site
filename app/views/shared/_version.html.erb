@@ -1,49 +1,79 @@
-<h1><%= project.title %></h1>
-<h2>Version <%= version.version_number %></h2>
-<% if version.asset %>
-  <%= link_to "Download "+version.asset.attachment_file_name, user_project_download_path(user, project, version) %><br />
-  File size: <%= number_to_human_size(version.asset.attachment.size) %><br />
-<% elsif current_user && current_user.is_owner_of(project) %>
-  This version does not have an attached script yet.<br />
-  <%= link_to "Upload one now!", user_project_upload_path(user, project, version) %><br />
-<% else %>
-  The author has not uploaded a script for this version.<br />
-  Please check back later.<br />
-<% end %>
-<br />
-Downloads this version: <%= version.download_count %><br />
-Total downloads: <%= project.downloads %><br />
-<br />
-Rating this version: <%= version.combined_votes %> (<%= version.votes_count %> votes)<br />
-Total rating: <%= project.rating %> (<%= project.total_votes_count %> votes)<br />
-<% if current_user %>
-  <% if !current_user.voted_on?(version) %>
-    <%= link_to "Vote Up", user_project_vote_up_path(user, project, version) %> |
-    <%= link_to "Vote Down", user_project_vote_down_path(user, project, version) %><br />
-  <% else %>
-    You have already voted.<br />
-  <% end %>
-<% else %>
-  Please log in to vote.
-<% end %>
-<br />
+<h1>
+  <%= project.title %>
+  <span class="version-number">(v <%= version.version_number %>)</span>
+</h1>
+<h2>by <%= link_to project.user.login, user_path(project.user) %></h2>
 
-<% if current_user && current_user.is_owner_of(project) %>	
-  <%= link_to "New Version", new_user_project_version_path(user, project) %> |
-  <%= link_to "Edit Version", edit_user_project_version_path(user, project, version) %> |
-  <%= link_to "Delete Version", user_project_version_path(user, project, version), :method => :delete, :confirm => "Are you sure you want to delete this version?" %>
-  <br />
-  <%= link_to "Edit Project", edit_user_project_path(user, project) %> |
-  <%= link_to "Delete Project", user_project_path(user, project), :method => :delete, :confirm => "Are you sure you want to delete this project?"%>
+<% if current_user && current_user.is_owner_of(project) %>
+  <div id="author-options">
+    <span id="author-options-heading">Author's options</span><br/>
+    <%= link_to "New Version", new_user_project_version_path(user, project) %> |
+    <%= link_to "Edit Version", edit_user_project_version_path(user, project, version) %> |
+    <%= link_to "Delete Version", user_project_version_path(user, project, version), :method => :delete, :confirm => "Are you sure you want to delete this version?" %>
+    <br />
+    <%= link_to "Edit Project", edit_user_project_path(user, project) %> |
+    <%= link_to "Delete Project", user_project_path(user, project), :method => :delete, :confirm => "Are you sure you want to delete this project?"%>
+  </div>
 <% end %>
+<div id="project-show-block">
+  <div id="download">
+    <% if version.asset %>
+      <%= link_to "Download", user_project_download_path(user, project, version) %><br />
+      File size: <%= number_to_human_size(version.asset.attachment.size) %>
+    <% elsif current_user && current_user.is_owner_of(project) %>
+      This version does not have an attached script yet.<br />
+      <%= link_to "Upload one now!", user_project_upload_path(user, project, version) %>
+    <% else %>
+      The author has not uploaded a script for this version.<br />
+      Please check back later.
+    <% end %>
+  </div>
+  <div id="project-left">
+    Version downloads: <%= version.download_count %><br />
+    Total downloads: <%= project.downloads %><br />
+    <br />
+    Version rating: <%= version.combined_votes %> (<%= version.votes_count %> votes)<br />
+    Total rating: <%= project.rating %> (<%= project.total_votes_count %> votes)<br />
+    <% if current_user %>
+      <% if !current_user.voted_on?(version) && !current_user.is_owner_of(version) %>
+        <%= link_to "Vote Up", user_project_vote_up_path(user, project, version) %> |
+        <%= link_to "Vote Down", user_project_vote_down_path(user, project, version) %><br />
+      <% end %>
+    <% else %>
+      Please log in to vote.<br/>
+    <% end %>
+    <br/>
+    
+    <h3>Versions</h3>
+    <% project.versions.all(:order => 'created_at DESC').first(5).each do |v| %>
+      <%= link_to project.title+' v'+v.version_number, user_project_version_path(user, project, v) %><br />
+    <% end %>
+    <%= link_to "See all versions", user_project_versions_path(user, project) %>
+  </div>
 
-<p><%= version.description %></p>
+  <div id="project-right">
+    Description:<br/>
+    <%= version.description %>
+  </div>
+  <br style ="clear:both" />
+</div>
 
-<h3>Versions</h3>
-<% project.versions.all(:order => 'created_at DESC').first(5).each do |v| %>
-  <%= link_to project.title+' v'+v.version_number, user_project_version_path(user, project, v) %><br />
+<% if project.youtube_video_id %>
+  <div id="youtube-video">
+    <object width="425" height="344">
+      <param name="movie" value=<%= "http://www.youtube.com/v/" + project.youtube_video_id %>> </param>
+      <param name="allowFullScreen" value="true"> </param>
+      <param name="allowscriptaccess" value="always"> </param>
+      <embed src=<%= "http://www.youtube.com/v/" + project.youtube_video_id %>
+             type="application/x-shockwave-flash"
+             allowscriptaccess="always"
+             allowfullscreen="true"
+             width="425"
+             height="344">
+      </embed>
+    </object>
+  </div>
 <% end %>
-<%= link_to "See all versions", user_project_versions_path(user, project) %>
 
 <h3>Comments for this version</h3>
 <% version.comments.all(:order => 'created_at DESC').first(10).each do |comment| %>

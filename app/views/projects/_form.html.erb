@@ -1,12 +1,18 @@
 <%= f.error_messages %><br/>
+<br/>
 <%= f.hidden_field :user_id, :value => current_user.id %>
+
 <%= f.label :title, "Title" %><br/>
 <%= f.text_field :title %><br/>
-<br/>
+
 <%= f.label :category_id, "Category" %><br/>
 <%= f.select :category_id, Category.select_array %><br/>
-<br/>
+
 <%= f.label :tag_list, "Tags" %><br/>
 <%= f.text_field :tag_list %><br/>
+
+<%= f.label :youtube_video_id, "YouTube Video ID" %><br/>
+For example: In "http://www.youtube.com/watch?v=8dslASdc4", "8dslASdc4" is the video ID.<br/>
+<%= f.text_field :youtube_video_id %><br/>
 <br/>
 <%= f.submit "Submit" %>

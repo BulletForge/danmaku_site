@@ -1,11 +1,10 @@
 <div id="search-form">
   <% form_for :search, :url => projects_path do |f| %>
-    <%= f.label :title_like, "Keyword" %>
     <%= f.hidden_field :title_like %>
     <%= f.hidden_field :user_login_like %>
     <%= f.hidden_field :tagged_with %><br />
     <%= label_tag :search_type, "Search by:" %>
-    <%= select_tag :search_type, options_for_select([['Title', 'title'], ['Username', 'username'], ['Tags', 'tags']], params[:search_type]) %><br />
+    <%= select_tag :search_type, options_for_select([['Title', 'title'], ['Username', 'username'], ['Tags', 'tags']], params[:search_type]) %>
     <%= f.submit "Search" %>
   <% end %>
 </div>

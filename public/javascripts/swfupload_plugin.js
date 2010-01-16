@@ -25,11 +25,9 @@
 
   FlashUploader.prototype = {
   	cancelQueue: function(id) {
-  	  console.log('cancelQueue', arguments);
   	},
 
   	fileDialogComplete: function(numFilesSelected, numFilesQueued) {
-  	  console.log('fileDialogComplete', arguments);
   		for( var i=0; i < numFilesSelected; i++ ) {
   		  var file = this.swfu.getFile(this.currentFileIndex++);
   		  var template = $('<li id="' + this.fileDomId(file) + '"></li>');
@@ -43,7 +41,6 @@
   	},
 
   	uploadProgress: function(file, bytesLoaded, bytesTotal) {
-  	  console.log('uploadProgress', arguments);
   	  var percent = bytesLoaded * 100 / bytesTotal;
   	  var percentStr = '' + percent + '%';
   		$(this.fileDomId(file)).find('.progress').css('width', percentStr);
@@ -54,7 +51,6 @@
   	},
   	
   	uploadSuccess: function(file, serverData) {
-  	  console.log('uploadSuccess', arguments);
   	  var $file = $(this.fileDomId(file));
   	  var $progress = $file.find('.progress');
   	  
@@ -62,15 +58,35 @@
   		$file.fadeOut(function(obj) {
   		  obj.element.remove();
   		});
-  		try {
-  			eval(serverData);
-  		} catch (e) {
-  			alert(e);
-  		}
+  		this.processServerData(serverData || {});
+  	},
+  	
+  	processServerData : function(data) {
+  	  data = JSON.parse(data);
+  	  if ( data && data.success ){
+  	    this.onSuccessData(data);
+  	  } else {
+  	    this.onFailureData(data);
+  	  }
+  	},
+  	
+  	onSuccessData : function(data) {
+  	  $(data.replace_dom).fadeOut('normal', function(){
+  	    $(data.replace_dom).html(data.partial)
+  	      .prepend("<h4 class='notice'>Your files has been uploaded successfully!</h4>")
+  	      .fadeIn('normal', function(){
+  	          setTimeout(function(){
+  	            $(data.replace_dom).find("h4.notice").fadeOut();	        
+  	          }, 3000)
+  	      });
+  	  });
+  	},
+  	
+  	onFailureData : function(data) {
+  	  alert("failure! " + data);
   	},
   	
   	uploadComplete: function(file) {
-  	  console.log('uploadComplete', arguments);
   		if (this.swfu.getStats().files_queued > 0) {
   			this.swfu.startUpload();
   		}
@@ -87,7 +103,6 @@
   	  var $el = $(element);
   		if ( !$el.data('flashUploader') ) {
   		  var options = jQuery.extend( {}, FlashUploader.defaultOptions, $el.metadata() );
-  		  console.log(options);
   		    		  
   		  if( options.single_file )
           options.button_actions = SWFUpload.BUTTON_ACTION.SELECT_FILE;

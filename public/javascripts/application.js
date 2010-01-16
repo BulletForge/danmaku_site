@@ -2,8 +2,6 @@
 $.metadata.setType('elem', 'script');
 
 var handle_search_type = function(){
-  console.log(arguments);
-  
     var title_like = $("#search_title_like");
     var user_login_like = $("#search_user_login_like");
     var tagged_with = $("#search_tagged_with");

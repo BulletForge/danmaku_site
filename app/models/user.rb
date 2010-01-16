@@ -21,6 +21,11 @@ class User < ActiveRecord::Base
   validates_exclusion_of :permalink, :in => ["new"], :message => "Calling yourself new is kinda gonna mess up the website. Try something else for your username."
   validates_uniqueness_of :permalink, :message => "That username is taken already. And don't bother with different cases or symbols."
   
+  # for declarative_authorization integration
+  def role_symbols
+    admin? ? [:admin] : [:user] 
+  end
+  
   def owner_of?(ownable)
     return false if ownable.class != Project && ownable.class != Version
     ownable.user == self

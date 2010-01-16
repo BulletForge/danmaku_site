@@ -20,28 +20,8 @@
     <div class="project-left">
       <div id="images">
       </div>
-      <div id="download">
-        <% if version.archive %>
-          <%= link_to "Download", user_project_download_path(user, project, version) %><br />
-          File size: <%= number_to_human_size(version.archive.attachment.size) %><br />
-        <% elsif current_user && current_user.owner_of?(project) %>
-          <h4> Upload your script now! </h4>
-          <p>
-            This version does not have an attached script yet.<br />
-            File size limit is <%= Archive::MAX_FILE_SIZE %>.<br />
-            Accepted file types are .zip, .rar, .7z, and .tar.
-          </p>
-
-          <%= swf_upload_area "Attach script", :upload_url => upload_user_project_version_path(@user, @project, version),
-            :file_types => "*.zip; *.rar; *.7z; *.tar",
-            :button_style => "font-family: Arial, sans-serif; font-size: 14pt; font-weight:bold;",
-            :single_file => true,
-            :file_size_limit => Archive::MAX_FILE_SIZE %>
-
-        <% else %>
-          The author has not uploaded a script for this version.<br />
-          Please check back later.
-        <% end %>
+      <div id="archive">
+		<%=render :partial => 'shared/archive', :locals => {:user => user, :project => project, :version => version}%>
       </div>
       <div id="statistics">
         Version downloads: <%= version.download_count %><br />

@@ -10,6 +10,8 @@ ActionController::Routing::Routes.draw do |map|
     users.resources :projects, :as => 'p' do |projects|
       projects.resources :versions, { :as => 'v', :member => {:download => :get, :vote_up => :get, :vote_down => :get, :upload => :post} } do |versions|
         versions.resources :comments, :only => [:index, :create, :destroy]
+        versions.resource :archive, :only => [:show, :create]
+        versions.resources :votes
       end
     end
   end

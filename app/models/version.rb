@@ -15,8 +15,17 @@ class Version < ActiveRecord::Base
   def to_param
     permalink
   end
-
-  def combined_votes
-    votes_for - votes_against
+  
+  def increment_download_counter!
+    Version.transaction do
+      update_attributes(:download_count => self.download_count += 1)
+      update_project_download_counter_cache
+    end
   end
+  
+  private
+  def update_project_download_counter_cache
+    project.update_attributes!(:downloads => project.calculate_download_count)
+  end
+  
 end

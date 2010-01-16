@@ -1,24 +1,38 @@
 class UserSessionsController < ApplicationController
-  before_filter :require_no_user, :only => [:new, :create]
-  before_filter :require_user, :only => :destroy
+  inherit_resources  
+  actions :new, :create, :destroy
   
-  def new
-    @user_session = UserSession.new
-  end
+  # preload all resource / collection in before filter
+  before_filter :collection, :only =>[:index]
+  before_filter :resource, :only => [:show, :edit, :update, :destroy]
+  before_filter :build_resource, :only => [:new, :create, :index]
+  filter_access_to :all
   
-  def create
-    @user_session = UserSession.new(params[:user_session])
-    if @user_session.save
+  create! do |success, failure|
+    success.html {
       flash[:notice] = "Successfully logged in!"
       redirect_back_or_default root_path
-    else
+    }    
+    failure.html {
       render :action => :new
-    end
+    }
   end
   
-  def destroy
-    current_user_session.destroy
-    flash[:notice] = "Successfully logged out!"
-    redirect_back_or_default root_path
+  destroy! do |format|
+    format.html {
+      flash[:notice] = "Successfully logged out!"
+      redirect_back_or_default root_path      
+    }
   end
+  
+  protected
+  
+  def resource
+    current_user_session
+  end
+  
+  def build_resource
+    @user_session = UserSession.create(params[:user_session])
+  end
+  
 end

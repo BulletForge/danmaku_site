@@ -17,27 +17,15 @@ class Project < ActiveRecord::Base
     permalink
   end
 
-  def download_count
-    downloads = 0
-    versions.each do |version|
-      downloads += version.download_count
-    end
-    downloads
+  def calculate_download_count
+    versions.inject(0) {|c, v| c += v.download_count }
   end
 
-  def total_win_votes
-    count = 0
-    versions.each do |v|
-      count += v.votes_for.count
-    end
-    count
+  def calculate_win_votes
+    versions.inject(0) { |c, v| c += v.votes_for.count }
   end
 
-  def total_fail_votes
-    count = 0
-    versions.each do |v|
-      count += v.votes_against.count
-    end
-    count
+  def calculate_fail_votes
+    versions.inject(0) { |c, v| c += v.votes_against.count }
   end
 end

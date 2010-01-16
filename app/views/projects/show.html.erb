@@ -1,6 +1,6 @@
 <% if @project.versions.count == 0 %>
   <h1><%= @project.title %></h1>
-  <% if current_user && current_user.is_owner_of(@project) %>
+  <% if current_user && current_user.owner_of?(@project) %>
     <div id="author-options">
       <span id="author-options-heading">Author's options</span><br/>
       <%= link_to "Edit Project", edit_user_project_path(@user, @project) %> |

@@ -21,17 +21,31 @@ class User < ActiveRecord::Base
   validates_exclusion_of :permalink, :in => ["new"], :message => "Calling yourself new is kinda gonna mess up the website. Try something else for your username."
   validates_uniqueness_of :permalink, :message => "That username is taken already. And don't bother with different cases or symbols."
   
-  def is_owner_of(ownable)
+  def owner_of?(ownable)
     return false if ownable.class != Project && ownable.class != Version
     ownable.user == self
   end
   
-  def can_destroy(comment)
+  def can_destroy?(comment)
     return false if comment.class != Comment
-    self == comment.author || self == comment.commentable || is_owner_of(comment.commentable)
+    self == comment.author || self == comment.commentable || owner_of?(comment.commentable)
   end
   
   def to_param
     permalink
   end
+  
+  
+  def self.current
+    Thread.current[:current_user]
+  end
+
+  def self.current=(user)
+    Thread.current[:current_user] = user
+  end
+  
+  def current?
+    self.class.current == self
+  end
+  
 end

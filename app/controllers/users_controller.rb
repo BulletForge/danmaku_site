@@ -1,31 +1,29 @@
 class UsersController < ApplicationController
+  inherit_resources
+  
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :require_user, :only => [:edit, :update, :destroy]
   before_filter :require_matching_user, :only => [:edit, :update, :destroy]
   
-  resource_controller
 
   # Change default flash notice and redirect
-  create do
-    flash "Successfully registered!"
-    wants.html {redirect_back_or_default root_path}
+  create! do |success, failure|
+    success.html {
+      #flash "Successfully registered!"
+      redirect_back_or_default root_path
+    }
   end
-  
 
-  private
+  protected
 
   # Paginate the users collection  
   def collection
-    @collection ||= end_of_association_chain.paginate :per_page => 10,
-                                                      :page => params[:page], 
-                                                      :order => 'created_at DESC'
+    get_collection_ivar || set_collection_ivar(end_of_association_chain.paginate(:per_page => 10, :page => params[:page], :order => 'created_at DESC'))
   end
   
   # Find by permalink instead of by id
-  def object
-    @object ||= end_of_association_chain.find_by_permalink(param)
-    raise ActiveRecord::RecordNotFound if @object.nil?
-    @object
+  def resource
+    get_resource_ivar || set_resource_ivar(end_of_association_chain.find_by_permalink!(params[:id]))
   end
   
   # Require current user to be the user

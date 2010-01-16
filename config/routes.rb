@@ -7,8 +7,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :users, :as => 'u' do |users|
     users.resources :comments, :only => [:index, :create, :destroy]
-    users.resources :projects, :as => 'p',  do |projects|
-      projects.resources :versions, :as => 'v', :members => {:download => :get, :vote_up => :get, :vote_down => :get, :upload => :post} do |versions|
+    users.resources :projects, :as => 'p' do |projects|
+      projects.resources :versions, { :as => 'v', :member => {:download => :get, :vote_up => :get, :vote_down => :get, :upload => :post} } do |versions|
         versions.resources :comments, :only => [:index, :create, :destroy]
       end
     end

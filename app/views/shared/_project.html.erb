@@ -1,14 +1,14 @@
 <div class="project-index-block">
-  <div class="project-top">
+  <div class="heading">
     <div class="title">
       <%= link_to p.title, user_project_path(p.user, p) %>
     </div>
     <div class="stats">
+      Win: <%= p.win_votes %> Fail: <%= p.fail_votes %><br />
       Downloads: <%= p.downloads %>
-      Rating: <%= p.rating %>
     </div>
   </div>
-  <div class="project-bottom">
+  <div class="body">
     Author: <%= link_to p.user.login, user_path(p.user) %><br/>
     
     <% if p.versions.last %>

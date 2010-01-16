@@ -11,62 +11,85 @@
 <% end %>
 
 <div id="project-show">
-  <div id="project-show-left">
-    <div id="general">
-      <h1>
-        <%= project.title %>
-        <span class="version-number">(v <%= version.version_number %>)</span>
-      </h1>
-      <h2>by <%= link_to project.user.login, user_path(project.user) %></h2>
-      Description:<br/>
-      <%= version.description %>
-    </div>
-
-    <div id="images">
-    </div>
-    <% unless project.youtube_video_id.blank? %>
-      <div id="youtube">
-        <object width="425" height="344">
-          <param name="movie" value=<%= "http://www.youtube.com/v/" + project.youtube_video_id %>> </param>
-          <param name="allowFullScreen" value="true"> </param>
-          <param name="allowscriptaccess" value="always"> </param>
-          <embed src=<%= "http://www.youtube.com/v/" + project.youtube_video_id %>
-                 type="application/x-shockwave-flash"
-                 allowscriptaccess="always"
-                 allowfullscreen="true"
-                 width="425"
-                 height="344">
-          </embed>
-        </object>
-      </div>
-    <% end %>
+  <div class="heading">
+    <%= project.title %>
+    <span class="version-number">(v <%= version.version_number %>)</span>
   </div>
 
-  <div id="project-show-right">
-    <div id="download">
-      <% if version.archive %>
-        <%= link_to "Download", user_project_download_path(user, project, version) %><br />
-        File size: <%= number_to_human_size(version.archive.attachment.size) %><br />
-      <% elsif current_user && current_user.owner_of?(project) %>
-        <h4> Upload your script now! </h4>
-        <p>          
-          This version does not have an attached script yet.<br />
-          
-          File size limit is <%= Archive::MAX_FILE_SIZE %>.
-          <br />
-          Accepted file types are .zip, .rar, .7z, and .tar.
-        </p>
+  <div class="body">
+    <div class="project-left">
+      <div id="images">
+      </div>
+      <div id="download">
+        <% if version.archive %>
+          <%= link_to "Download", user_project_download_path(user, project, version) %><br />
+          File size: <%= number_to_human_size(version.archive.attachment.size) %><br />
+        <% elsif current_user && current_user.owner_of?(project) %>
+          <h4> Upload your script now! </h4>
+          <p>
+            This version does not have an attached script yet.<br />
+            File size limit is <%= Archive::MAX_FILE_SIZE %>.<br />
+            Accepted file types are .zip, .rar, .7z, and .tar.
+          </p>
 
-        <%= swf_upload_area "Attach script", :upload_url => upload_user_project_version_path(@user, @project, version),
-          :file_types => "*.zip; *.rar; *.7z; *.tar",
-          :button_style => "font-family: Arial, sans-serif; font-size: 14pt; font-weight:bold;",
-          :single_file => true,
-          :file_size_limit => Archive::MAX_FILE_SIZE %>
-          
-      <% else %>
-        The author has not uploaded a script for this version.<br />
-        Please check back later.<br />
+          <%= swf_upload_area "Attach script", :upload_url => upload_user_project_version_path(@user, @project, version),
+            :file_types => "*.zip; *.rar; *.7z; *.tar",
+            :button_style => "font-family: Arial, sans-serif; font-size: 14pt; font-weight:bold;",
+            :single_file => true,
+            :file_size_limit => Archive::MAX_FILE_SIZE %>
+
+        <% else %>
+          The author has not uploaded a script for this version.<br />
+          Please check back later.
+        <% end %>
+      </div>
+      <div id="statistics">
+        Version downloads: <%= version.download_count %><br />
+        Total downloads: <%= project.downloads %><br />
+        <br />
+        Version win: <%= version.votes_for %><br />
+        Version fail: <%= version.votes_against %><br />
+        <br />
+        Total win: <%= project.win_votes %><br />
+        Total fail: <%= project.fail_votes %>
+      </div>
+    </div>
+
+    <div class="project-right">
+      Author: <%= link_to project.user.login, user_path(project.user) %><br/>
+      Category: <%= project.category.name %><br/>
+      <% if project.tags %>
+        Tags:
+        <% project.tags.each do |tag| %>
+          <% link_to tag.name, projects_path(:search => {:tagged_with => tag.name}, :search_type => :tags) %>
+        <% end %>
+        <br/>
       <% end %>
+      Last updated at: <%= project.versions.last.created_at %><br/>
+      <br/>
+      <%= version.description %>
+    </div>
+  </div>
+</div>
+
+  <% unless project.youtube_video_id.blank? %>
+    <div id="youtube">
+      <object width="425" height="344">
+        <param name="movie" value=<%= "http://www.youtube.com/v/" + project.youtube_video_id %>> </param>
+        <param name="allowFullScreen" value="true"> </param>
+        <param name="allowscriptaccess" value="always"> </param>
+        <embed src=<%= "http://www.youtube.com/v/" + project.youtube_video_id %>
+               type="application/x-shockwave-flash"
+               allowscriptaccess="always"
+               allowfullscreen="true"
+               width="425"
+               height="344">
+        </embed>
+      </object>
+    </div>
+  <% end %>
+
+  <div id="project-show-right">
       <br />
       <% if current_user %>
         <% if !current_user.voted_on?(version) && !current_user.owner_of?(version) %>
@@ -76,15 +99,6 @@
       <% else %>
         Please log in to vote.<br/>
       <% end %>
-    </div>
-
-    <div id="statistics">
-      Version downloads: <%= version.download_count %><br />
-      Total downloads: <%= project.downloads %><br />
-      <br />
-      Version rating: <%= version.combined_votes %> (<%= version.votes_count %> votes)<br />
-      Total rating: <%= project.rating %> (<%= project.total_votes_count %> votes)<br />
-    </div>
 
     <div id="versions">
       <h3>Versions</h3>
@@ -94,21 +108,6 @@
       <%= link_to "See all versions", user_project_versions_path(user, project) %>
     </div>
   </div>
-</div>
-
-<div id="project-show-block">
-  <div id="download">
-  </div>
-  <div id="project-left">
-    <br/>
-    
-  </div>
-
-  <div id="project-right">
-  </div>
-  <br style ="clear:both" />
-</div>
-
 
 
 <h3>Comments for this version</h3>

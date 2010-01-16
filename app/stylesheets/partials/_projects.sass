@@ -1,18 +1,17 @@
 #project-list
     .project-index-block
-        border: solid 1px black
-        background-color: #DDDDDD
+        +heading-box
         margin-top: 10px
-        .project-top
-            background-color: #CCCCCC
-            border-bottom: solid 1px black
-            +pad
-            +clearfix
-            .title
-                float: left
-                font-size: 1.5em
-            .stats
-                float: right
-                text-align: right
-        .project-bottom
-            +pad
+        .title
+            float: left
+            font-size: 1.5em
+        .stats
+            float: right
+            text-align: right
+
+#project-show
+    +heading-box
+    .project-left
+        +column(11)
+    .project-right
+        +column(12, true)

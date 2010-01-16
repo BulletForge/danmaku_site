@@ -12,5 +12,18 @@
 // Colors
 !light_blue = #DDDDFF
 
+// Mixins
 =pad
     padding: 10px
+
+=heading-box(!heading_color= #CCC, !body_color= #DDD, !border_color= #000)
+    border= "solid" 1px !border_color
+    background-color= !body_color
+    .heading
+        background-color= !heading_color
+        border-bottom= "solid" 1px !border_color
+        +pad
+        +clearfix
+    .body
+        +pad
+        +clearfix

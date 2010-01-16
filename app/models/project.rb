@@ -25,18 +25,18 @@ class Project < ActiveRecord::Base
     downloads
   end
 
-  def total_combined_votes
+  def total_win_votes
     count = 0
     versions.each do |v|
-      count += v.combined_votes
+      count += v.votes_for.count
     end
     count
   end
 
-  def total_votes_count
+  def total_fail_votes
     count = 0
     versions.each do |v|
-      count += v.votes_count
+      count += v.votes_against.count
     end
     count
   end

@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
   inherit_resources
-  belongs_to :user, :finder => :find_by_permalink!
+  belongs_to :user, :finder => :find_by_permalink!, :optional => true
   
   before_filter :require_user, :except => [:index, :show]
   before_filter :require_owner, :only => [:edit, :update, :destroy]
@@ -14,7 +14,8 @@ class ProjectsController < ApplicationController
   private
   # Paginate the projects collection  
   def collection
-    get_collection_ivar || set_collection_ivar(end_of_association_chain.search( params[:search] ).paginate( :per_page => 10, :page => params[:page] ))
+    @search ||= end_of_association_chain.search( params[:search] )
+    get_collection_ivar || set_collection_ivar(@search.paginate( :per_page => 10, :page => params[:page] ))
   end
 
   # Find by permalink instead of by id

@@ -18,8 +18,7 @@
 		this.settings.upload_error_handler          =  bindFunction(this.uploadError, this);
 		this.settings.upload_success_handler        =  bindFunction(this.uploadSuccess, this);
 		this.settings.upload_complete_handler       =  bindFunction(this.uploadComplete, this);
-  	
-
+		  	
   	this.swfu = new SWFUpload(this.settings);
   	this.currentFileIndex = 0;
   };
@@ -47,7 +46,7 @@
   	  console.log('uploadProgress', arguments);
   	  var percent = bytesLoaded * 100 / bytesTotal;
   	  var percentStr = '' + percent + '%';
-  		$(this.fileDomId(file)).find('.progress').setStyle('width', percentStr);
+  		$(this.fileDomId(file)).find('.progress').css('width', percentStr);
   	},
 
   	uploadError: function(file, errorCode, message) {
@@ -59,10 +58,10 @@
   	  var $file = $(this.fileDomId(file));
   	  var $progress = $file.find('.progress');
   	  
-  	  $progress.setStyle('width', '100%');
-  		$file.fade({duration: 0.5, afterFinish: function(obj) {
+  	  $progress.css('width', '100%');
+  		$file.fadeOut(function(obj) {
   		  obj.element.remove();
-  		}});
+  		});
   		try {
   			eval(serverData);
   		} catch (e) {
@@ -88,11 +87,13 @@
   	  var $el = $(element);
   		if ( !$el.data('flashUploader') ) {
   		  var options = jQuery.extend( {}, FlashUploader.defaultOptions, $el.metadata() );
-  		  
+  		  console.log(options);
+  		    		  
   		  if( options.single_file )
           options.button_actions = SWFUpload.BUTTON_ACTION.SELECT_FILE;
         else
           options.button_actions = SWFUpload.BUTTON_ACTION.SELECT_FILES;
+          
         
   		  $el.data( 'flashUploader', new FlashUploader($el, options) );
 

@@ -49,8 +49,21 @@
         <%= link_to "Download", user_project_download_path(user, project, version) %><br />
         File size: <%= number_to_human_size(version.asset.attachment.size) %><br />
       <% elsif current_user && current_user.is_owner_of(project) %>
-        This version does not have an attached script yet.<br />
-        <%= link_to "Upload one now!", user_project_upload_path(user, project, version) %>
+        <h4> Upload your script now! </h4>
+        <p>          
+          This version does not have an attached script yet.<br />
+          
+          File size limit is <%= Asset::MAX_FILE_SIZE %>.
+          <br />
+          Accepted file types are .zip, .rar, .7z, and .tar.
+        </p>
+
+        <%= swf_upload_area "Attach script", :upload_url => user_project_upload_script_path(@user, @project, @version),
+          :file_types => "*.zip; *.rar; *.7z; *.tar",
+          :button_style => "font-family: Arial, sans-serif; font-size: 14pt; font-weight:bold;",
+          :single_file => true,
+          :file_size_limit => Asset::MAX_FILE_SIZE %>
+          
       <% else %>
         The author has not uploaded a script for this version.<br />
         Please check back later.<br />

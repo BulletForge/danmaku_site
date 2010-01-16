@@ -1,33 +1,17 @@
 class VersionsController < ApplicationController
   before_filter :require_user, :except => [:index, :show, :download]
   before_filter :require_owner, :only => [:edit, :update, :destroy, :upload, :upload_script_bundle]
+  before_filter :load_object, :only => [:upload_script_bundle, :download, :vote_up, :vote_down]
 
   resource_controller
   belongs_to :project 
 
   destroy.wants.html {redirect_to user_project_path(@user, @project)}
-  create.wants.html {redirect_to user_project_upload_path(@user, @project, @version)}
-
-  def upload
-    @user = User.find_by_permalink params[:user_id]
-    raise ActiveRecord::RecordNotFound if @user.nil?
-    @project = @user.projects.find_by_permalink params[:project_id]
-    raise ActiveRecord::RecordNotFound if @project.nil?
-    @version = @project.versions.find_by_permalink params[:id]
-    raise ActiveRecord::RecordNotFound if @version.nil?
-  end
 
   def upload_script_bundle
-    @user = User.find_by_permalink params[:user_id]
-    raise ActiveRecord::RecordNotFound if @user.nil?
-    @project = @user.projects.find_by_permalink params[:project_id]
-    raise ActiveRecord::RecordNotFound if @project.nil?
-    @version = @project.versions.find_by_permalink params[:id]
-    raise ActiveRecord::RecordNotFound if @version.nil?
-
-    @script_bundle = Asset.new(:attachment => swf_upload_data)
-    @script_bundle.attachable = @version
+    @script_bundle = Asset.new(:attachment => swf_upload_data, :attachable => @version)
     if @script_bundle.save
+      flash[:notice] = "File uploaded successfully"
       render :update do |page|
         page.redirect_to :action => 'show'
       end
@@ -37,45 +21,20 @@ class VersionsController < ApplicationController
   end
   
   def download
-    @user = User.find_by_permalink params[:user_id]
-    raise ActiveRecord::RecordNotFound if @user.nil?    
-    @project = @user.projects.find_by_permalink params[:project_id]
-    raise ActiveRecord::RecordNotFound if @project.nil?
-    @version = @project.versions.find_by_permalink params[:id]
-    raise ActiveRecord::RecordNotFound if @version.nil?
-    
-    @version.download_count += 1
-    @version.save
-    @project.downloads = @project.download_count
-    @project.save
+    @version.update_attributes(:download_count => @version.download_count += 1)
+    @project.update_attributes(:downloads => @project.download_count)
     redirect_to @version.asset.attachment.url
   end
 
   def vote_up
-    @user = User.find_by_permalink params[:user_id]
-    raise ActiveRecord::RecordNotFound if @user.nil?
-    @project = @user.projects.find_by_permalink params[:project_id]
-    raise ActiveRecord::RecordNotFound if @project.nil?
-    @version = @project.versions.find_by_permalink params[:id]
-    raise ActiveRecord::RecordNotFound if @version.nil?
-
     current_user.vote_for @version
-    @project.rating = @project.total_combined_votes
-    @project.save
+    @project.update_attributes(:rating => @project.total_combined_votes)
     redirect_to user_project_version_path(@user, @project, @version)
   end
 
   def vote_down
-    @user = User.find_by_permalink params[:user_id]
-    raise ActiveRecord::RecordNotFound if @user.nil?
-    @project = @user.projects.find_by_permalink params[:project_id]
-    raise ActiveRecord::RecordNotFound if @project.nil?
-    @version = @project.versions.find_by_permalink params[:id]
-    raise ActiveRecord::RecordNotFound if @version.nil?
-
     current_user.vote_against @version
-    @project.rating = @project.total_combined_votes
-    @project.save
+    @project.update_attributes(:rating => @project.total_combined_votes)
     redirect_to user_project_version_path(@user, @project, @version)
   end
 

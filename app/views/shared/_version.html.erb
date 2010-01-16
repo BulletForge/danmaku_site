@@ -44,24 +44,24 @@
 
   <div id="project-show-right">
     <div id="download">
-      <% if version.asset %>
+      <% if version.archive %>
         <%= link_to "Download", user_project_download_path(user, project, version) %><br />
-        File size: <%= number_to_human_size(version.asset.attachment.size) %><br />
+        File size: <%= number_to_human_size(version.archive.attachment.size) %><br />
       <% elsif current_user && current_user.is_owner_of(project) %>
         <h4> Upload your script now! </h4>
         <p>          
           This version does not have an attached script yet.<br />
           
-          File size limit is <%= Asset::MAX_FILE_SIZE %>.
+          File size limit is <%= Archive::MAX_FILE_SIZE %>.
           <br />
           Accepted file types are .zip, .rar, .7z, and .tar.
         </p>
 
-        <%= swf_upload_area "Attach script", :upload_url => user_project_upload_script_path(@user, @project, @version),
+        <%= swf_upload_area "Attach script", :upload_url => upload_user_project_path(@user, @project, @version),
           :file_types => "*.zip; *.rar; *.7z; *.tar",
           :button_style => "font-family: Arial, sans-serif; font-size: 14pt; font-weight:bold;",
           :single_file => true,
-          :file_size_limit => Asset::MAX_FILE_SIZE %>
+          :file_size_limit => Archive::MAX_FILE_SIZE %>
           
       <% else %>
         The author has not uploaded a script for this version.<br />
@@ -70,8 +70,8 @@
       <br />
       <% if current_user %>
         <% if !current_user.voted_on?(version) && !current_user.is_owner_of(version) %>
-          <%= link_to "Vote Up", user_project_vote_up_path(user, project, version) %> |
-          <%= link_to "Vote Down", user_project_vote_down_path(user, project, version) %><br />
+          <%= link_to "Vote Up", vote_up_user_project_path(user, project, version) %> |
+          <%= link_to "Vote Down", vote_down_user_project_path(user, project, version) %><br />
         <% end %>
       <% else %>
         Please log in to vote.<br/>

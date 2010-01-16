@@ -3,6 +3,7 @@ class Project < ActiveRecord::Base
   belongs_to :category
   has_many   :versions, :dependent => :destroy
   has_many   :comments, :through => :versions
+  has_many   :images,   :as => :attachable, :dependent => :destroy
 
   validates_presence_of :title, :message => "Nameless project, eh?"
 

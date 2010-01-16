@@ -9,7 +9,7 @@ class VersionsController < ApplicationController
   destroy.wants.html {redirect_to user_project_path(@user, @project)}
 
   def upload_script_bundle
-    @script_bundle = Asset.new(:attachment => swf_upload_data, :attachable => @version)
+    @script_bundle = Archive.new(:attachment => swf_upload_data, :attachable => @version)
     if @script_bundle.save
       flash[:notice] = "File uploaded successfully"
       render :update do |page|
@@ -23,7 +23,7 @@ class VersionsController < ApplicationController
   def download
     @version.update_attributes(:download_count => @version.download_count += 1)
     @project.update_attributes(:downloads => @project.download_count)
-    redirect_to @version.asset.attachment.url
+    redirect_to @version.archive.attachment.url
   end
 
   def vote_up

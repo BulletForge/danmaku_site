@@ -7,13 +7,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :users, :as => 'u' do |users|
     users.resources :comments, :only => [:index, :create, :destroy]
-    users.resources :projects, :as => 'p' do |projects|
-      projects.download '/v/:id/download', :controller => 'versions', :action => 'download'
-      projects.vote_up '/v/:id/vote_up', :controller => 'versions', :action => 'vote_up'
-      projects.vote_down '/v/:id/vote_down', :controller => 'versions', :action => 'vote_down'
-      projects.upload_script '/v/:id/upload-script', :controller => 'versions', :action => 'upload_script_bundle'
-      projects.upload '/v/:id/upload', :controller => 'versions', :action => 'upload'
-      projects.resources :versions, :as => 'v' do |versions|
+    users.resources :projects, :as => 'p',  do |projects|
+      projects.resources :versions, :as => 'v', :members => {:download => :get, :vote_up => :get, :vote_down => :get, :upload => :post} do |versions|
         versions.resources :comments, :only => [:index, :create, :destroy]
       end
     end

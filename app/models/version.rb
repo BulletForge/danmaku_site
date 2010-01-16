@@ -1,7 +1,7 @@
 class Version < ActiveRecord::Base
   belongs_to :project
   has_one    :user, :through => :project
-  has_one    :asset, :as => :attachable, :dependent => :destroy
+  has_one    :archive, :as => :attachable, :dependent => :destroy
   has_many   :comments, :as => :commentable, :dependent => :destroy
   
   validates_presence_of :version_number, :message => "What's the point of versioning without version numbers?"

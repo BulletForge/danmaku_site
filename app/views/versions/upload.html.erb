@@ -1,9 +1,13 @@
 <h1>Uploading an attachment for <%= @project.title + " v" + @version.version_number %></h1>
 
-File size limit is 300 MB.<br />
-Accepted file types are .zip, .rar, .7z, and .tar.
-<%= swf_upload_area "Attach script", :url => user_project_upload_script_path(@user, @project, @version),
-  :filetypes => "*.zip; *.rar; *.7z; *.tar",
+<p>
+  File size limit is <%= Asset::MAX_FILE_SIZE %>.
+  <br />
+  Accepted file types are .zip, .rar, .7z, and .tar.
+</p>
+
+<%= swf_upload_area "Attach script", :upload_url => user_project_upload_script_path(@user, @project, @version),
+  :file_types => "*.zip; *.rar; *.7z; *.tar",
   :button_style => "font-family: Arial, sans-serif; font-size: 14pt; font-weight:bold;",
   :single_file => true,
-  :file_size_limit => "1 GB" %>
+  :file_size_limit => Asset::MAX_FILE_SIZE %>

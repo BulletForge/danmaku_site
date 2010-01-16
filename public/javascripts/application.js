@@ -1,3 +1,6 @@
+// setting metadata default params
+$.metadata.setType('elem', 'script');
+
 var handle_search_type = function(){
     // this --> $("search_type")
     var title_like = $("search_title_like");

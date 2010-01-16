@@ -24,8 +24,7 @@
 
     <div id="images">
     </div>
-
-    <% if project.youtube_video_id %>
+    <% unless project.youtube_video_id.blank? %>
       <div id="youtube">
         <object width="425" height="344">
           <param name="movie" value=<%= "http://www.youtube.com/v/" + project.youtube_video_id %>> </param>

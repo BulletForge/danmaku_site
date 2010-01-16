@@ -1,13 +1,14 @@
-<%= will_paginate @projects %>
-
 <div id ="order-projects">Order by:
   <%= order @search, :by => :created_at, :as => "Date" %> |
   <%= order @search, :by => :title, :as => "Title" %> |
   <%= order @search, :by => :rating, :as => "Rating" %> |
   <%= order @search, :by => :downloads, :as => "Downloads" %>
 </div>
-<% @projects.each do |p| %>
-  <%= render :partial => 'shared/project', :locals => {:p => p} %>
-<% end %>
 
-<%= will_paginate @projects %>
+<div id="project-list">
+  <%= will_paginate @projects %>
+  <% @projects.each do |p| %>
+    <%= render :partial => 'shared/project', :locals => {:p => p} %>
+  <% end %>
+  <%= will_paginate @projects %>
+</div>

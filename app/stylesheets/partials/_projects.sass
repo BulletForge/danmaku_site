@@ -1,67 +1,18 @@
-// SASS for project and version views.
-
-// Index
-.project-index-block
-    :background #DDDDDD
-    :padding 12px
-    :border solid 1px black
-    :margin-top 8px
-    .project-left
-        :float left
-        :width 300px
-    .project-right
-        :float left
-        :width 600px
-
-// Show
-.version-number
-    :color #CCCCCC
-    :vertical-align top
-    :font-size 0.5em
-
-#author-options
-    :border solid 1px black
-    :background #DDDDDD
-    :padding 8px
-    :margin-bottom 8px
-    #author-options-heading
-        :font-size 1.5em
-
-#project-show
-    #project-show-left
-        :float left
-        :width 460px
-        #general
-            :background #DDDDDD
-            :padding 8px
-            :border solid 1px black
-            :margin-bottom 12px
-        #images
-            :background #DDDDDD
-            :padding 8px
-            :border solid 1px black
-            :margin-bottom 12px
-        #youtube
-            :background #DDDDDD
-            :padding 8px
-            :border solid 1px black
-            :margin-bottom 12px
-
-    #project-show-right
-        :float right
-        :width 460px
-        #download
-            :background #DDDDDD
-            :padding 8px
-            :border solid 1px black
-            :margin-bottom 12px
-        #statistics
-            :background #DDDDDD
-            :padding 8px
-            :border solid 1px black
-            :margin-bottom 12px
-        #versions
-            :background #DDDDDD
-            :padding 8px
-            :border solid 1px black
-            :margin-bottom 12px
+#project-list
+    .project-index-block
+        border: solid 1px black
+        background-color: #DDDDDD
+        margin-top: 10px
+        .project-top
+            background-color: #CCCCCC
+            border-bottom: solid 1px black
+            +pad
+            +clearfix
+            .title
+                float: left
+                font-size: 1.5em
+            .stats
+                float: right
+                text-align: right
+        .project-bottom
+            +pad

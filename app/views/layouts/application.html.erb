@@ -12,12 +12,14 @@
 </head>
 
 <body>
-  <div id="header" class="container">
-    <%= render :partial => 'shared/login' %>
-    <%= render :partial => 'shared/search_form' %>
-  </div>
 
-  <div id="wrapper" class="container">
+  <div id="wrapper">
+    <div id="header">
+      <h1>BulletForge</h1>
+      <%= render :partial => 'shared/login' %>
+      <%= render :partial => 'shared/search_form' %>
+    </div>
+
     <div id="content">
       <% if flash[:notice] %>
         <div class="flash notice"><%= flash[:notice] %></div>

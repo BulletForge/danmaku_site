@@ -1,33 +1,13 @@
-body
-    :background #000000
-    h1
-        :text-align center
-    h2
-        :text-align center
+#wrapper
+    +container
 
-.container
-    :background white
-    :padding 8px
+a
+    +hover-link
 
 #header
-    :height 120px
-    #login-bar
-        :text-align right
-        :height 35px
-    #search-form
-        :text-align center
+    +pad
+    h1
+        margin: 0
 
-.bar
-    :width 500px
-    :height 10px
-    :border solid 1px black
-    .progress
-        :background red
-        :height 100%
-.imageUploader
-    :padding 20px
-    .uploader
-        :margin-top 20px
-    li
-        :float left
-        :margin 10px
+.hidden
+    display: none

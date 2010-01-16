@@ -1,24 +1,32 @@
 <div class="project-index-block">
-  <div class="project-left">
-    <%= link_to p.title, user_project_path(p.user, p) %><br/>
-    by <%= link_to p.user.login, user_path(p.user) %><br/>
-    <br/>
-    Downloads: <%= p.downloads %><br/>
-    Rating: <%= p.rating %>
+  <div class="project-top">
+    <div class="title">
+      <%= link_to p.title, user_project_path(p.user, p) %>
+    </div>
+    <div class="stats">
+      Downloads: <%= p.downloads %>
+      Rating: <%= p.rating %>
+    </div>
   </div>
-  <div class="project-right">
+  <div class="project-bottom">
+    Author: <%= link_to p.user.login, user_path(p.user) %><br/>
+    
     <% if p.versions.last %>
       Latest version: <%= p.versions.last.version_number %><br/>
     <% else %>
       No versions<br/>
     <% end %>
+
     <br/>
+
     <% if p.versions.last && !p.versions.last.description.blank? %>
-      <%= truncate p.versions.last.description, 250 %><br/>
+      <p><%= truncate p.versions.last.description, 512 %></p>
     <% else %>
-      No description<br/>
+      <p>No description</p>
     <% end %>
-    <br/>
+
+    Category: <%= p.category.name %> |
+
     <% if p.tags %>
       Tags:
       <% p.tags.each do |tag| %>
@@ -28,5 +36,4 @@
       No description
     <% end %>
   </div>
-  <br style="clear:both" />
 </div>

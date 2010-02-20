@@ -22,10 +22,10 @@ class Project < ActiveRecord::Base
   end
 
   def calculate_win_votes
-    versions.inject(0) { |c, v| c += v.votes_for.count }
+    versions.inject(0) { |c, v| c += v.votes_for }
   end
 
   def calculate_fail_votes
-    versions.inject(0) { |c, v| c += v.votes_against.count }
+    versions.inject(0) { |c, v| c += v.votes_against }
   end
 end

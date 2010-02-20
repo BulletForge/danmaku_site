@@ -20,10 +20,8 @@ class ArchivesController < ApplicationController
   end
   
   create! do |success, failure|
-    p "!!!!!!!!!!!!!!!!!!!!!!!!!!!!create!!!!!!!!!!!!!!!!!!!!!!!!!!"
     
     success.json {
-      p '!!!!!!!!!!!!!!! Success!!!!!!!!!!!!!!!!!!!!!!!!!!!'
       str = render_to_string :template => 'shared/_archive.html.erb', :locals => { :user => @user, :project => @project, :version => @version }
       render :json => { 
         :success => true, 

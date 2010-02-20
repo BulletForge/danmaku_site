@@ -21,17 +21,15 @@
       <div id="images">
       </div>
       <div id="archive">
-		<%=render :partial => 'shared/archive', :locals => {:user => user, :project => project, :version => version}%>
+	<%=render :partial => 'shared/archive', :locals => {:user => user, :project => project, :version => version}%>
       </div>
       <div id="statistics">
-        Version downloads: <%= version.download_count %><br />
-        Total downloads: <%= project.downloads %><br />
-        <br />
-        Version win: <%= version.votes_for %><br />
-        Version fail: <%= version.votes_against %><br />
-        <br />
-        Total win: <%= project.win_votes %><br />
-        Total fail: <%= project.fail_votes %>
+        <div id="downloads">
+          Version downloads: <%= version.download_count %><br />
+          Total downloads: <%= project.downloads %><br />
+        </div>
+        <br/>
+        <%= render :partial => 'shared/votes', :locals => { :user => user, :project => project, :version => version } %>
       </div>
     </div>
 
@@ -71,14 +69,6 @@
 
   <div id="project-show-right">
       <br />
-      <% if current_user %>
-        <% if !current_user.voted_on?(version) && !current_user.owner_of?(version) %>
-          <%= link_to "Vote Up", vote_up_user_project_path(user, project, version) %> |
-          <%= link_to "Vote Down", vote_down_user_project_path(user, project, version) %><br />
-        <% end %>
-      <% else %>
-        Please log in to vote.<br/>
-      <% end %>
 
     <div id="versions">
       <h3>Versions</h3>

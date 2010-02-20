@@ -34,10 +34,33 @@ var handle_search_type = function(){
     }
 };
 
+var voting_ajax = function(el, vote){
+    $.ajax({
+        url: el.href,
+        type: "POST",
+        contentType: "application/json; charset-utf-8",
+        data: JSON.stringify({vote : {vote : vote}}),
+        dataType: "json",
+        success: function(data, status, request){
+            $(data.replace_dom).html(data.partial)
+        },
+        error: function(request, status, error){
+            console.log(status, error);
+        }
+    });
+    return false;
+}
+
 $(function(){
+    var $up = $("#vote_up");
+    var $down = $("#vote_down");
+    $up.click(function(e){return voting_ajax(e.target, true);});
+    $down.click(function(e){return voting_ajax(e.target, false);});
+});
+
+$(function(){
+    handle_search_type.apply($('#search_type')[0]);
     $('#search_type').change(handle_search_type);
-    handle_search_type.apply($('#search_type'));
-    
 })
 
 function uploadFailed(message){

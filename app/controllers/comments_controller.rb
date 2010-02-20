@@ -1,11 +1,8 @@
 class CommentsController < ApplicationController
   inherit_resources
   actions :index, :create, :update, :destroy
-  belongs_to :user, :finder => :find_by_permalink!, :optional => true do
-    belongs_to :project, :finder => :find_by_permalink!, :optional => true do
-      belongs_to :version, :finder => :find_by_permalink!, :optional => true
-    end
-  end
+  belongs_to :user, :finder => :find_by_permalink!, :polymorphic => true
+  belongs_to :version, :finder => :find_by_permalink!, :polymorphic => true
   
   # preload all resource / collection in before filter
   before_filter :collection, :only =>[:index]

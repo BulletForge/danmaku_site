@@ -1,0 +1,7 @@
+<div id="versions">
+  <h3>Versions</h3>
+  <% project.versions.all(:order => 'created_at DESC').first(5).each do |version| %>
+    <%= link_to project.title+' v'+version.version_number, user_project_version_path(user, project, version) %><br />
+  <% end %>
+  <%= link_to "See all versions", user_project_versions_path(user, project) %>
+</div>

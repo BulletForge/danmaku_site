@@ -1,14 +1,4 @@
-<% if current_user && current_user.owner_of?(@project) %>
-  <div id="author-options">
-    <span id="author-options-heading">Author's options</span><br/>
-    <%= link_to "New Version", new_user_project_version_path(@user, @project) %> |
-    <%= link_to "Edit Version", edit_user_project_version_path(@user, @project, @version) %> |
-    <%= link_to "Delete Version", user_project_version_path(@user, @project, @version), :method => :delete, :confirm => "Are you sure you want to delete this @version?" %>
-    <br />
-    <%= link_to "Edit Project", edit_user_project_path(@user, @project) %> |
-    <%= link_to "Delete Project", user_project_path(@user, @project), :method => :delete, :confirm => "Are you sure you want to delete this @project?"%>
-  </div>
-<% end %>
+<%= render :partial => 'author_toolbar', :locals => {:user => @user, :project => @project, :version => @version} %>
 
 <div id="project-show">
   <div class="heading">
@@ -20,9 +10,7 @@
     <div class="project-left">
       <div id="images">
       </div>
-      <div id="archive">
-	<%=render :partial => 'archive', :locals => {:user => @user, :project => @project, :version => @version}%>
-      </div>
+      <%= render :partial => 'archive', :locals => {:user => @user, :project => @project, :version => @version} %>
       <div id="statistics">
         <div id="downloads">
           Version downloads: <%= @version.download_count %><br />
@@ -50,50 +38,6 @@
   </div>
 </div>
 
-  <% unless @project.youtube_video_id.blank? %>
-    <div id="youtube">
-      <object width="425" height="344">
-        <param name="movie" value=<%= "http://www.youtube.com/v/" + @project.youtube_video_id %>> </param>
-        <param name="allowFullScreen" value="true"> </param>
-        <param name="allowscriptaccess" value="always"> </param>
-        <embed src=<%= "http://www.youtube.com/v/" + @project.youtube_video_id %>
-               type="application/x-shockwave-flash"
-               allowscriptaccess="always"
-               allowfullscreen="true"
-               width="425"
-               height="344">
-        </embed>
-      </object>
-    </div>
-  <% end %>
-
-  <div id="project-show-right">
-      <br />
-
-    <div id="versions">
-      <h3>Versions</h3>
-      <% @project.versions.all(:order => 'created_at DESC').first(5).each do |v| %>
-        <%= link_to @project.title+' v'+v.version_number, user_project_version_path(@user, @project, v) %><br />
-      <% end %>
-      <%= link_to "See all versions", user_project_versions_path(@user, @project) %>
-    </div>
-  </div>
-
-
-<h3>Comments for this version</h3>
-<% @version.comments.all(:order => 'created_at DESC').first(10).each do |comment| %>
-  <%= render :partial => 'shared/comment', :locals => {:user => @user, :project => @project, :version => @version, :comment => comment, :destroy_path => '@version'} %>
-<% end %>
-<%= link_to "See all comments ("+@version.comments.count.to_s+")", user_project_version_comments_path(@user, @project, @version)%>
-
-<% if current_user %>
-  <% form_for :comment, :url => user_project_version_comments_path(@user, @project, @version) do |f| %>
-    <%= f.hidden_field :author_id, :value => current_user.id %>
-    <%= f.hidden_field :commentable_type, :value => 'Version' %>
-    <%= f.hidden_field :commentable_id, :value => @version.id %>
-    <%= f.text_area :content %><br />
-    <%= f.submit 'Post Comment' %>
-  <% end %>
-<% else %>
-  <p>You must be logged in to comment or rate.</p>
-<% end %>
+<%= render :partial => "youtube", :locals => {:project => @project} %>
+<%= render :partial => "version_list", :locals => {:user => @user, :project => @project} %>
+<%= render :partial => "comments", :locals => {:user => @user, :project => @project, :version => @version} %>

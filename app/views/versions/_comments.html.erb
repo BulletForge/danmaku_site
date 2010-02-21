@@ -1,0 +1,17 @@
+<h3>Comments for this version</h3>
+<% version.comments.all(:order => 'created_at DESC').first(10).each do |comment| %>
+  <%= render :partial => 'shared/comment', :locals => {:user => user, :project => project, :version => version, :comment => comment, :destroy_path => '@version'} %>
+<% end %>
+<%= link_to "See all comments ("+version.comments.count.to_s+")", user_project_version_comments_path(user, project, version)%>
+
+<% if current_user %>
+  <% form_for :comment, :url => user_project_version_comments_path(user, project, version) do |f| %>
+    <%= f.hidden_field :author_id, :value => current_user.id %>
+    <%= f.hidden_field :commentable_type, :value => 'Version' %>
+    <%= f.hidden_field :commentable_id, :value => version.id %>
+    <%= f.text_area :content %><br />
+    <%= f.submit 'Post Comment' %>
+  <% end %>
+<% else %>
+  <p>You must be logged in to comment or rate.</p>
+<% end %>

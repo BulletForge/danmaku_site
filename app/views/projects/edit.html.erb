@@ -1,5 +1,10 @@
 <h1>Editing <%= @project.title %></h1>
 
 <% form_for @project, :url => user_project_path(@user, @project) do |f| %>
-<%= render :partial => "form", :locals => {:f => f} %>
+  <%= render :partial => "form", :locals => {:f => f} %>
+  <%= f.label :youtube_video_id, "YouTube Video ID" %><br/>
+  For example: In "http://www.youtube.com/watch?v=8dslASdc4", "8dslASdc4" is the video ID.<br/>
+  <%= f.text_field :youtube_video_id %><br/>
+  <br/>
+  <%= f.submit "Submit" %>
 <% end %>

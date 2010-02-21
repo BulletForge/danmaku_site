@@ -29,7 +29,7 @@
 
     <% if p.tags %>
       Tags:
-      <% p.tags.each do |tag| %>
+      <% p.tags.reverse.each do |tag| %>
         <%= link_to tag.name, projects_path(:search => {:tagged_with => tag.name}, :search_type => :tags) %>
       <% end %>
     <% else %>

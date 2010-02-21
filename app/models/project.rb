@@ -5,13 +5,14 @@ class Project < ActiveRecord::Base
   has_many   :comments, :through => :versions
   has_many   :images,   :as => :attachable, :dependent => :destroy
 
-  validates_presence_of :title, :message => "Nameless project, eh?"
+  accepts_nested_attributes_for :versions, :images, :allow_destroy => true
 
   acts_as_taggable_on :tags
-  
   has_permalink :title, :update => true, :unique => false
-  validates_exclusion_of :permalink, :in => ["new"], :message => "Stop trying to mess with the website. Who names their projects new anyway?"
-  validates_uniqueness_of :permalink, :scope => :user_id, :message => "You're using that title for another project already, remember?"
+  
+  validates_presence_of :title, :message => "Title is required."
+  validates_exclusion_of :permalink, :in => ["new"], :message => "Title cannot be named 'new'."
+  validates_uniqueness_of :permalink, :scope => :user_id, :message => "Title is too similar to an existing project you have made."
 
   def to_param
     permalink

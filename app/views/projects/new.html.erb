@@ -1,5 +1,14 @@
 <h1>Creating New Project</h1>
 
 <% form_for @project, :url => user_projects_path(@user) do |f| %>
-<%= render :partial => "form", :locals => {:f => f} %>
+  <%= render :partial => "form", :locals => {:f => f} %>
+  <% f.fields_for :versions do |v| %>
+    <%= v.label :version_number, "Initial version number" %><br />
+    <%= v.text_field :version_number %><br />
+    
+    <%= v.label :description, "Description" %><br />
+    <%= v.text_area :description %><br />
+  <% end %>
+  <br/>
+  <%= f.submit "Create" %>
 <% end %>

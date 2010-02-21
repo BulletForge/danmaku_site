@@ -4,13 +4,13 @@ class Version < ActiveRecord::Base
   has_one    :archive, :as => :attachable, :dependent => :destroy
   has_many   :comments, :as => :commentable, :dependent => :destroy
   
-  validates_presence_of :version_number, :message => "What's the point of versioning without version numbers?"
+  validates_presence_of :version_number, :message => "Version number is required."
 
   acts_as_voteable
 
   has_permalink :version_number, :update => true, :unique => false
-  validates_exclusion_of :permalink, :in => ["new"], :message => "Version number new. That makes no sense."
-  validates_uniqueness_of :permalink, :scope => :project_id, :message => "This project is already using that version number. Or not, but try something else anyway."
+  validates_exclusion_of :permalink, :in => ["new"], :message => "Version number cannot be 'new'."
+  validates_uniqueness_of :permalink, :scope => :project_id, :message => "Version number is too similar to another number this project is using."
   
   def to_param
     permalink

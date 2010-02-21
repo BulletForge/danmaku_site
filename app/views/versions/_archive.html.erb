@@ -4,7 +4,6 @@
 <% elsif current_user && current_user.owner_of?(project) %>
   <h4> Upload your script now! </h4>
   <p>
-    This version does not have an attached script yet.<br />
     File size limit is <%= Archive::MAX_FILE_SIZE %>.<br />
     Accepted file types are .zip, .rar, .7z, and .tar.
   </p>

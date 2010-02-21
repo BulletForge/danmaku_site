@@ -14,6 +14,16 @@ class ProjectsController < ApplicationController
     success.html {redirect_to user_path(@user)}
   end
 
+  def new
+    @project.versions.build
+    new!
+  end
+
+  def show
+    version = @project.versions.last
+    redirect_to user_project_version_path(@user, @project, version)
+  end
+
 
   private
   # Paginate the projects collection  

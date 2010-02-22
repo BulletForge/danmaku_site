@@ -2,7 +2,8 @@
   <% if current_user %>
     Logged in as <%= current_user.login %><br/>
     <%= link_to "My Account", user_path(current_user) %> |
-    <%= link_to "Log Out", logout_path%><br />
+    <%= link_to "Log Out", logout_path%> |
+    <%= link_to "New Project", new_user_project_path(current_user) %><br />
   <% else %>
     <%= link_to "Login", login_path %> |
     <%= link_to "Register", new_user_path%><br />

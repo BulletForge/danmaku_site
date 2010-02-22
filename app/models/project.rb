@@ -5,7 +5,9 @@ class Project < ActiveRecord::Base
   has_many   :comments, :through => :versions
   has_many   :images,   :as => :attachable, :dependent => :destroy
 
-  accepts_nested_attributes_for :versions, :images, :allow_destroy => true
+  accepts_nested_attributes_for :versions
+  accepts_nested_attributes_for :images, :allow_destroy => true,
+    :reject_if => proc { |attrs| attrs.all? { |k, v| v.blank? } }
 
   acts_as_taggable_on :tags
   has_permalink :title, :update => true, :unique => false

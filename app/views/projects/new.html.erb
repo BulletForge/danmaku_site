@@ -1,6 +1,6 @@
 <h1>Creating New Project</h1>
 
-<% form_for @project, :url => user_projects_path(@user) do |f| %>
+<% form_for setup_project(@project), :url => user_projects_path(@user) do |f| %>
   <%= render :partial => "form", :locals => {:f => f} %>
   <% f.fields_for :versions do |v| %>
     <%= v.label :version_number, "Initial version number" %><br />

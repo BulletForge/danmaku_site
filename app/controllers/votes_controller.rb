@@ -32,7 +32,7 @@ class VotesController < ApplicationController
   def success_json
     @project.reload
     @version.reload
-    str = render_to_string :template => 'shared/_votes.html.erb', :locals => { :user => @user, :project => @project, :version => @version }
+    str = render_to_string :template => 'versions/_votes.html.erb', :locals => { :user => @user, :project => @project, :version => @version }
     { 
       :success => true,
       :replace_dom => '#votes',

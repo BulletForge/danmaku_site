@@ -1,28 +1,78 @@
 class CommentsController < ApplicationController
-  inherit_resources
-  actions :index, :create, :update, :destroy
-  belongs_to :user, :finder => :find_by_permalink!, :polymorphic => true
-  belongs_to :version, :finder => :find_by_permalink!, :polymorphic => true
-  
-  # preload all resource / collection in before filter
-  before_filter :collection, :only =>[:index]
-  before_filter :resource, :only => [:show, :edit, :update, :destroy]
-  before_filter :build_resource, :only => [:new, :create, :index]
-  filter_access_to :all
-  
-  create! do |success, failure|
-    success.html { redirect_to parent_url }
+
+  def index
+    if params[:user_id]
+      @user = User.find_by_permalink params[:user_id]
+      if params[:project_id]
+        @project = @user.projects.find_by_permalink params[:project_id]
+        if params[:version_id]
+          @version = @project.versions.find_by_permalink params[:version_id]
+          @comments = @version.comments
+        else
+          @comments = @project.comments
+        end
+      else
+        @comments = @user.comments
+      end
+    end
   end
-  
-  destroy! do |success, failure|
-    success.html { redirect_to parent_url }
+
+  def create
+    if params[:user_id]
+      @user = User.find_by_permalink params[:user_id]
+      if params[:project_id]
+        @project = @user.projects.find_by_permalink params[:project_id]
+        if params[:version_id]
+          @version = @project.versions.find_by_permalink params[:version_id]
+        end
+      end
+    end
+
+    @comment = Comment.new(params[:comment])
+    if @comment.save
+      flash[:notice] = "Comment successfully posted."
+    else
+      flash[:notice] = "Comment posting failed."
+    end
+
+    if @version
+      redirect_to user_project_version_path(@user, @project, @version)
+    elsif @project
+      redirect_to user_project_path(@user, @project)
+    elsif @user
+      redirect_to user_path(@user)
+    else
+      redirect_to root_path
+    end
   end
-  
-  protected
-  
-  def build_resource
-    @comment ||= end_of_association_chain.send(method_for_build, params[resource_instance_name] || {})
-    @comment.commentable = parent
-    @comment
+
+  def destroy
+    if params[:user_id]
+      @user = User.find_by_permalink params[:user_id]
+      if params[:project_id]
+        @project = @user.projects.find_by_permalink params[:project_id]
+        if params[:version_id]
+          @version = @project.versions.find_by_permalink params[:version_id]
+          @comment = @version.comments.find params[:id]
+        else
+          @comment = @project.comments.find params[:id]
+        end
+      else
+        @comment = @user.comments.find params[:id]
+      end
+    end
+
+    @comment.destroy
+
+    if @version
+      redirect_to user_project_version_path(@user, @project, @version)
+    elsif @project
+      redirect_to user_project_path(@user, @project)
+    elsif @user
+      redirect_to user_path(@user)
+    else
+      redirect_to root_path
+    end
   end
+
 end

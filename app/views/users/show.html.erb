@@ -2,9 +2,11 @@
 <%= link_to "Edit Account", edit_user_path(@user) if current_user==@user%>
 
 <h2><%= @user.login %>'s Projects</h2>
-<% @user.projects.first(5).each do |p| %>
-  <%= render :partial => 'shared/project', :locals => {:p => p} %>
-<% end %>
+<div id="project-list">
+  <% @user.projects.first(5).each do |p| %>
+    <%= render :partial => 'shared/project', :locals => {:p => p} %>
+  <% end %>
+</div>
 <%= link_to "See all of "+@user.login+"'s projects", user_projects_path(@user) %>
 
 <h3>User comments</h3>

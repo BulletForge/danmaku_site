@@ -4,4 +4,10 @@ Category.create(:name => "Stage")
 Category.create(:name => "Full Game")
 Category.create(:name => "Player")
 
-User.create(:login => "Blargel", :email => "cmplt_idiot@yahoo.com", :password => "asdfjkl;", :password_confirmation => "asdfjkl;")
+User.create(
+  :login => "Blargel",
+  :email => "LargeBagel@gmail.com",
+  :password => "asdfjkl;",
+  :password_confirmation => "asdfjkl;",
+  :admin => true
+)

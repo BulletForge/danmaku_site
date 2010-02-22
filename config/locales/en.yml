@@ -1,11 +1,11 @@
 en:
   authlogic:
     error_messages:
-      login_blank: "I'm pretty sure a blank username is not going to work."
-      login_not_found: "That username doesn't even exist"
-      login_invalid: "Your login can only use .-_@. And letters and numbers of course."
-      consecutive_failed_logins_limit_exceeded: "You failed to log into that account 50 times in a row so it's locked for 2 hours now. Good job."
-      email_invalid: "At least try to make the email look like a real one."
-      password_blank: "At least try to give me a password."
-      password_invalid: "Wrong password, buddy."
-      no_authentication_details: "Are you going to give me some info to check?"
+      login_blank: "Username cannot be blank."
+      login_not_found: "Username does not exist"
+      login_invalid: "Invalid username."
+      consecutive_failed_logins_limit_exceeded: "You have been locked out due to 50 consecutive failed login attempts."
+      email_invalid: "Invalid e-mail"
+      password_blank: "Password cannot be blank."
+      password_invalid: "Invalid password."
+      no_authentication_details: "Please input credentials to check."

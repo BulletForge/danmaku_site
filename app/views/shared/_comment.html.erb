@@ -1,7 +1,7 @@
 <%= link_to comment.author.login, user_path(comment.author) %> <%= comment.created_at.strftime '%d %B %Y, %I:%m %p' %><br/>
 <% if current_user && current_user.can_destroy?(comment) %>
   <% path = user_comment_path(user, comment) if destroy_path == 'user' %>
-  <% path = user_project_version_comment_path(user, project, version, comment) if destroy_path == 'comment' %>
+  <% path = user_project_version_comment_path(user, project, version, comment) if destroy_path == 'version' %>
   <%= link_to "Remove", path, :method => :delete, :confirm => "Are you sure you want to delete this comment?" %><br />
 <% end %>
 <%= comment.content %><br />

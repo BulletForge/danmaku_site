@@ -8,6 +8,9 @@
       Downloads: <%= p.downloads %>
     </div>
   </div>
+  <div class="preview">
+    <%= preview_image p %>
+  </div>
   <div class="body">
     Author: <%= link_to p.user.login, user_path(p.user) %><br/>
     

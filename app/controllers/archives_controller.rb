@@ -22,7 +22,7 @@ class ArchivesController < ApplicationController
   create! do |success, failure|
     
     success.json {
-      str = render_to_string :template => 'shared/_archive.html.erb', :locals => { :user => @user, :project => @project, :version => @version }
+      str = render_to_string :template => 'versions/_archive.html.erb', :locals => { :user => @user, :project => @project, :version => @version }
       render :json => { 
         :success => true, 
         :replace_dom => '#archive', 

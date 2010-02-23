@@ -9,8 +9,21 @@ class Version < ActiveRecord::Base
   acts_as_voteable
 
   has_permalink :version_number, :update => true, :unique => false
-  validates_exclusion_of :permalink, :in => ["new"], :message => "Version number cannot be 'new'."
-  validates_uniqueness_of :permalink, :scope => :project_id, :message => "Version number is too similar to another number this project is using."
+  validate :version_number_excludes_new_by_permalink, :version_number_is_unique_by_permalink
+
+  def version_number_excludes_new_by_permalink
+    errors.add(:version_number, "Version number cannot be named 'new'") if
+      permalink == "new"
+  end
+
+  def version_number_is_unique_by_permalink
+    project.versions.each do |version|
+      if version.permalink == permalink && version != self
+        errors.add(:title, "Version number is already in use by the same project.")
+        break
+      end
+    end
+  end
   
   def to_param
     permalink

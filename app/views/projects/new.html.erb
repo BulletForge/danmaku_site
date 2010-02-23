@@ -1,14 +1,18 @@
 <h1>Creating New Project</h1>
 
-<% form_for setup_project(@project), :url => user_projects_path(@user) do |f| %>
-  <%= render :partial => "form", :locals => {:f => f} %>
-  <% f.fields_for :versions do |v| %>
-    <%= v.label :version_number, "Initial version number" %><br />
-    <%= v.text_field :version_number %><br />
-    
-    <%= v.label :description, "Description" %><br />
-    <%= v.text_area :description %><br />
+<% semantic_form_for setup_project(@project), :url => user_projects_path(@user) do |form| %>
+  <% form.inputs do %>
+    <%= form.input :title, :required => true %>
+    <%= form.input :category %>
+    <%= form.input :tag_list, :label => "Tags", :hint => "Tags are separated by commas (\",\")" %>
   <% end %>
-  <br/>
-  <%= f.submit "Create" %>
+
+  <% form.semantic_fields_for :versions do |version| %>
+    <% version.inputs do %>
+      <%= version.input :version_number, :required => true %>
+      <%= version.input :description %>
+    <% end %>
+  <% end %>
+
+  <%= form.buttons %>
 <% end %>

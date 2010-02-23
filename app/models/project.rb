@@ -13,8 +13,21 @@ class Project < ActiveRecord::Base
   has_permalink :title, :update => true, :unique => false
   
   validates_presence_of :title, :message => "Title is required."
-  validates_exclusion_of :permalink, :in => ["new"], :message => "Title cannot be named 'new'."
-  validates_uniqueness_of :permalink, :scope => :user_id, :message => "Title is too similar to an existing project you have made."
+  validate :title_excludes_new_by_permalink, :title_is_unique_by_permalink
+
+  def title_excludes_new_by_permalink
+    errors.add(:title, "Title cannot be named 'new'") if
+      permalink == "new"
+  end
+
+  def title_is_unique_by_permalink
+    user.projects.each do |project|
+      if project.permalink == permalink && project != self
+        errors.add(:title, "Title is already in use by another project you own.")
+        break
+      end
+    end
+  end
 
   def to_param
     permalink

@@ -1,22 +1,24 @@
 <h1>Editing <%= @project.title %></h1>
 
-<% form_for setup_project(@project), :url => user_project_path(@user, @project), :html => { :multipart => true } do |f| %>
-  <%= render :partial => "form", :locals => {:f => f} %>
-  <%= f.label :youtube_video_id, "YouTube Video ID" %><br/>
-  For example: In "http://www.youtube.com/watch?v=8dslASdc4", "8dslASdc4" is the video ID.<br/>
-  <%= f.text_field :youtube_video_id %><br/>
-  <br/>
-  Upload images:<br/>
-  <br/>
-  <% f.fields_for :images do |i| %>
-    <% if i.object.new_record? %>
-      <%= i.file_field :attachment %><br/>
-    <% else %>
-      <%= image_tag i.object.attachment.url(:thumb) %>
-      <%= i.check_box :_delete %>
-      <%= i.label :_delete, "Remove" %><br/>
+<% semantic_form_for setup_project(@project), :url => user_project_path(@user, @project), :html => { :multipart => true } do |form| %>
+  <% form.inputs do %>
+    <%= form.input :title, :required => true %>
+    <%= form.input :category %>
+    <%= form.input :tag_list, :label => "Tags", :hint => "Tags are separated by commas (\",\")" %>
+  <% end %>
+
+<br />
+
+  <% form.semantic_fields_for :images do |image| %>
+    <% image.inputs do %>
+      <% if image.object.new_record? %>
+        <%= image.input :attachment, :label => "Image attachment" %>
+      <% else %>
+        <%= image_tag image.object.attachment.url(:thumb) %>
+        <%= image.input :_delete, :label => "Remove", :as => :boolean %>
+      <% end %>
     <% end %>
   <% end %>
-  <br/>
-  <%= f.submit "Submit" %>
+
+  <%= form.buttons %>
 <% end %>

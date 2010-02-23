@@ -14,6 +14,7 @@ Rails::Initializer.run do |config|
   config.gem "searchlogic"
   config.gem "will_paginate"
   config.gem "inherited_resources"
+  config.gem "formtastic"
 
 
   # Only load the plugins named here, in the order given (default is alphabetical).

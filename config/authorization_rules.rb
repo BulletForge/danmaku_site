@@ -11,6 +11,10 @@ privileges do
     includes :edit, :update
   end
 
+  privilege :manage do
+    includes :edit, :update, :destroy
+  end
+
   privilege :do_all do
     includes :index, :show, :new, :create, :edit, :update, :destroy
   end

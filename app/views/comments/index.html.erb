@@ -2,7 +2,7 @@
   <% if @version %>
     <%= link_to @project.title + " v" + @version.version_number, user_project_version_path(@user, @project, @version) %>
   <% elsif @project %>
-    <%= link_to @project.title, user_project_path (@user, @project) %>
+    <%= link_to @project.title, user_project_path(@user, @project) %>
   <% elsif @user %>
     <%= link_to @user.login, user_path(@user) %>
   <% end %>

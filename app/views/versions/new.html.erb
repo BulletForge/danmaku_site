@@ -1,9 +1,5 @@
 <h1>Creating New Version</h1>
 
-<% form_for @version, :url => user_project_versions_path(@user, @project), :html => { :multipart => true, :method => :post } do |f| %>
-<%= error_messages_for :version %>
-<%= f.hidden_field :project_id, :value => @project.id %>
-<%= f.hidden_field :user_id, :value => @user.id %>
-<br />
-<%= render :partial => "form", :locals => {:f => f} %>
+<% semantic_form_for @version, :url => user_project_versions_path(@user, @project) do |form| %>
+<%= render :partial => "form", :locals => {:form => form} %>
 <% end %>

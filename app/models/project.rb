@@ -21,12 +21,9 @@ class Project < ActiveRecord::Base
   end
 
   def title_is_unique_by_permalink
-    user.projects.each do |project|
-      if project.permalink == permalink && project != self
-        errors.add(:title, "Title is already in use by another project you own.")
-        break
-      end
-    end
+    project_with_permalink = user.projects.find_by_permalink(permalink)
+    errors.add(:title, "Title is already in use by another project you own.") if
+      project_with_permalink && project_with_permalink != self
   end
 
   def to_param

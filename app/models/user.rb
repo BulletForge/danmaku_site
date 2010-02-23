@@ -28,12 +28,9 @@ class User < ActiveRecord::Base
   end
 
   def login_is_unique_by_permalink
-    User.each do |user|
-      if user.permalink == permalink && user != self
-        errors.add(:login, "Username is in use by another account.")
-        break
-      end
-    end
+    user_with_permalink = User.find_by_permalink(permalink)
+    errors.add(:login, "Username is in use by another account.") if
+      user_with_permalink && user_with_permalink != self
   end
   
   # for declarative_authorization integration

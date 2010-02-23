@@ -1,17 +1,12 @@
-<% form_for @user, :users do |f| %>
-  <%= f.error_messages %><br />
-    <% if f.object.new_record? %>
-    <%= f.label :login, "User name" %><br />
-    <%= f.text_field :login %><br />
-    <br />
+<% semantic_form_for @user, :users do |form| %>
+  <% form.inputs do %>
+    <% if form.object.new_record? %>
+      <%= form.input :login, :label => "Username", :required => true %>
+    <% end %>
+    <%= form.input :email %>
+    <%= form.input :password, :required => true if form.object.new_record? %>
+    <%= form.input :password, :label => "Change password", :hint => "Leave this blank to keep it the same." unless form.object.new_record? %>
+    <%= form.input :password_confirmation %>
   <% end %>
-  <%= f.label :email %><br />
-  <%= f.text_field :email %><br />
-  <br />
-  <%= f.label :password, f.object.new_record? ? nil : "Change password" %><br />
-  <%= f.password_field :password %><br />
-  <br />
-  <%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %><br />
-  <%= f.submit "Submit" %>
+  <%= form.buttons %>
 <% end %>

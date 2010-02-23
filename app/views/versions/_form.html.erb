@@ -1,7 +1,5 @@
-<%= f.label :version_number %><br />
-<%= f.text_field :version_number %><br />
-<br />
-<%= f.label :description %><br />
-<%= f.text_area :description %><br />
-<br />
-<%= f.submit "Submit" %>
+<% form.inputs do %>
+  <%= form.input :version_number, :required => true %>
+  <%= form.input :description %>
+<% end %>
+<%= form.buttons %>

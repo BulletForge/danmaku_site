@@ -17,12 +17,9 @@ class Version < ActiveRecord::Base
   end
 
   def version_number_is_unique_by_permalink
-    project.versions.each do |version|
-      if version.permalink == permalink && version != self
-        errors.add(:title, "Version number is already in use by the same project.")
-        break
-      end
-    end
+    version_with_permalink = project.versions.find_by_permalink(permalink)
+    errors.add(:title, "Version number is already in use by the same project.") if
+      version_with_permalink && version_with_permalink != self
   end
   
   def to_param

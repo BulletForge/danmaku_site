@@ -1,7 +1,5 @@
 <h1>Editing Version Details</h1>
 
-<% form_for @version, :url => user_project_version_path(@user, @project, @version), :html => {:method => :put} do |f| %>
-<%= error_messages_for :version %>
-<br />
-<%= render :partial => "form", :locals => {:f => f} %>
+<% semantic_form_for @version, :url => user_project_version_path(@user, @project, @version), :html => {:method => :put} do |form| %>
+<%= render :partial => "form", :locals => {:form => form} %>
 <% end %>

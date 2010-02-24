@@ -1,11 +1,12 @@
 <div id="login-bar">
-  <% if current_user %>
+  <% permitted_to? :destroy, :user_sessions do %>
     Logged in as <%= current_user.login %><br/>
     <%= link_to "My Account", user_path(current_user) %> |
-    <%= link_to "Log Out", logout_path%> |
-    <%= link_to "New Project", new_user_project_path(current_user) %><br />
-  <% else %>
+    <%= link_to "Log Out", logout_path%>
+    <%= "| " + link_to("New Project", new_user_project_path(current_user)) if permitted_to?(:create, :projects) %>
+  <% end %>
+  <% permitted_to? :create, :user_sessions do %>
     <%= link_to "Login", login_path %> |
-    <%= link_to "Register", new_user_path%><br />
+    <%= link_to "Register", new_user_path%>
   <% end %>
 </div>

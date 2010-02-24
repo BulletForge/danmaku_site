@@ -6,17 +6,13 @@
   Total fail: <%= project.fail_votes %><br />
 
   <br/>
-  <% if current_user %>
-    <% unless current_user.owner_of?(version) %>
-      <% if !current_user.voted_on?(version) %>
-        <%= link_to "Vote Up", user_project_version_votes_path(user, project, version, :format => :json), :id => "vote_up"%> |
-        <%= link_to "Vote Down", user_project_version_votes_path(user, project, version, :format => :json), :id => "vote_down" %><br />
-      <% else %>
-        You voted <%= "win." if current_user.voted_for?(version) %>
-        <%= "fail." if current_user.voted_against?(version) %>
-      <% end %>
+  <% permitted_to? :create, version.votes.new do %>
+    <% unless current_user.voted_on?(version) %>
+      <%= link_to "Vote Up", user_project_version_votes_path(user, project, version, :format => :json), :id => "vote_up"%> |
+      <%= link_to "Vote Down", user_project_version_votes_path(user, project, version, :format => :json), :id => "vote_down" %>
+    <% else %>
+      You voted <%= "win." if current_user.voted_for?(version) %>
+      <%= "fail." if current_user.voted_against?(version) %>
     <% end %>
-  <% else %>
-    Please log in to vote.
   <% end %>
 </div>

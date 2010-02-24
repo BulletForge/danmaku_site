@@ -1,5 +1,5 @@
 <h1><%= @user.login %></h1>
-<%= link_to "Edit Account", edit_user_path(@user) if current_user==@user%>
+<%= link_to "Edit Account", edit_user_path(@user) if permitted_to?(:edit, @user)%>
 
 <h2><%= @user.login %>'s Projects</h2>
 <div id="project-list">
@@ -15,7 +15,7 @@
 <% end %>
 <%= link_to "See all comments ("+@user.comments.count.to_s+")", user_comments_path(@user)%>
 
-<% if current_user %>
+<% if permitted_to?(:create, :comments) %>
   <% form_for :comment, :url => user_comments_path(@user) do |f| %>
     <%= f.hidden_field :author_id, :value => current_user.id %>
     <%= f.hidden_field :commentable_type, :value => 'User' %>

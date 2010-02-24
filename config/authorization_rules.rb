@@ -48,9 +48,14 @@ authorization do
     # user can logout, but cannot login (because they are already logged in)
     has_permission_on :user_sessions, :to => :destroy   
     
-    # users can create, edit, and destroy their own projects, versions, comments, votes, and archives
-    has_permission_on [:projects, :versions, :comments, :votes, :archives], :to => :do_all do
+    # users can create, edit, and destroy their own projects, versions, comments, and archives
+    has_permission_on [:projects, :versions, :comments, :archives], :to => :do_all do
       if_attribute :user => is { user }
+    end
+
+    # users can vote on versions as long as it isn't their own version
+    has_permission_on :votes, :to => :create do
+      if_attribute :voteable => { :user => is_not { user } }
     end
     
     # users can edit their own user profile

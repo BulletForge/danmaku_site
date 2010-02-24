@@ -1,6 +1,5 @@
 <% permitted_to? :edit, @project do %>
   <div id="management-toolbar">
-    <span id="toolbar-heading">Management Toolbar</span><br/>
     <%= link_to "New Version", new_user_project_version_path(@user, @project) %> |
     <%= link_to "Edit Version", edit_user_project_version_path(@user, @project, @version) %>
     <%= "|" + link_to("Delete Version",

@@ -1,6 +1,6 @@
 <div id="home">
   <div id="featured">
-    <h2>Featured new project!</h2>
+    <h2>Featured New Project</h2>
     <% featured_project = Project.created_at_greater_than_or_equal_to(Time.now - 30.days).descend_by_win_votes.first %>
     <h3><%= featured_project.title %></h3>
     <div id="featured-image">
@@ -13,7 +13,8 @@
       <%= "Win votes: " + featured_project.win_votes.to_s %><br/>
       <%= "Fail votes: " + featured_project.fail_votes.to_s %><br/>
       <br/>
-      <%= featured_project.versions.last.description %>
+      <%= truncate featured_project.versions.last.description, 700 %>
+      <%= link_to "Read more", user_project_path(featured_project.user, featured_project) %>
     </div>
   </div>
   <div id="most-downloaded">

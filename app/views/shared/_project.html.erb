@@ -9,7 +9,7 @@
     </div>
   </div>
   <div class="preview">
-    <%= preview_image p %>
+    <%= preview_image p, :thumb %>
   </div>
   <div class="body">
     Author: <%= link_to p.user.login, user_path(p.user) %><br/>

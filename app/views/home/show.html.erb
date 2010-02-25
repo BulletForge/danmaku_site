@@ -1,5 +1,21 @@
-<h1>This is the home!</h1>
 <div id="home">
+  <div id="featured">
+    <h2>Featured new project!</h2>
+    <% featured_project = Project.created_at_greater_than_or_equal_to(Time.now - 30.days).descend_by_win_votes.first %>
+    <h3><%= featured_project.title %></h3>
+    <div id="featured-image">
+      <%= preview_image(featured_project, :normal) %>
+    </div>
+    <div id="featured-content">
+      <%= "Author: " + featured_project.user.login %><br/>
+      <%= "Category: " + featured_project.category.name %><br/>
+      <%= "Downloads: " + featured_project.downloads.to_s %><br/>
+      <%= "Win votes: " + featured_project.win_votes.to_s %><br/>
+      <%= "Fail votes: " + featured_project.fail_votes.to_s %><br/>
+      <br/>
+      <%= featured_project.versions.last.description %>
+    </div>
+  </div>
   <div id="most-downloaded">
     <h3>Most Downloaded Projects</h3>
     <% Project.descend_by_downloads.first(5).each do |project| %>

@@ -14,9 +14,11 @@ class ArchivesController < ApplicationController
   before_filter :build_resource, :only => [:new, :create, :index]
   filter_access_to :all
   
-  show! do |format|
-    @version.increment_download_counter!
-    format.html { redirect_to @version.archive.attachment.url }
+  def show
+    show! do |format|
+      @version.increment_download_counter!
+      format.html { redirect_to @version.archive.attachment.url }
+    end
   end
   
   create! do |success, failure|

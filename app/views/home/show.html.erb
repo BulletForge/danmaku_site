@@ -1,0 +1,37 @@
+<h1>This is the home!</h1>
+<div id="home">
+  <div id="most-downloaded">
+    <h3>Most Downloaded Projects</h3>
+    <% Project.descend_by_downloads.first(5).each do |project| %>
+      <%= link_to(
+        project.title + " (" + project.downloads.to_s + " downloads)",
+        user_project_path(project.user, project)
+      )%><br />
+    <% end %>
+    <br />
+    <%= link_to "See more...", projects_path(:search => {:order => :descend_by_downloads}) %>
+  </div>
+  <div id="highest-rated">
+    <h3>Highest Rated Projects</h3>
+    <% Project.descend_by_win_votes.first(5).each do |project| %>
+      <%= link_to(
+        project.title + " (" + project.win_votes.to_s + " win votes)",
+        user_project_path(project.user, project)
+      )%><br />
+    <% end %>
+    <br />
+    <%= link_to "See more...", projects_path(:search => {:order => :descend_by_win_votes}) %>
+  </div>
+  <div id="latest">
+    <h3>Latest Projects</h3>
+    <% Project.descend_by_created_at.first(5).each do |project| %>
+      <%= link_to(
+        project.title + " (" + project.created_at.strftime('%b %d %Y, %I:%m %p') + ")",
+        user_project_path(project.user, project)
+      )%><br />
+    <% end %>
+    <br />
+    <%= link_to "See more...", projects_path(:search => {:order => :descend_by_created_at}) %>
+  </div>
+</div>
+

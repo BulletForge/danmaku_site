@@ -47,7 +47,10 @@
   	},
 
   	uploadError: function(file, errorCode, message) {
-  		alert(arguments);
+  		alert('something went wrong');
+  		if(console && console.log){
+  		  console.log(arguments);
+  		}
   	},
   	
   	uploadSuccess: function(file, serverData) {

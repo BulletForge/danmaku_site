@@ -32,12 +32,3 @@ ExceptionNotifier.exception_recipients = %w(LargeBagel@gmail.com aq1018@gmail.co
 ExceptionNotifier.sender_address = %("Exception Error" <aq1018@gmail.com>)
 ExceptionNotifier.email_prefix = "[BulletForge] "
 
-ActionMailer::Base.smtp_settings = {
-  :enable_starttls_auto => true,
-  :address        => 'smtp.gmail.com',
-  :port           => 587,
-  :domain         => 'bulletforge.org',
-  :authentication => :plain,
-  :user_name      => 'webmaster@bulletforge.org',
-  :password       => 'asdf123'
-}

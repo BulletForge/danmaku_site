@@ -29,5 +29,6 @@ Rails::Initializer.run do |config|
 end
 
 ExceptionNotifier.exception_recipients = %w(LargeBagel@gmail.com aq1018@gmail.com)
+ExceptionNotifier.sender_address = %(webmaster@bulletforge.org)
 ExceptionNotifier.email_prefix = "[BulletForge] "
 

@@ -32,7 +32,7 @@ class UserSessionsController < ApplicationController
   end
   
   def build_resource
-    @user_session = UserSession.create(params[:user_session])
+    @user_session = UserSession.new(params[:user_session])
   end
   
 end

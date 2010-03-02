@@ -136,7 +136,7 @@
     flash_url               : "/flash/swfupload.swf",
     use_query_string        : true,
     upload_url              : '/upload',
-    file_size_limit         : '200MB',
+    file_size_limit         : '200 MB',
     file_types              : "*",
     file_types              : "All file types",
     file_upload_limit       : 0,

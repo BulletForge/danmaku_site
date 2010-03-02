@@ -5,17 +5,17 @@ set :deploy_via, :remote_cache
 set :use_sudo, false
 set :user, 'deploy'
 
-role :app, 'bulletforge.net'
-role :web, 'bulletforge.net'
-role :db,  'bulletforge.net', :primary => true
+role :app, 'bulletforge.org'
+role :web, 'bulletforge.org'
+role :db,  'bulletforge.org', :primary => true
 
 ###########################################
 # let you to use local ssh keys
-set :ssh_options, {:forward_agent => true}
-default_run_options[:pty] = true
-on :start do
-    `ssh-add`
-end
+#set :ssh_options, {:forward_agent => true}
+#default_run_options[:pty] = true
+#on :start do
+#    `ssh-add`
+#end
 ###########################################
 
 # production only...
@@ -28,6 +28,7 @@ after 'deploy:update_code', :roles => :app do
   run <<-BASH
     ln -s #{shared_path}/config/database.yml #{current_release}/config/database.yml &&
     ln -s #{shared_path}/public/system #{current_release}/public/system
+    ln -s #{shared_path}/cache #{current_release}/tmp/cache
   BASH
 end
 
@@ -54,14 +55,15 @@ namespace :deploy do
 
   task :restart, :roles => :app do
     web.disable
-    stop
-    start
+    run "thin restart -C /etc/thin/bulletforge.yml"
     web.enable
   end
 
   task :start, :roles => :app do
+    run "thin start -C /etc/thin/bulletforge.yml"
   end
 
   task :stop, :roles => :app do
+    run "thin stop -C /etc/thin/bulletforge.yml"
   end
 end

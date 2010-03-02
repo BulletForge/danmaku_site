@@ -1,21 +1,37 @@
 <div id="home">
   <div id="featured">
-    <h2>Featured New Project</h2>
-    <% featured_project = Project.created_at_greater_than_or_equal_to(Time.now - 30.days).descend_by_win_votes.first %>
-    <h3><%= featured_project.title %></h3>
-    <div id="featured-image">
-      <%= preview_image(featured_project, :normal) %>
-    </div>
-    <div id="featured-content">
-      <%= "Author: " + featured_project.user.login %><br/>
-      <%= "Category: " + featured_project.category.name %><br/>
-      <%= "Downloads: " + featured_project.downloads.to_s %><br/>
-      <%= "Win votes: " + featured_project.win_votes.to_s %><br/>
-      <%= "Fail votes: " + featured_project.fail_votes.to_s %><br/>
-      <br/>
-      <%= truncate featured_project.versions.last.description, 700 %>
-      <%= link_to "Read more", user_project_path(featured_project.user, featured_project) %>
-    </div>
+    <% if @featured_project %>
+      <h2>Featured New Project</h2>
+      <h3><%= @featured_project.title %></h3>
+      <div id="featured-image">
+        <%= preview_image(@featured_project, :normal) %>
+      </div>
+      <div id="featured-content">
+        <%= "Author: " + @featured_project.user.login %><br/>
+        <%= "Category: " + @featured_project.category.name %><br/>
+        <%= "Downloads: " + @featured_project.downloads.to_s %><br/>
+        <%= "Win votes: " + @featured_project.win_votes.to_s %><br/>
+        <%= "Fail votes: " + @featured_project.fail_votes.to_s %><br/>
+        <br/>
+        <%= truncate @featured_project.versions.last.description, 700 %>
+        <%= link_to "Read more", user_project_path(@featured_project.user, @featured_project) %>
+      </div>
+    <% else %>
+      <h2>
+        BulletForge is still in beta.
+      </h2>
+      <p>
+          We need more projects from people like you! <br />
+        <%- unless current_user%>
+          <%= link_to "Signup to upload a project now!", new_user_path %><br />
+          <br />
+          Already have an account?<br />
+          <%= link_to "Log in now!", login_path %>
+        <%- end %>
+  
+        <%= link_to "Upload a project now!", new_user_project_path(current_user) if current_user %>
+      </p>
+    <% end %>
   </div>
   <div id="most-downloaded">
     <h3>Most Downloaded Projects</h3>

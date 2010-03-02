@@ -31,7 +31,8 @@ after 'deploy:update_code', :roles => :app do
     rm -rf #{current_release}/public/cache &&
     ln -s #{shared_path}/config/database.yml #{current_release}/config/database.yml &&
     ln -s #{shared_path}/public/system #{current_release}/public/ &&
-    ln -s #{shared_path}/cache #{current_release}/tmp/
+    ln -s #{shared_path}/cache #{current_release}/tmp/ &&
+    cd #{current_release} && gem bundle
   BASH
 end
 

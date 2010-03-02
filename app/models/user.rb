@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
   
   # for declarative_authorization integration
   def role_symbols
-    admin? ? [:admin] : [:user] 
+    admin? ? [:admin, :user] : [:user]
   end
   
   def owner_of?(ownable)

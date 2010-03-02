@@ -33,7 +33,7 @@
       <% end %>
       Last updated at: <%= @project.versions.last.created_at %><br/>
       <br/>
-      <%= @version.description %>
+      <%= simple_format(sanitize(@version.description)) %>
     </div>
   </div>
 </div>

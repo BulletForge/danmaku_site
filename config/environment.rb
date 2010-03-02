@@ -13,7 +13,8 @@ Rails::Initializer.run do |config|
   config.gem "authlogic"
   config.gem "searchlogic"
   config.gem "will_paginate"
-  config.gem "inherited_resources"
+  config.gem "responders", :version => "0.4.0"
+  config.gem "inherited_resources", :version => "1.0.0"
   config.gem "formtastic"
 
 

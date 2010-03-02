@@ -41,6 +41,7 @@
   	},
 
   	uploadProgress: function(file, bytesLoaded, bytesTotal) {
+          console.log(arguments);
   	  var percent = bytesLoaded * 100 / bytesTotal;
   	  var percentStr = '' + percent + '%';
   		$(this.fileDomId(file)).find('.progress').css('width', percentStr);

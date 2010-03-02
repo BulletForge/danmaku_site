@@ -7,17 +7,6 @@ RAILS_GEM_VERSION = '2.3.5' unless defined? RAILS_GEM_VERSION
 require File.join(File.dirname(__FILE__), 'boot')
 
 Rails::Initializer.run do |config|
-  config.gem 'compass', :version => '>= 0.8.17'
-  config.gem 'haml', :version => '>=2.2.16'
-  config.gem "declarative_authorization", :version => '0.4'
-  config.gem "authlogic", :version => '2.1.3'
-  config.gem "searchlogic", :version => '2.3.5'
-  config.gem "will_paginate", :version => '2.3.11'
-  config.gem "responders", :version => '0.4.2'
-  config.gem "inherited_resources", :version => '1.0.2'
-  config.gem "formtastic", :version => '0.9.7'
-
-
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
   # config.plugins = [ :exception_notification, :ssl_requirement, :all ]

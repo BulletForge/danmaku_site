@@ -1,0 +1,15 @@
+source 'http://gems.github.com'
+
+bundle_path 'vendor/bundler_gems'
+
+gem 'rails', '2.3.5'
+gem 'pg'
+gem 'compass', '>= 0.8.17'
+gem 'haml', '>=2.2.16'
+gem 'declarative_authorization', '0.4'
+gem 'authlogic', '2.1.3'
+gem 'searchlogic', '2.3.5'
+gem 'will_paginate', '2.3.11'
+gem 'responders', '0.4.2'
+gem 'inherited_resources', '1.0.2'
+gem 'formtastic', '0.9.7'

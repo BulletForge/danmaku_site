@@ -41,17 +41,13 @@
   	},
 
   	uploadProgress: function(file, bytesLoaded, bytesTotal) {
-          console.log(arguments);
   	  var percent = bytesLoaded * 100 / bytesTotal;
   	  var percentStr = '' + percent + '%';
-  		$(this.fileDomId(file)).find('.progress').css('width', percentStr);
+  	  $("#" + this.fileDomId(file)).find('.progress').css('width', percentStr);
   	},
 
   	uploadError: function(file, errorCode, message) {
   		alert('something went wrong');
-  		if(console && console.log){
-  		  console.log(arguments);
-  		}
   	},
   	
   	uploadSuccess: function(file, serverData) {
@@ -97,7 +93,7 @@
   	},
 
   	fileDomId: function(file){
-  		return 'fu_' + this.index + '_file_' + file.index
+  		return file.id;
   	}
   	
   };

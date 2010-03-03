@@ -1,11 +1,13 @@
 module ActiveRecord
   module Acts
     module TaggableOn
+
       def self.included(base)
         base.extend(ClassMethods)
       end
 
       module ClassMethods
+
         def taggable?
           false
         end
@@ -17,17 +19,19 @@ module ActiveRecord
         def acts_as_taggable_on(*args)
           args.flatten! if args
           args.compact! if args
+
           for tag_type in args
             tag_type = tag_type.to_s
-            # use aliased_join_table_name for context condition so that sphix can join multiple
+            # use aliased_join_table_name for context condition so that sphinx can join multiple
             # tag references from same model without getting an ambiguous column error
-            self.class_eval do
+            class_eval do
               has_many "#{tag_type.singularize}_taggings".to_sym, :as => :taggable, :dependent => :destroy,
-                :include => :tag, :conditions => ['#{aliased_join_table_name rescue "taggings"}.context = ?',tag_type], :class_name => "Tagging"
+                :include => :tag, :conditions => ['#{aliased_join_table_name || Tagging.table_name rescue Tagging.table_name}.context = ?',tag_type], :class_name => "Tagging"
               has_many "#{tag_type}".to_sym, :through => "#{tag_type.singularize}_taggings".to_sym, :source => :tag
             end
 
-            self.class_eval <<-RUBY
+            class_eval <<-RUBY
+
               def self.taggable?
                 true
               end
@@ -68,7 +72,7 @@ module ActiveRecord
               def find_matching_contexts(search_context, result_context, options = {})
                 matching_contexts_for(search_context.to_s, result_context.to_s, self.class, options)
               end
-              
+
               def find_matching_contexts_for(klass, search_context, result_context, options = {})
                 matching_contexts_for(search_context.to_s, result_context.to_s, klass, options)
               end
@@ -80,13 +84,14 @@ module ActiveRecord
               def self.top_#{tag_type}(limit = 10)
                 tag_counts_on('#{tag_type}', :order => 'count desc', :limit => limit.to_i)
               end
+
             RUBY
           end
 
           if respond_to?(:tag_types)
             write_inheritable_attribute( :tag_types, (tag_types + args).uniq )
           else
-            self.class_eval do
+            class_eval do
               write_inheritable_attribute(:tag_types, args.uniq)
               class_inheritable_reader :tag_types
 
@@ -96,10 +101,11 @@ module ActiveRecord
               attr_writer :custom_contexts
 
               before_save :save_cached_tag_list
-              after_save :save_tags
+
+              after_save:save_tags
 
               if respond_to?(:named_scope)
-                named_scope :tagged_with, lambda{ |*args|
+                scope :tagged_with, lambda{ |*args|
                   find_options_for_find_tagged_with(*args)
                 }
               end
@@ -111,23 +117,22 @@ module ActiveRecord
           end
         end
 
-        def is_taggable?
-          false
-        end
       end
 
       module SingletonMethods
+
         include ActiveRecord::Acts::TaggableOn::GroupHelper
+
         # Pass either a tag string, or an array of strings or tags
         #
         # Options:
+        #   :any - find models that match any of the given tags
         #   :exclude - Find models that are not tagged with the given tags
         #   :match_all - Find models that match all of the given tags, not just one
         #   :conditions - A piece of SQL conditions to add to the query
         #   :on - scopes the find to a context
         def find_tagged_with(*args)
-          options = find_options_for_find_tagged_with(*args)
-          options.blank? ? [] : find(:all,options)
+          find_options_for_find_tagged_with(*args)
         end
 
         def caching_tag_list_on?(context)
@@ -135,47 +140,48 @@ module ActiveRecord
         end
 
         def tag_counts_on(context, options = {})
-          Tag.find(:all, find_options_for_tag_counts(options.merge({:on => context.to_s})))
+          find_for_tag_counts(options.merge({:on => context.to_s}))
         end
 
         def all_tag_counts(options = {})
-          Tag.find(:all, find_options_for_tag_counts(options))
+          find_for_tag_counts(options)
         end
 
         def find_options_for_find_tagged_with(tags, options = {})
-          tags = TagList.from(tags)
+          tag_list = TagList.from(tags)
 
-          return {} if tags.empty?
+          return {} if tag_list.empty?
 
           joins = []
           conditions = []
 
           context = options.delete(:on)
 
-
           if options.delete(:exclude)
-            tags_conditions = tags.map { |t| sanitize_sql(["#{Tag.table_name}.name LIKE ?", t]) }.join(" OR ")
+            tags_conditions = tag_list.map { |t| sanitize_sql(["#{Tag.table_name}.name LIKE ?", t]) }.join(" OR ")
             conditions << "#{table_name}.#{primary_key} NOT IN (SELECT #{Tagging.table_name}.taggable_id FROM #{Tagging.table_name} JOIN #{Tag.table_name} ON #{Tagging.table_name}.tag_id = #{Tag.table_name}.id AND (#{tags_conditions}) WHERE #{Tagging.table_name}.taggable_type = #{quote_value(base_class.name)})"
 
+          elsif options.delete(:any)
+            tags_conditions = tag_list.map { |t| sanitize_sql(["#{Tag.table_name}.name LIKE ?", t]) }.join(" OR ")
+            conditions << "#{table_name}.#{primary_key} IN (SELECT #{Tagging.table_name}.taggable_id FROM #{Tagging.table_name} JOIN #{Tag.table_name} ON #{Tagging.table_name}.tag_id = #{Tag.table_name}.id AND (#{tags_conditions}) WHERE #{Tagging.table_name}.taggable_type = #{quote_value(base_class.name)})"
+
           else
+            tags = Tag.named_any(tag_list)
+            return { :conditions => "1 = 0" } unless tags.length == tag_list.length
+
             tags.each do |tag|
-              safe_tag = tag.gsub(/[^a-zA-Z0-9]/, '')
+              safe_tag = tag.name.gsub(/[^a-zA-Z0-9]/, '')
               prefix   = "#{safe_tag}_#{rand(1024)}"
 
               taggings_alias = "#{table_name}_taggings_#{prefix}"
-              tags_alias     = "#{table_name}_tags_#{prefix}"
 
               tagging_join  = "JOIN #{Tagging.table_name} #{taggings_alias}" +
                               "  ON #{taggings_alias}.taggable_id = #{table_name}.#{primary_key}" +
-                              " AND #{taggings_alias}.taggable_type = #{quote_value(base_class.name)}"
+                              " AND #{taggings_alias}.taggable_type = #{quote_value(base_class.name)}" +
+                              " AND #{taggings_alias}.tag_id = #{tag.id}"
               tagging_join << " AND " + sanitize_sql(["#{taggings_alias}.context = ?", context.to_s]) if context
 
-              tag_join     = "JOIN #{Tag.table_name} #{tags_alias}" +
-                             "  ON #{tags_alias}.id = #{taggings_alias}.tag_id" +
-                             " AND " + sanitize_sql(["#{tags_alias}.name like ?", tag])
-
               joins << tagging_join
-              joins << tag_join
             end
           end
 
@@ -189,9 +195,12 @@ module ActiveRecord
             group = "#{grouped_column_names_for(self)} HAVING COUNT(#{taggings_alias}.taggable_id) = #{tags.size}"
           end
 
-          { :joins      => joins.join(" "),
-            :group      => group,
-            :conditions => conditions.join(" AND ") }.update(options)
+          Tag.joins(joins.join(" ")).group(group).where(conditions.join(" AND "))
+
+          # { :joins      => joins.join(" "),L
+          #   :group      => group,
+          #   :conditions => conditions.join(" AND "),
+          #   :readonly   => false }.update(options)
         end
 
         # Calculate the tag counts for all tags.
@@ -205,10 +214,9 @@ module ActiveRecord
         #  :at_least - Exclude tags with a frequency less than the given value
         #  :at_most - Exclude tags with a frequency greater than the given value
         #  :on - Scope the find to only include a certain context
-        def find_options_for_tag_counts(options = {})
+        def find_for_tag_counts(options = {})
           options.assert_valid_keys :start_at, :end_at, :conditions, :at_least, :at_most, :order, :limit, :on, :id
 
-          scope = scope(:find)
           start_at = sanitize_sql(["#{Tagging.table_name}.created_at >= ?", options.delete(:start_at)]) if options[:start_at]
           end_at = sanitize_sql(["#{Tagging.table_name}.created_at <= ?", options.delete(:end_at)]) if options[:end_at]
 
@@ -225,18 +233,15 @@ module ActiveRecord
           ]
 
           conditions = conditions.compact.join(' AND ')
-          conditions = merge_conditions(conditions, scope[:conditions]) if scope
 
           joins = ["LEFT OUTER JOIN #{Tagging.table_name} ON #{Tag.table_name}.id = #{Tagging.table_name}.tag_id"]
           joins << sanitize_sql(["AND #{Tagging.table_name}.context = ?",options.delete(:on).to_s]) unless options[:on].nil?
-
           joins << " INNER JOIN #{table_name} ON #{table_name}.#{primary_key} = #{Tagging.table_name}.taggable_id"
-          unless self.descends_from_active_record?
-            # Current model is STI descendant, so add type checking to the join condition
-            joins << " AND #{table_name}.#{self.inheritance_column} = '#{self.name}'"
-          end
 
-          joins << scope[:joins] if scope && scope[:joins]
+          unless descends_from_active_record?
+            # Current model is STI descendant, so add type checking to the join condition
+            joins << " AND #{table_name}.#{inheritance_column} = '#{name}'"
+          end
 
           at_least  = sanitize_sql(['COUNT(*) >= ?', options.delete(:at_least)]) if options[:at_least]
           at_most   = sanitize_sql(['COUNT(*) <= ?', options.delete(:at_most)]) if options[:at_most]
@@ -244,26 +249,19 @@ module ActiveRecord
           group_by  = "#{grouped_column_names_for(Tag)} HAVING COUNT(*) > 0"
           group_by << " AND #{having}" unless having.blank?
 
-          { :select     => "#{Tag.table_name}.*, COUNT(*) AS count",
-            :joins      => joins.join(" "),
-            :conditions => conditions,
-            :group      => group_by,
-            :limit      => options[:limit],
-            :order      => options[:order]
-          }
+          Tag.select("#{Tag.table_name}.*, COUNT(*) AS count").joins(joins.join(" ")).where(conditions).group(group_by).limit(options[:limit]).order(options[:order])
+
         end
 
         def is_taggable?
           true
         end
+
       end
 
       module InstanceMethods
-        include ActiveRecord::Acts::TaggableOn::GroupHelper
 
-        def tag_types
-          self.class.tag_types
-        end
+        include ActiveRecord::Acts::TaggableOn::GroupHelper
 
         def custom_contexts
           @custom_contexts ||= []
@@ -277,51 +275,68 @@ module ActiveRecord
           custom_contexts << value.to_s unless custom_contexts.include?(value.to_s) or self.class.tag_types.map(&:to_s).include?(value.to_s)
         end
 
-        def tag_list_on(context, owner=nil)
-          var_name = context.to_s.singularize + "_list"
+        def tag_list_on(context, owner = nil)
           add_custom_context(context)
-          return instance_variable_get("@#{var_name}") unless instance_variable_get("@#{var_name}").nil?
+          cache = tag_list_cache_on(context)
+          return owner ? cache[owner] : cache[owner] if cache[owner]
 
           if !owner && self.class.caching_tag_list_on?(context) and !(cached_value = cached_tag_list_on(context)).nil?
-            instance_variable_set("@#{var_name}", TagList.from(self["cached_#{var_name}"]))
+            cache[owner] = TagList.from(cached_tag_list_on(context))
           else
-            instance_variable_set("@#{var_name}", TagList.new(*tags_on(context, owner).map(&:name)))
+            cache[owner] = TagList.new(*tags_on(context, owner).map(&:name))
           end
         end
 
-        def tags_on(context, owner=nil)
+        def all_tags_list_on(context)
+          variable_name = "@all_#{context.to_s.singularize}_list"
+          return instance_variable_get(variable_name) if instance_variable_get(variable_name)
+          instance_variable_set(variable_name, TagList.new(all_tags_on(context).map(&:name)).freeze)
+        end
+
+        def all_tags_on(context)
+          opts =  ["#{Tagging.table_name}.context = ?", context.to_s]
+          base_tags.where(opts).order("#{Tagging.table_name}.created_at")
+        end
+
+        def tags_on(context, owner = nil)
           if owner
-            opts = {:conditions => ["#{Tagging.table_name}.context = ? AND #{Tagging.table_name}.tagger_id = ? AND #{Tagging.table_name}.tagger_type = ?",
-                                    context.to_s, owner.id, owner.class.to_s]}
+            opts = ["#{Tagging.table_name}.context = ? AND #{Tagging.table_name}.tagger_id = ? AND #{Tagging.table_name}.tagger_type = ?", context.to_s, owner.id, owner.class.to_s]
           else
-            opts = {:conditions => ["#{Tagging.table_name}.context = ?", context.to_s]}
+            opts = ["#{Tagging.table_name}.context = ? AND #{Tagging.table_name}.tagger_id IS NULL", context.to_s]
           end
-          base_tags.find(:all, opts)
+          base_tags.where(opts)
         end
 
         def cached_tag_list_on(context)
           self["cached_#{context.to_s.singularize}_list"]
         end
 
-        def set_tag_list_on(context,new_list, tagger=nil)
-          instance_variable_set("@#{context.to_s.singularize}_list", TagList.from_owner(tagger, new_list))
+        def tag_list_cache_on(context)
+          variable_name = "@#{context.to_s.singularize}_list"
+          cache = instance_variable_get(variable_name)
+          instance_variable_set(variable_name, cache = {}) unless cache
+          cache
+        end
+
+        def set_tag_list_on(context, new_list, tagger = nil)
+          tag_list_cache_on(context)[tagger] = TagList.from(new_list)
           add_custom_context(context)
         end
 
         def tag_counts_on(context, options={})
-          self.class.tag_counts_on(context, options.merge(:id => self.id))
+          self.class.tag_counts_on(context, options.merge(:id => id))
         end
 
         def related_tags_for(context, klass, options = {})
           search_conditions = related_search_options(context, klass, options)
 
-          klass.find(:all, search_conditions)
+          klass.select(search_conditions[:select]).from(search_conditions[:from]).where(search_conditions[:conditions]).group(search_conditions[:group]).order(search_conditions[:order])
         end
 
         def related_search_options(context, klass, options = {})
-          tags_to_find = self.tags_on(context).collect { |t| t.name }
+          tags_to_find = tags_on(context).collect { |t| t.name }
 
-          exclude_self = "#{klass.table_name}.id != #{self.id} AND" if self.class == klass
+          exclude_self = "#{klass.table_name}.id != #{id} AND" if self.class == klass
 
           { :select     => "#{klass.table_name}.*, COUNT(#{Tag.table_name}.id) AS count",
             :from       => "#{klass.table_name}, #{Tag.table_name}, #{Tagging.table_name}",
@@ -330,17 +345,17 @@ module ActiveRecord
             :order      => "count DESC"
           }.update(options)
         end
-        
+
         def matching_contexts_for(search_context, result_context, klass, options = {})
           search_conditions = matching_context_search_options(search_context, result_context, klass, options)
 
-          klass.find(:all, search_conditions)
+          klass.select(search_conditions[:select]).from(search_conditions[:from]).where(search_conditions[:conditions]).group(search_conditions[:group]).order(search_conditions[:order])
         end
-        
-        def matching_context_search_options(search_context, result_context, klass, options = {})
-          tags_to_find = self.tags_on(search_context).collect { |t| t.name }
 
-          exclude_self = "#{klass.table_name}.id != #{self.id} AND" if self.class == klass
+        def matching_context_search_options(search_context, result_context, klass, options = {})
+          tags_to_find = tags_on(search_context).collect { |t| t.name }
+
+          exclude_self = "#{klass.table_name}.id != #{id} AND" if self.class == klass
 
           { :select     => "#{klass.table_name}.*, COUNT(#{Tag.table_name}.id) AS count",
             :from       => "#{klass.table_name}, #{Tag.table_name}, #{Tagging.table_name}",
@@ -349,28 +364,49 @@ module ActiveRecord
             :order      => "count DESC"
           }.update(options)
         end
-        
+
         def save_cached_tag_list
           self.class.tag_types.map(&:to_s).each do |tag_type|
             if self.class.send("caching_#{tag_type.singularize}_list?")
-              self["cached_#{tag_type.singularize}_list"] = send("#{tag_type.singularize}_list").to_s
+              self["cached_#{tag_type.singularize}_list"] = tag_list_cache_on(tag_type.singularize).to_a.flatten.compact.join(', ')
             end
           end
         end
 
         def save_tags
-          (custom_contexts + self.class.tag_types.map(&:to_s)).each do |tag_type|
-            next unless instance_variable_get("@#{tag_type.singularize}_list")
-            owner = instance_variable_get("@#{tag_type.singularize}_list").owner
-            new_tag_names = instance_variable_get("@#{tag_type.singularize}_list") - tags_on(tag_type).map(&:name)
-            old_tags = tags_on(tag_type, owner).reject { |tag| instance_variable_get("@#{tag_type.singularize}_list").include?(tag.name) }
+          contexts = custom_contexts + self.class.tag_types.map(&:to_s)
 
-            self.class.transaction do
-              base_tags.delete(*old_tags) if old_tags.any?
-              new_tag_names.each do |new_tag_name|
-                new_tag = Tag.find_or_create_with_like_by_name(new_tag_name)
-                Tagging.create(:tag_id => new_tag.id, :context => tag_type,
-                               :taggable => self, :tagger => owner)
+          transaction do
+            contexts.each do |context|
+              cache = tag_list_cache_on(context)
+
+              cache.each do |owner, list|
+                new_tags = Tag.find_or_create_all_with_like_by_name(list.uniq)
+                taggings = Tagging.where({ :taggable_id => self.id, :taggable_type => self.class.to_s })
+
+                # Destroy old taggings:
+                if owner
+                  old_tags = tags_on(context, owner) - new_tags
+                  old_taggings = Tagging.where({ :taggable_id => self.id, :taggable_type => self.class.to_s, :tag_id => old_tags, :tagger_id => owner.id, :tagger_type => owner.class.to_s, :context => context })
+
+                  Tagging.destroy_all :id => old_taggings.map(&:id)
+                else
+                  old_tags = tags_on(context) - new_tags
+                  base_tags.delete(*old_tags)
+                end
+
+                new_tags.reject! { |tag| taggings.any? { |tagging|
+                    tagging.tag_id      == tag.id &&
+                    tagging.tagger_id   == (owner ? owner.id : nil) &&
+                    tagging.tagger_type == (owner ? owner.class.to_s : nil) &&
+                    tagging.context     == context
+                  }
+                }
+
+                # create new taggings:
+                new_tags.each do |tag|
+                  Tagging.create!(:tag_id => tag.id, :context => context, :tagger => owner, :taggable => self)
+                end
               end
             end
           end
@@ -380,11 +416,12 @@ module ActiveRecord
 
         def reload_with_tag_list(*args)
           self.class.tag_types.each do |tag_type|
-            self.instance_variable_set("@#{tag_type.to_s.singularize}_list", nil)
+            instance_variable_set("@#{tag_type.to_s.singularize}_list", nil)
           end
 
           reload_without_tag_list(*args)
         end
+
       end
     end
   end

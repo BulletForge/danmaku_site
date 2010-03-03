@@ -213,7 +213,7 @@ class PermalinkFuTest < Test::Unit::TestCase
   
   def test_should_allow_override_of_permalink_method
     @m = OverrideModel.new
-    @m.write_attribute(:permalink, 'the permalink')
+    @m[:permalink] = 'the permalink'
     assert_not_equal @m.permalink, @m.read_attribute(:permalink)
   end
   

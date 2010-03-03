@@ -1,10 +1,18 @@
 # require File.dirname(__FILE__) + '/../../../../spec/spec_helper'
 require 'rubygems'
-require 'activerecord'
+require 'active_record'
 require 'spec'
 
 module Spec::Example::ExampleGroupMethods
   alias :context :describe
+end
+
+class Array
+  def freq
+    k=Hash.new(0)
+    each {|e| k[e]+=1}
+    k
+  end
 end
 
 TEST_DATABASE_FILE = File.join(File.dirname(__FILE__), '..', 'test.sqlite3')
@@ -16,7 +24,10 @@ ActiveRecord::Base.establish_connection(
 
 RAILS_DEFAULT_LOGGER = Logger.new(File.join(File.dirname(__FILE__), "debug.log"))
 
-load(File.dirname(__FILE__) + '/schema.rb')
+ActiveRecord::Base.silence do
+  ActiveRecord::Migration.verbose = false
+  load(File.dirname(__FILE__) + '/schema.rb')
+end
 
 $: << File.join(File.dirname(__FILE__), '..', 'lib')
 require File.join(File.dirname(__FILE__), '..', 'init')

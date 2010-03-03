@@ -97,8 +97,12 @@ module PermalinkFu
     end
 
     def define_attribute_methods_with_permalinks
-      if value = define_attribute_methods_without_permalinks
-        evaluate_attribute_method permalink_field, "def #{self.permalink_field}=(new_value);write_attribute(:#{self.permalink_field}, new_value.blank? ? '' : PermalinkFu.escape(new_value));end", "#{self.permalink_field}="
+      if (value = define_attribute_methods_without_permalinks) && self.permalink_field
+        class_eval <<-EOV
+          def #{self.permalink_field}=(new_value);
+            write_attribute(:#{self.permalink_field}, new_value.blank? ? '' : PermalinkFu.escape(new_value));
+          end
+        EOV
       end
       value
     end

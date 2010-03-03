@@ -1,25 +1,28 @@
-ActionController::Routing::Routes.draw do |map|
+BulletForge::Application.routes.draw do
 
-  map.root :controller => 'home', :action => 'show'
-
-  map.login  '/login',  :controller => 'user_sessions', :action => 'new'
-  map.logout '/logout', :controller => 'user_sessions', :action => 'destroy'
-
-  map.resources :users, :as => 'u' do |users|
-    users.resources :comments, :only => [:index, :create, :destroy]
-    users.resources :projects, :as => 'p' do |projects|
-      projects.resources :versions, { :as => 'v', :member => {:download => :get, :vote_up => :get, :vote_down => :get, :upload => :post} } do |versions|
-        versions.resources :comments, :only => [:index, :create, :destroy]
-        versions.resource :archive, :only => [:show, :create]
-        versions.resources :votes
+  resources :users, :as => 'u' do
+    resources :comments, :only => [:index, :create, :destroy]
+    resources :projects, :as => 'p' do
+      resources :versions, :as => 'v' do
+        member do
+          get :download
+          get :upload
+          get :vote_up
+          get :vote_down
+        end
+        resources :comments, :only => [:index, :create, :destroy]
+        resource :archive, :only => [:show, :create]
+        resources :votes
       end
     end
   end
-  map.resource  :user_session
-  map.resource  :sitemap, :only => :show
-  map.resources :projects, :only => :index
 
-  # Default routes
-  map.connect ':controller/:action/:id.:format'
-  map.connect ':controller/:action/:id'
+  resource :user_session
+  resource :sitemap, :only => [:show]
+  resources :projects, :only => [:index]
+  match 'login' => 'user_sessions#new', :as => :login
+  match 'logout' => 'user_sessions#destroy', :as => :logout
+  
+  root :to => 'home#show'  
+  match '/:controller(/:action(/:id))'
 end

@@ -2,8 +2,8 @@
 
 <div id="project-show">
   <div class="heading">
-    <%= @project.title %>
-    <span class="@version-number">(v <%= @version.version_number %>)</span>
+    <%=h @project.title %>
+    <span class="version-number">(v <%=h @version.version_number %>)</span>
   </div>
 
   <div class="body">
@@ -27,13 +27,13 @@
       <% if @project.tags %>
         Tags:
         <% @project.tags.reverse.each do |tag| %>
-          <%= link_to tag.name, projects_path(:search => {:tagged_with => tag.name}, :search_type => :tags) %>
+          <%= link_to h(tag.name), projects_path(:search => {:tagged_with => tag.name}, :search_type => :tags) %>
         <% end %>
         <br/>
       <% end %>
       Last updated at: <%= @project.versions.last.created_at %><br/>
       <br/>
-      <%= simple_format(sanitize(@version.description)) %>
+      <%= simple_format(h(@version.description)) %>
     </div>
   </div>
 </div>

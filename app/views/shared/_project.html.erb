@@ -1,7 +1,7 @@
 <div class="project-index-block">
   <div class="heading">
     <div class="title">
-      <%= link_to p.title, user_project_path(p.user, p) %>
+      <%= link_to h(p.title), user_project_path(p.user, p) %>
     </div>
     <div class="stats">
       Win: <%= p.win_votes %> Fail: <%= p.fail_votes %><br />
@@ -15,7 +15,7 @@
     Author: <%= link_to p.user.login, user_path(p.user) %><br/>
     
     <% if p.versions.last %>
-      Latest version: <%= p.versions.last.version_number %><br/>
+      Latest version: <%=h p.versions.last.version_number %><br/>
     <% else %>
       No versions<br/>
     <% end %>
@@ -23,7 +23,7 @@
     <br/>
 
     <% if p.versions.last && !p.versions.last.description.blank? %>
-      <p><%= truncate p.versions.last.description, 512 %></p>
+      <p><%=h truncate p.versions.last.description, 512 %></p>
     <% else %>
       <p>No description</p>
     <% end %>
@@ -33,7 +33,7 @@
     <% if p.tags %>
       Tags:
       <% p.tags.reverse.each do |tag| %>
-        <%= link_to tag.name, projects_path(:search => {:tagged_with => tag.name}, :search_type => :tags) %>
+        <%= link_to h(tag.name), projects_path(:search => {:tagged_with => tag.name}, :search_type => :tags) %>
       <% end %>
     <% else %>
       No description

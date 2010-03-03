@@ -2,7 +2,7 @@
   <% if version.archive %>
     <%= link_to "Download", user_project_version_archive_path(user, project, version) %><br />
     File size: <%= number_to_human_size(version.archive.attachment.size) %><br />
-  <% elsif permitted_to?(:edit, version) %>
+  <% elsif can?(:edit, version) %>
     <h4> Upload your script now! </h4>
     <p>
       File size limit is <%= Archive::MAX_FILE_SIZE %>.<br />

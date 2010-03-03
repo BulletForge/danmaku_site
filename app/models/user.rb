@@ -33,9 +33,8 @@ class User < ActiveRecord::Base
       user_with_permalink && user_with_permalink != self
   end
   
-  # for declarative_authorization integration
-  def role_symbols
-    admin? ? [:admin, :user] : [:user]
+  def roles
+    admin? ? [:admin, :user] : :user
   end
   
   def owner_of?(ownable)
@@ -63,6 +62,5 @@ class User < ActiveRecord::Base
   
   def current?
     self.class.current == self
-  end
-  
+  end  
 end

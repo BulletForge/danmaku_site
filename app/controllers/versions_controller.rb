@@ -9,8 +9,9 @@ class VersionsController < ApplicationController
   before_filter :collection, :only =>[:index]
   before_filter :resource, :only => [:show, :edit, :update, :destroy]
   before_filter :build_resource, :only => [:new, :create, :index]
-  filter_access_to :all
-  filter_access_to [:edit, :update], :attribute_check => true
+  
+  load_and_authorize_resource
+  
 
   destroy! do |success, failure|
     success.html { redirect_to user_project_path(@user, @project) }
@@ -18,6 +19,6 @@ class VersionsController < ApplicationController
 
   private
   def _collection
-    end_of_association_chain.descend_by_created_at
+    end_of_association_chain.order("created_at DESC")
   end
 end

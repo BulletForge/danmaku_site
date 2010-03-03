@@ -3,6 +3,8 @@ class CommentsController < ApplicationController
   before_filter :comment, :only =>  :destroy
   before_filter :build_comment, :only => :create
   
+  load_and_authorize_resource
+  
   def index
     @comments = comments
   end

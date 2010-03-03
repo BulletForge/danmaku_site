@@ -7,8 +7,9 @@ class ProjectsController < ApplicationController
   before_filter :collection, :only =>[:index]
   before_filter :resource, :only => [:show, :edit, :update, :destroy]
   before_filter :build_resource, :only => [:new, :create, :index]
-  filter_access_to :all
-  filter_access_to [:edit, :update], :attribute_check => true
+  
+  load_and_authorize_resource
+  
   
   # Change redirect
   destroy! do |success, failure|
@@ -24,6 +25,24 @@ class ProjectsController < ApplicationController
   private
   # Paginate the projects collection  
   def _collection
+    # title_like = params[:search]["title_like"].blank? ? nil : params[:search]["title_like"]
+    # user_login_like = params[:search]["user_login_like"].blank? ? nil : params[:search]["user_login_like"]
+    # tagged_with = params[:search]["tagged_with"].blank? ? nil : params[:search]["user_login_like"]
+    # 
+    # @search = end_of_association_chain
+    # 
+    # if title_like
+    #   @search = @search.where("title LIKE ?", "%#{title_like}%")
+    # end
+    # 
+    # if user_login_like
+    #   @search = @search.joins(:user).where("users.login LIKE ?", "%#{user_login_like}%")
+    # end
+    # 
+    # if tagged_with
+    #   @search = @search.tagged_with(tagged_with)
+    # end
+    
     @search ||= end_of_association_chain.search( params[:search] )
     @search.paginate( :per_page => 10, :page => params[:page] )
   end

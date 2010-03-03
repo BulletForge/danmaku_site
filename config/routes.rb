@@ -20,8 +20,9 @@ BulletForge::Application.routes.draw do
   resource :user_session
   resource :sitemap, :only => [:show]
   resources :projects, :only => [:index]
-  match 'login' => 'user_sessions#new', :as => :login
-  match 'logout' => 'user_sessions#destroy', :as => :logout
+  
+  get '/login' => 'user_sessions#new', :as => :login
+  get '/logout' => 'user_sessions#destroy', :as => :logout
   
   root :to => 'home#show'  
   match '/:controller(/:action(/:id))'

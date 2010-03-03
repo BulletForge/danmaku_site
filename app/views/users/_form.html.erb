@@ -1,13 +1,13 @@
 <% semantic_form_for @user, :users do |form| %>
   <% form.inputs do %>
     <% if form.object.new_record? %>
-      <%= form.input :login, :label => "Username", :required => true %>
+      <%=raw form.input :login, :label => "Username", :required => true %>
     <% end %>
-    <%= form.input :email %>
-    <%= form.input :password, :required => true if form.object.new_record? %>
-    <%= form.input :password, :label => "Change password", :hint => "Leave this blank to keep it the same." unless form.object.new_record? %>
-    <%= form.input :password_confirmation %>
-    <%= form.input :admin if has_role?(:admin) %>
+    <%=raw form.input :email %>
+    <%=raw form.input :password, :required => true if form.object.new_record? %>
+    <%=raw form.input :password, :label => "Change password", :hint => "Leave this blank to keep it the same." unless form.object.new_record? %>
+    <%=raw form.input :password_confirmation %>
+    <%=raw form.input :admin if has_role?(:admin) %>
   <% end %>
-  <%= form.buttons %>
+  <%=raw form.buttons %>
 <% end %>

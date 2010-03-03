@@ -7,6 +7,7 @@ class UsersController < ApplicationController
   before_filter :resource, :only => [:show, :edit, :update, :destroy]
   before_filter :build_resource, :only => [:new, :create, :index]
   filter_access_to :all
+  filter_access_to [:edit, :update], :attribute_check => true
 
   # Change default flash notice and redirect
   create! do |success, failure|

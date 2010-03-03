@@ -16,6 +16,7 @@ ActionController::Routing::Routes.draw do |map|
     end
   end
   map.resource  :user_session
+  map.resource  :sitemap, :only => :show
   map.resources :projects, :only => :index
 
   # Default routes

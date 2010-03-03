@@ -7,7 +7,6 @@
 <% if permitted_to?(:create, :comments) %>
   <% form_for :comment, :url => user_project_version_comments_path(user, project, version) do |f| %>
     <%= f.hidden_field :author_id, :value => current_user.id %>
-    <%= f.hidden_field :commentable, :value => version %>
     <%= f.text_area :content %><br />
     <%= f.submit 'Post Comment' %>
   <% end %>

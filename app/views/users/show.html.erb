@@ -18,8 +18,6 @@
 <% if permitted_to?(:create, :comments) %>
   <% form_for :comment, :url => user_comments_path(@user) do |f| %>
     <%= f.hidden_field :author_id, :value => current_user.id %>
-    <%= f.hidden_field :commentable_type, :value => 'User' %>
-    <%= f.hidden_field :commentable_id, :value => @user.id %>
     <%= f.text_area :content %><br />
     <%= f.submit 'Post Comment' %>
   <% end %>

@@ -30,7 +30,7 @@ class CommentsController < ApplicationController
   end
   
   def build_comment
-    @comment = end_of_association_chain.find(params[:comment])
+    @comment = end_of_association_chain.build(params[:comment])
   end
   
   def comment

@@ -32,7 +32,7 @@ after 'deploy:update_code', :roles => :app do
     ln -s #{shared_path}/config/database.yml #{current_release}/config/database.yml &&
     ln -s #{shared_path}/public/system #{current_release}/public/ &&
     ln -s #{shared_path}/cache #{current_release}/tmp/ &&
-    cd #{current_release} && gem bundle
+    cd #{current_release} && bundle install
   BASH
 end
 
@@ -59,7 +59,7 @@ namespace :deploy do
 
   task :restart, :roles => :app do
     web.disable
-    run "thin restart -C /etc/thin/bulletforge.yml"
+    run "thin restart -C /etc/thin/bulletforge.yml && sleep 10"
     web.enable
   end
 

@@ -25,25 +25,48 @@ class ProjectsController < ApplicationController
   private
   # Paginate the projects collection  
   def _collection
-    # title_like = params[:search]["title_like"].blank? ? nil : params[:search]["title_like"]
-    # user_login_like = params[:search]["user_login_like"].blank? ? nil : params[:search]["user_login_like"]
-    # tagged_with = params[:search]["tagged_with"].blank? ? nil : params[:search]["user_login_like"]
-    # 
-    # @search = end_of_association_chain
-    # 
-    # if title_like
-    #   @search = @search.where("title LIKE ?", "%#{title_like}%")
-    # end
-    # 
-    # if user_login_like
-    #   @search = @search.joins(:user).where("users.login LIKE ?", "%#{user_login_like}%")
-    # end
-    # 
-    # if tagged_with
-    #   @search = @search.tagged_with(tagged_with)
-    # end
+    @search = end_of_association_chain
+    if params[:search]
+      title_like = params[:search]["title_like"].blank? ? nil : params[:search]["title_like"]
+      user_login_like = params[:search]["user_login_like"].blank? ? nil : params[:search]["user_login_like"]
+      tagged_with = params[:search]["tagged_with"].blank? ? nil : params[:search]["tagged_with"]
     
-    @search ||= end_of_association_chain.search( params[:search] )
+      if title_like
+        @search = @search.where("title LIKE ?", "%#{title_like}%")
+      end
+    
+      if user_login_like
+        @search = @search.joins(:user).where("users.login LIKE ?", "%#{user_login_like}%")
+      end
+    
+      if tagged_with
+        @search = @search.tagged_with(tagged_with)
+      end
+      
+      p "==============="
+      p params[:search][:order]
+      
+      if !params[:search][:order].blank?
+        order = params[:search][:order].split("_by_")
+        direction = order[0]
+        column = order[1]
+        
+        if direction == "ascend"
+          direction = "ASC"
+        else
+          direction = "DESC"
+        end
+        
+        p "==================="
+        p column
+        
+        if ["created_at", "title", "win_votes", "downloads"].include? column
+          @search = @search.order("#{column} #{direction}")
+        end
+      end
+    end
+    
+    #@search ||= end_of_association_chain.search( params[:search] )
     @search.paginate( :per_page => 10, :page => params[:page] )
   end
 end

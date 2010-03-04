@@ -46,5 +46,20 @@ module ApplicationHelper
   def has_role?(role)
     return false unless current_user
     current_user.roles.include? role
-  end 
+  end
+  
+  def direction(sym)
+    search_params = params[:search] || {}
+    if search_params[:order] == "descend_by_#{sym}"
+      "ascend_by_#{sym}"
+    else
+      "descend_by_#{sym}"
+    end
+  end
+  
+  def order(search, options)
+    search_params = params[:search] || {}
+    search_params = search_params.merge( :order => direction(options[:by]) )
+    link_to( options[:as], projects_path(:search => search_params) )
+  end
 end

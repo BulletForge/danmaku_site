@@ -15,18 +15,25 @@ class VotesController < ApplicationController
   
   load_and_authorize_resource
   
+  def create
+    create! do |success, failure|
+      success.json { render :json => success_json }
+      failure.json { render :json => failure_json }
+    end
+  end
 
-  create! do |success, failure|
-    success.json { render :json => success_json }
-    failure.json { render :json => failure_json }
+  def update  
+    update! do |success, failure|
+      success.json { render :json => success_json }
+      failure.json { render :json => failure_json }
+    end
   end
-  update! do |success, failure|
-    success.json { render :json => success_json }
-    failure.json { render :json => failure_json }
-  end
-  destroy! do |success, failure|
-    success.json { render :json => success_json }
-    failure.json { render :json => failure_json }
+
+  def destroy
+    destroy! do |success, failure|
+      success.json { render :json => success_json }
+      failure.json { render :json => failure_json }
+    end
   end
 
   private
@@ -34,7 +41,7 @@ class VotesController < ApplicationController
   def success_json
     @project.reload
     @version.reload
-    str = render_to_string :template => 'versions/_votes.html.erb', :locals => { :user => @user, :project => @project, :version => @version }
+    str = render_to_string :template => 'versions/_votes.html.erb', :locals => { :user => @user, :project => @project, :version => @version }, :layout => false
     { 
       :success => true,
       :replace_dom => '#votes',

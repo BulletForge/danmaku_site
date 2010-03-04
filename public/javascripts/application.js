@@ -42,6 +42,7 @@ var voting_ajax = function(el, vote){
         data: JSON.stringify({vote : {vote : vote}}),
         dataType: "json",
         success: function(data, status, request){
+          console.log(arguments);
             $(data.replace_dom).html(data.partial)
         },
         error: function(request, status, error){

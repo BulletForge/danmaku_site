@@ -16,7 +16,7 @@
         <%= image.input :attachment, :label => "Image attachment" %>
       <% else %>
         <%= image_tag image.object.attachment.url(:thumb) %>
-        <%# image.input :_delete, :label => "Remove", :as => :boolean %>
+        <%= image.input :_destroy, :label => "Remove", :as => :boolean %>
       <% end %>
     <% end %>
   <% end %>

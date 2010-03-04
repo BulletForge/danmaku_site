@@ -1,1 +1,6 @@
-Hey, guys. I can't believe some of you actually looked at this. :V
+This is the source code for bulleteforge.org
+
+TODO:
+* Fix file upload. (not working for Archive and Images, possibly paperclip is not working yet. )
+* replace "button_to" with "link_to" for deleting projects and versions and javascript
+* 

@@ -1,4 +1,4 @@
-<% semantic_form_for @user, :users do |form| %>
+<% semantic_form_for @user do |form| %>
   <% form.inputs do %>
     <% if form.object.new_record? %>
       <%=raw form.input :login, :label => "Username", :required => true %>

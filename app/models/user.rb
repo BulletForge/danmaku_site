@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
   end
   
   def roles
-    admin? ? [:admin, :user] : :user
+    admin? ? [:admin, :user] : [:user]
   end
   
   def owner_of?(ownable)

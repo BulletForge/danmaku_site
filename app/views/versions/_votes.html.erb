@@ -6,7 +6,7 @@
   Total fail: <%= project.fail_votes %><br />
 
   <br/>
-  <% can? :create, version.votes.new do %>
+  <%if can? :create, version.votes.build %>
     <% unless current_user.voted_on?(version) %>
       <%= link_to "Vote Up", user_project_version_votes_path(user, project, version, :format => :json), :id => "vote_up"%> |
       <%= link_to "Vote Down", user_project_version_votes_path(user, project, version, :format => :json), :id => "vote_down" %>

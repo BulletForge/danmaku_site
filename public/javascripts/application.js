@@ -61,7 +61,17 @@ $(function(){
 $(function(){
     handle_search_type.apply($('#search_type')[0]);
     $('#search_type').change(handle_search_type);
-})
+});
+
+
+$(function(){
+  $("a[data-method=delete]").live("click", function() {
+    var f = $("<form style='display:none' method='post' action='"+ this.href + "'><input type='hidden' name='_method' value='delete' /></form>");
+    $(this).after(f);
+    f.submit();
+    return false;
+  });
+});
 
 function uploadFailed(message){
 }

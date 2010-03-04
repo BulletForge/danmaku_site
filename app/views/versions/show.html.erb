@@ -27,13 +27,13 @@
       <% if @project.tags %>
         Tags:
         <% @project.tags.reverse.each do |tag| %>
-          <%= link_to h(tag.name), projects_path(:search => {:tagged_with => tag.name}, :search_type => :tags) %>
+          <%= link_to tag.name, projects_path(:search => {:tagged_with => tag.name}, :search_type => :tags) %>
         <% end %>
         <br/>
       <% end %>
       Last updated at: <%= @project.versions.last.created_at %><br/>
       <br/>
-      <%= simple_format(h(@version.description)) %>
+      <%=raw simple_format((@version.description)) %>
     </div>
   </div>
 </div>

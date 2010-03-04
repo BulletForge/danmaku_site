@@ -1,11 +1,11 @@
 <div id="login-bar">
-  <% can? :destroy, :user_sessions do %>
+  <% if can? :destroy, UserSession %>
     Logged in as <%= current_user.login %><br/>
     <%= link_to "My Account", user_path(current_user) %> |
     <%= link_to "Log Out", logout_path%>
     <%= "| " + link_to("New Project", new_user_project_path(current_user)) if can?(:create, :projects) %>
   <% end %>
-  <% can? :create, :user_sessions do %>
+  <% if can? :create, UserSession %>
     <%= link_to "Login", login_path %> |
     <%= link_to "Register", new_user_path%>
   <% end %>

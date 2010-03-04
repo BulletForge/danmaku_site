@@ -4,7 +4,7 @@
 <% end %>
 <%= link_to "See all comments ("+version.comments.count.to_s+")", user_project_version_comments_path(user, project, version)%>
 
-<% if can?(:create, :comments) %>
+<% if can?(:create, Comment) %>
   <% form_for :comment, :url => user_project_version_comments_path(user, project, version) do |f| %>
     <%= f.hidden_field :author_id, :value => current_user.id %>
     <%= f.text_area :content %><br />

@@ -12,8 +12,8 @@ class ArchivesController < ApplicationController
   before_filter :collection, :only =>[:index]
   before_filter :resource, :only => [:show, :edit, :update, :destroy]
   before_filter :build_resource, :only => [:new, :create, :index]
-  
-  load_and_authorize_resource
+  before_filter :require_authorization
+  authorize_resource
   
   
   def show
@@ -24,7 +24,6 @@ class ArchivesController < ApplicationController
   end
   
   create! do |success, failure|
-    
     success.json {
       str = render_to_string :template => 'versions/_archive.html.erb', :locals => { :user => @user, :project => @project, :version => @version }, :layout => false
       render :json => { 
@@ -33,8 +32,9 @@ class ArchivesController < ApplicationController
         :partial => str
       }.to_json
     }
-    failure.json {render :json => { :success => false, :errors => @archive.errors }.to_json }
+    failure.json { render :json => { :success => false, :errors => @archive.errors }.to_json }
   end
+
   
   destroy! do |success, failure|
     success.json { render :json => { :success => true }.to_json}
@@ -42,7 +42,6 @@ class ArchivesController < ApplicationController
   end
 
   private
-
   def build_resource
     end_of_association_chain
     @archive ||= Archive.new(:attachment => swf_upload_data, :attachable => @version)

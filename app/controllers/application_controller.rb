@@ -2,6 +2,8 @@
 # Likewise, all the methods added will be available for all controllers.
  
 class ApplicationController < ActionController::Base
+  before_filter :print_session
+  
   #include ExceptionNotifiable
   include Authentication
   include InheritedResources::DSL
@@ -12,5 +14,14 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied do |exception|
     flash[:error] = exception.message
     redirect_to root_url
+  end
+  
+  
+  
+  
+  private
+  def print_session
+    p "==============="
+    p session
   end
 end

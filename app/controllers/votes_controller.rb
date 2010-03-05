@@ -13,7 +13,7 @@ class VotesController < ApplicationController
   before_filter :resource, :only => [:show, :edit, :update, :destroy]
   before_filter :build_resource, :only => [:new, :create, :index]
   
-  load_and_authorize_resource
+  authorize_resource
   
   def create
     create! do |success, failure|

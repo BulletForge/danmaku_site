@@ -43,7 +43,7 @@ module SwfUpload
   }
 
   def swf_upload_data
-    @swf_upload_data ||= fix_mime_type(params[:Filedata]) if params[:Filedata]
+    @swf_upload_data ||= fix_mime_type() if params[:Filedata]
   end
 
 private

@@ -10,9 +10,10 @@ module ApplicationHelper
     # get session key
     session_key = ActionController::Base.session_options[:key]
 
-    post_params = {}
+    post_params = options.delete(:post_params) || {}     
     post_params['authenticity_token'] = CGI::escape(form_authenticity_token)
     post_params[session_key.to_s] = CGI::escape(cookies[session_key])
+    post_params = post_params
     options = options.reverse_merge({'post_params' => post_params})
     
     %Q{<div class="swfUploadArea">

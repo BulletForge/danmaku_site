@@ -12,8 +12,7 @@ class ArchivesController < ApplicationController
   before_filter :collection, :only =>[:index]
   before_filter :resource, :only => [:show, :edit, :update, :destroy]
   before_filter :build_resource, :only => [:new, :create, :index]
-  before_filter :require_authorization
-  authorize_resource
+  #authorize_resource
   
   
   def show
@@ -42,8 +41,9 @@ class ArchivesController < ApplicationController
   end
 
   private
+  
+  
   def build_resource
-    end_of_association_chain
-    @archive ||= Archive.new(:attachment => swf_upload_data, :attachable => @version)
+    @archive ||= end_of_association_chain.build_archive(:attachment => params[:Filedata], :attachable => @version)
   end
 end

@@ -1,13 +1,13 @@
 #login-bar
   - if can? :destroy, UserSession
     = current_user.login
+    - if can?(:create, current_user.projects.build)
+      |
+      = link_to("New Project", new_user_project_path(current_user))
     |
     = link_to "My Account", user_path(current_user)
     |
     = link_to "Log Out", logout_path
-    - if can?(:create, :projects)
-      |
-      = link_to("New Project", new_user_project_path(current_user))
 
   - if can? :create, UserSession
     = link_to "Login", login_path

@@ -56,8 +56,6 @@ class Ability
       
       # manage archives
       can :manage, Archive do |action, archive|
-        p "=================="
-        p archive
         archive.version && can?(:manage, archive.version)
       end
       

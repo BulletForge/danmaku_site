@@ -1,7 +1,11 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
   def preview_image(project, type)
-    image = image_tag 'nopreview.png'
+    if type == :normal
+      image = image_tag 'nopreviewnormal.png'
+    elsif type == :thumb
+      image = image_tag 'nopreviewthumb.png'
+    end
     image = image_tag project.images.first.attachment.url(type) unless project.images.empty?
     link_to image, user_project_path(project.user, project)
   end

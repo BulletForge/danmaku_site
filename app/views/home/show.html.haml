@@ -1,5 +1,5 @@
 #home
-  #ads
+  #announcements
     %h2
       BulletForge is still in beta.
     %p
@@ -19,11 +19,11 @@
         Featured New Project
       %h3
         = @featured_project.title
-      - unless @featured_project.images.blank?
-        #featured-image
+      #featured-image
+        - unless @featured_project.youtube_video_id.blank?
+          = render :partial => 'versions/youtube', :locals => {:project => @featured_project}
+        - else
           = preview_image(@featured_project, :normal)
-      - unless @featured_project.youtube_video_id.blank?
-        = render :partial => 'versions/youtube', :locals => {:project => @featured_project}
       #featured-content
         = "Author: " + @featured_project.user.login
         %br

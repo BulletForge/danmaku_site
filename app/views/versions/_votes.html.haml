@@ -1,0 +1,26 @@
+#votes
+  Version win:
+  = version.votes_for
+  %br
+  Version fail:
+  = version.votes_against
+  %br
+  %br
+  Total win:
+  = project.win_votes
+  %br
+  Total fail:
+  = project.fail_votes
+  %br
+  %br
+  - if can? :create, version.votes.build
+  - unless current_user.voted_on?(version)
+  = link_to "Vote Up", user_project_version_votes_path(user, project, version, :format => :json), :id => "vote_up"
+  |
+  = link_to "Vote Down", user_project_version_votes_path(user, project, version, :format => :json), :id => "vote_down"
+  - else
+  You voted
+  = "win." if current_user.voted_for?(version)
+  = "fail." if current_user.voted_against?(version)
+  - end
+  - end

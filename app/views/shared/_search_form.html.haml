@@ -1,0 +1,10 @@
+#search-form
+  - form_tag projects_path do
+  = text_field_tag 'search[title_like]', params[:search] ? params[:search][:title_like] : nil, :id => 'search_title_like', :class => "hidden"
+  = text_field_tag 'search[user_login_like]', params[:search] ? params[:search][:user_login_like] : nil, :id => 'search_user_login_like', :class => "hidden"
+  = text_field_tag 'search[tagged_with]',params[:search] ? params[:search][:tagged_with] : nil, :id => 'search_tagged_with', :class => "hidden"
+  %br
+  = label_tag :search_type, "Search by:"
+  = select_tag :search_type, options_for_select([['Title', 'title'], ['Username', 'username'], ['Tags', 'tags']], params[:search_type])
+  = submit_tag "Search", :id => "search_submit"
+  - end

@@ -1,0 +1,15 @@
+#order-projects
+  Order by:
+  = order @search, :by => :created_at, :as => "Date"
+  |
+  = order @search, :by => :title, :as => "Title"
+  |
+  = order @search, :by => :win_votes, :as => "Rating"
+  |
+  = order @search, :by => :downloads, :as => "Downloads"
+#project-list
+  = will_paginate @projects
+  - @projects.each do |p|
+  = render :partial => 'shared/project', :locals => {:p => p}
+  - end
+  = will_paginate @projects

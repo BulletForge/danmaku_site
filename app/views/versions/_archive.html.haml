@@ -1,0 +1,22 @@
+#archive
+  - if version.archive
+  = link_to "Download", user_project_version_archive_path(user, project, version)
+  %br
+  File size:
+  = number_to_human_size(version.archive.attachment.size)
+  %br
+  - elsif can?(:update, version)
+  %h4
+    Upload your script now!
+  %p
+    File size limit is
+    = Archive::MAX_FILE_SIZE
+    \.
+    %br
+    Accepted file types are .zip, .rar, .7z, and .tar.
+  = swf_upload_area "Attach script", :upload_url => '/upload/archive', :file_types => "*.zip; *.rar; *.7z; *.tar", :button_style => "font-family: Arial, sans-serif; font-size: 14pt; font-weight:bold;", :single_file => true, :file_size_limit => Archive::MAX_FILE_SIZE, :post_params => { :user_id => user.permalink, :project_id => project.permalink, :version_id => version.permalink, :format => :json }
+  - else
+  The author has not uploaded a script for this version.
+  %br
+  Please check back later.
+  - end

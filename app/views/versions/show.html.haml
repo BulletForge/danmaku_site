@@ -1,0 +1,44 @@
+= render :partial => 'management_toolbar', :locals => {:user => @user, :project => @project, :version => @version}
+#project-show
+  .heading
+    = h @project.title
+    %span.version-number
+      (v
+      = h @version.version_number
+      )
+  .body
+    .project-left
+      #images
+      = render :partial => 'archive', :locals => {:user => @user, :project => @project, :version => @version}
+      #statistics
+        #downloads
+          Version downloads:
+          = @version.download_count
+          %br
+          Total downloads:
+          = @project.downloads
+          %br
+        %br
+        = render :partial => 'votes', :locals => { :user => @user, :project => @project, :version => @version }
+    .project-right
+      Author:
+      = link_to @project.user.login, user_path(@project.user)
+      %br
+      Category:
+      = @project.category.name
+      %br
+      - if @project.tags
+      Tags:
+      - @project.tags.reverse.each do |tag|
+      = link_to tag.name, projects_path(:search => {:tagged_with => tag.name}, :search_type => :tags)
+      - end
+      %br
+      - end
+      Last updated at:
+      = @project.versions.last.created_at
+      %br
+      %br
+      = raw simple_format((@version.description))
+= render :partial => "youtube", :locals => {:project => @project}
+= render :partial => "version_list", :locals => {:user => @user, :project => @project}
+= render :partial => "comments", :locals => {:user => @user, :project => @project, :version => @version}

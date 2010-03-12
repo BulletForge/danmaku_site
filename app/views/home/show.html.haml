@@ -6,66 +6,61 @@
       We need more projects from people like you!
       %br
       - unless current_user
-      = link_to "Signup to upload a project now!", new_user_path
-      %br
-      %br
-      Already have an account?
-      %br
-      = link_to "Log in now!", login_path
-      - end
+        = link_to "Signup to upload a project now!", new_user_path
+        %br
+        %br
+        Already have an account?
+        %br
+        = link_to "Log in now!", login_path
       = link_to "Upload a project now!", new_user_project_path(current_user) if current_user
   - if @featured_project
-  #featured
-    %h2
-      Featured New Project
-    %h3
-      = @featured_project.title
-    - unless @featured_project.images.blank?
-    #featured-image
-      = preview_image(@featured_project, :normal)
-    - end
-    - unless @featured_project.youtube_video_id.blank?
-    = render :partial => 'versions/youtube', :locals => {:project => @featured_project}
-    - end
-    #featured-content
-      = "Author: " + @featured_project.user.login
-      %br
-      = "Category: " + @featured_project.category.name
-      %br
-      = "Downloads: " + @featured_project.downloads.to_s
-      %br
-      = "Win votes: " + @featured_project.win_votes.to_s
-      %br
-      = "Fail votes: " + @featured_project.fail_votes.to_s
-      %br
-      %br
-      = truncate @featured_project.versions.last.description, 700
-      = link_to "Read more", user_project_path(@featured_project.user, @featured_project)
-  - end
+    #featured
+      %h2
+        Featured New Project
+      %h3
+        = @featured_project.title
+      - unless @featured_project.images.blank?
+        #featured-image
+          = preview_image(@featured_project, :normal)
+      - unless @featured_project.youtube_video_id.blank?
+        = render :partial => 'versions/youtube', :locals => {:project => @featured_project}
+      #featured-content
+        = "Author: " + @featured_project.user.login
+        %br
+        = "Category: " + @featured_project.category.name
+        %br
+        = "Downloads: " + @featured_project.downloads.to_s
+        %br
+        = "Win votes: " + @featured_project.win_votes.to_s
+        %br
+        = "Fail votes: " + @featured_project.fail_votes.to_s
+        %br
+        %br
+        = truncate @featured_project.versions.last.description, 700
+        = link_to "Read more", user_project_path(@featured_project.user, @featured_project)
+
   #most-downloaded
-    %h3
-      Most Downloaded Projects
+    %h3 Most Downloaded Projects
     - Project.order('downloads DESC').limit(5).each do |project|
-    = link_to( project.title + " (" + project.downloads.to_s + " downloads)", user_project_path(project.user, project) )
-    %br
-    - end
+      = link_to( project.title + " (" + project.downloads.to_s + " downloads)", user_project_path(project.user, project) )
+      %br
     %br
     = link_to "See more...", projects_path(:search => {:order => :descend_by_downloads})
+
   #highest-rated
     %h3
       Highest Rated Projects
     - Project.order('win_votes DESC').limit(5).each do |project|
-    = link_to( project.title + " (" + project.win_votes.to_s + " win votes)", user_project_path(project.user, project) )
-    %br
-    - end
+      = link_to( project.title + " (" + project.win_votes.to_s + " win votes)", user_project_path(project.user, project) )
+      %br
     %br
     = link_to "See more...", projects_path(:search => {:order => :descend_by_win_votes})
+
   #latest
     %h3
       Latest Projects
     - Project.order('created_at DESC').limit(5).each do |project|
-    = link_to( project.title + " (" + project.created_at.strftime('%b %d %Y, %I:%m %p') + ")", user_project_path(project.user, project) )
-    %br
-    - end
+      = link_to( project.title + " (" + project.created_at.strftime('%b %d %Y, %I:%m %p') + ")", user_project_path(project.user, project) )
+      %br
     %br
     = link_to "See more...", projects_path(:search => {:order => :descend_by_created_at})

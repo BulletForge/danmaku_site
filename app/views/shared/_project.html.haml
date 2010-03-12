@@ -10,36 +10,32 @@
       %br
       Downloads:
       = p.downloads
+
   .preview
     = preview_image p, :thumb
+
   .body
     Author:
     = link_to p.user.login, user_path(p.user)
     %br
     - if p.versions.last
-    Latest version:
-    = h p.versions.last.version_number
-    %br
+      Latest version:
+      = h p.versions.last.version_number
+      %br
     - else
-    No versions
-    %br
-    - end
+      No versions
+      %br
     %br
     - if p.versions.last && !p.versions.last.description.blank?
-    %p
-      = h truncate p.versions.last.description, 512
+      %p= h truncate p.versions.last.description, 512
     - else
-    %p
-      No description
-    - end
+      %p No description
     Category:
     = p.category.name
     |
     - if p.tags
-    Tags:
-    - p.tags.reverse.each do |tag|
-    = link_to h(tag.name), projects_path(:search => {:tagged_with => tag.name}, :search_type => :tags)
-    - end
+      Tags:
+      - p.tags.reverse.each do |tag|
+      = link_to h(tag.name), projects_path(:search => {:tagged_with => tag.name}, :search_type => :tags)
     - else
-    No description
-    - end
+      No description

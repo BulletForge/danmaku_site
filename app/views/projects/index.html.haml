@@ -10,6 +10,5 @@
 #project-list
   = will_paginate @projects
   - @projects.each do |p|
-  = render :partial => 'shared/project', :locals => {:p => p}
-  - end
+    = render :partial => 'shared/project', :locals => {:p => p}
   = will_paginate @projects

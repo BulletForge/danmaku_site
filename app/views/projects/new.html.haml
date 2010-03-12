@@ -1,16 +1,16 @@
 %h1
   Creating New Project
 - semantic_form_for setup_project(@project), :url => user_projects_path(@user) do |form|
-- form.inputs do
-= form.input :title, :required => true
-= form.input :category
-= form.input :tag_list, :label => "Tags", :hint => "Tags are separated by commas (\",\")"
-- end
-- form.semantic_fields_for :versions do |version|
-- version.inputs do
-= version.input :version_number, :required => true
-= version.input :description
-- end
-- end
-= form.buttons
-- end
+
+  - form.inputs do
+    = form.input :title, :required => true
+    = form.input :category
+    = form.input :tag_list, :label => "Tags", :hint => "Tags are separated by commas (\",\")"
+
+  - form.semantic_fields_for :versions do |version|
+    - version.inputs do
+      = version.input :version_number, :required => true
+      = version.input :description
+
+  = form.buttons
+

@@ -10,6 +10,7 @@ class Ability
       can :create, User
       # read everything
       can :read, :all
+      return
     end
     
     # admin
@@ -19,6 +20,7 @@ class Ability
       # but...
       # cannot login because he is already logged in
       cannot :create, UserSession
+      return
     end
     
     # regular user

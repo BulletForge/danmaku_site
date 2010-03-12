@@ -13,17 +13,46 @@
     /[if IE]
       = stylesheet_link_tag "ie", :media => "screen, projection"
   %body
-    #wrapper
-      #header
-        %h1#logo= link_to "BulletForge", root_path
-        = render :partial => 'shared/login'
-        = render :partial => 'shared/search_form'
-      #content
-        - if flash[:notice]
-          .flash.notice= flash[:notice]
-        - if flash[:error]
-          .flash.errors= flash[:error]
-        = yield
+    #header
+      %h1#logo= link_to "BulletForge", root_path
+      = render :partial => 'shared/login'
+      = render :partial => 'shared/search_form'
+    #content
+      - if flash[:notice]
+        .flash.notice= flash[:notice]
+      - if flash[:error]
+        .flash.errors= flash[:error]
+      = yield  
+    #footer
+      #most-downloaded
+        .content
+          %h3 Most Downloaded
+          - Project.order('downloads DESC').limit(5).each do |project|
+            = link_to( project.title + " (" + project.downloads.to_s + " downloads)", user_project_path(project.user, project) )
+            %br
+          %br
+          = link_to "See more...", projects_path(:search => {:order => :descend_by_downloads})
+
+      #highest-rated
+        .content
+          %h3
+            Highest Rated
+          - Project.order('win_votes DESC').limit(5).each do |project|
+            = link_to( project.title + " (" + project.win_votes.to_s + " win votes)", user_project_path(project.user, project) )
+            %br
+          %br
+          = link_to "See more...", projects_path(:search => {:order => :descend_by_win_votes})
+
+      #latest
+        .content
+          %h3
+            Latest
+          - Project.order('created_at DESC').limit(5).each do |project|
+            = link_to( project.title + " (" + project.created_at.strftime('%b %d %Y, %I:%m %p') + ")", user_project_path(project.user, project) )
+            %br
+          %br
+          = link_to "See more...", projects_path(:search => {:order => :descend_by_created_at})
+
     - if !Rails.env.production?
       :javascript
         var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");

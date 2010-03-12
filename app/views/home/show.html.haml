@@ -38,29 +38,3 @@
         %br
         = truncate @featured_project.versions.last.description, 700
         = link_to "Read more", user_project_path(@featured_project.user, @featured_project)
-
-  #most-downloaded
-    %h3 Most Downloaded Projects
-    - Project.order('downloads DESC').limit(5).each do |project|
-      = link_to( project.title + " (" + project.downloads.to_s + " downloads)", user_project_path(project.user, project) )
-      %br
-    %br
-    = link_to "See more...", projects_path(:search => {:order => :descend_by_downloads})
-
-  #highest-rated
-    %h3
-      Highest Rated Projects
-    - Project.order('win_votes DESC').limit(5).each do |project|
-      = link_to( project.title + " (" + project.win_votes.to_s + " win votes)", user_project_path(project.user, project) )
-      %br
-    %br
-    = link_to "See more...", projects_path(:search => {:order => :descend_by_win_votes})
-
-  #latest
-    %h3
-      Latest Projects
-    - Project.order('created_at DESC').limit(5).each do |project|
-      = link_to( project.title + " (" + project.created_at.strftime('%b %d %Y, %I:%m %p') + ")", user_project_path(project.user, project) )
-      %br
-    %br
-    = link_to "See more...", projects_path(:search => {:order => :descend_by_created_at})

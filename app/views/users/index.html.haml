@@ -1,7 +1,6 @@
 %h1
   Users
 - @users.each do |user|
-= link_to user.login, user_path(user)
-%br
-- end
+  = link_to user.login, user_path(user)
+  %br
 = will_paginate @users

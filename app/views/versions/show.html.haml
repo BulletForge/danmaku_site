@@ -6,6 +6,7 @@
       (v
       = h @version.version_number
       )
+
   .body
     .project-left
       #images
@@ -20,6 +21,7 @@
           %br
         %br
         = render :partial => 'votes', :locals => { :user => @user, :project => @project, :version => @version }
+
     .project-right
       Author:
       = link_to @project.user.login, user_path(@project.user)
@@ -28,17 +30,18 @@
       = @project.category.name
       %br
       - if @project.tags
-      Tags:
-      - @project.tags.reverse.each do |tag|
-      = link_to tag.name, projects_path(:search => {:tagged_with => tag.name}, :search_type => :tags)
-      - end
-      %br
-      - end
+        Tags:
+        - @project.tags.reverse.each do |tag|
+          = link_to tag.name, projects_path(:search => {:tagged_with => tag.name}, :search_type => :tags)
+        %br
+
       Last updated at:
       = @project.versions.last.created_at
       %br
       %br
       = raw simple_format((@version.description))
+
+
 = render :partial => "youtube", :locals => {:project => @project}
 = render :partial => "version_list", :locals => {:user => @user, :project => @project}
 = render :partial => "comments", :locals => {:user => @user, :project => @project, :version => @version}

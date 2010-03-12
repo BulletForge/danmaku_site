@@ -15,7 +15,7 @@
       <%= link_to "Upload a project now!", new_user_project_path(current_user) if current_user %>
     </p>
   </div>
-  <% if @featured_project %>  
+  
   <div id="featured">
       <h2>Featured New Project</h2>
       <h3><%= @featured_project.title %></h3>
@@ -41,8 +41,6 @@
         <%= link_to "Read more", user_project_path(@featured_project.user, @featured_project) %>
       </div>
   </div>
-  <% end %>  
-
   <div id="most-downloaded">
     <h3>Most Downloaded Projects</h3>
     <% Project.order('downloads DESC').limit(5).each do |project| %>

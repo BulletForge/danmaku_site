@@ -3,7 +3,9 @@
     Logged in as <%= current_user.login %><br/>
     <%= link_to "My Account", user_path(current_user) %> |
     <%= link_to "Log Out", logout_path%>
-    <%= "| " + link_to("New Project", new_user_project_path(current_user)) if can?(:create, :projects) %>
+    <%- if can?(:create, :projects) %>
+      | <%= link_to("New Project", new_user_project_path(current_user)) %>
+    <% end %>
   <% end %>
   <% if can? :create, UserSession %>
     <%= link_to "Login", login_path %> |

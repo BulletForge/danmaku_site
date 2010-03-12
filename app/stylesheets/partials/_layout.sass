@@ -1,11 +1,34 @@
 body
-    background-color:  #333
+    background-color= !widget_border_color
     margin-top: 0
     #wrapper
         +container
+        background-color: white
         #header
-            h1
+            position: relative
+            h1#logo
                 margin: 0
+                padding: 20px 0
+            #login-bar
+                +pad
+                +border-radius-bottom-right(!widget_rounded_radius)
+                +border-radius-bottom-left(!widget_rounded_radius)
+                background-color= !widget_bg_color
+                position: absolute
+                top:      0
+                right:    0
+                border= 1px solid !widget_border_color
+                    top: none
+                margin: 0 5px
+            #search-bar
+                background-color= !widget_bg_color
+                padding: 5px 20px
+                text-align: right
+                border-top= 1px solid !widget_border_color
+                border-bottom= 1px solid !widget_border_color
+
+
+
         .hidden
             display: none
     a

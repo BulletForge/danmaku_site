@@ -13,9 +13,9 @@
     /[if IE]
       = stylesheet_link_tag "ie", :media => "screen, projection"
   %body
-    #wrapper.showgrid
+    #wrapper
       #header
-        %h1= link_to "BulletForge", root_path
+        %h1#logo= link_to "BulletForge", root_path
         = render :partial => 'shared/login'
         = render :partial => 'shared/search_form'
       #content

@@ -1,8 +1,7 @@
 #login-bar
   - if can? :destroy, UserSession
-    Logged in as
     = current_user.login
-    %br
+    |
     = link_to "My Account", user_path(current_user)
     |
     = link_to "Log Out", logout_path

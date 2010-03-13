@@ -16,7 +16,7 @@
   - if @featured_project
     #featured
       %h2
-        Featured New Project
+        Featured Project
       %h3
         = @featured_project.title
       #featured-image
@@ -25,16 +25,32 @@
         - else
           = preview_image(@featured_project, :normal)
       #featured-content
-        = "Author: " + @featured_project.user.login
-        %br
-        = "Category: " + @featured_project.category.name
-        %br
-        = "Downloads: " + @featured_project.downloads.to_s
-        %br
-        = "Win votes: " + @featured_project.win_votes.to_s
-        %br
-        = "Fail votes: " + @featured_project.fail_votes.to_s
-        %br
-        %br
-        = truncate @featured_project.versions.last.description, 700
-        = link_to "Read more", user_project_path(@featured_project.user, @featured_project)
+        - if @featured_project.versions.last.archive
+          .download-now
+            =link_to "Download Now", user_project_version_archive_path(@featured_project.user, @featured_project, @featured_project.versions.last)
+        .author.stats
+          .title Author:
+          .content= link_to @featured_project.user.login, user_path(@featured_project.user)
+          %br{:style=>"clear:both"}
+        .category.stats
+          .title Category:
+          .content= @featured_project.category.name
+          %br{:style=>"clear:both"}
+        .downloads.stats
+          .title Downloads:
+          .content= @featured_project.downloads.to_s
+          %br{:style=>"clear:both"}
+        .win-votes.stats
+          .title Win votes:
+          .content= @featured_project.win_votes.to_s
+          %br{:style=>"clear:both"}
+        .fail-votes.stats
+          .title Fail votes:
+          .content= @featured_project.fail_votes.to_s
+          %br{:style=>"clear:both"}
+        .description
+          .title
+            Description
+          .content
+            = truncate @featured_project.versions.last.description, 700
+            = link_to "Read more", user_project_path(@featured_project.user, @featured_project)

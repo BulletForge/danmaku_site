@@ -1,11 +1,13 @@
 body
     background-color= !widget_border_color
     margin-top: 0
+    font-size:  75%
     #header
         +container
-        +border-radius-bottom-right(30px)
-        +border-radius-bottom-left(30px)
+        +border-radius-bottom-right(20px)
+        +border-radius-bottom-left(20px)
         margin-bottom: 40px
+        padding-bottom: 30px
         background-color: white
         position: relative
         h1#logo
@@ -28,8 +30,6 @@ body
             text-align: right
             border-top= 1px solid !widget_border_color
             border-bottom= 1px solid !widget_border_color
-            +border-radius-bottom-right(20px)
-            +border-radius-bottom-left(20px)
 
     #content
         +container

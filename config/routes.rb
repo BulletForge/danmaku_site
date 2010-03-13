@@ -4,12 +4,6 @@ BulletForge::Application.routes.draw do
     resources :comments, :only => [:index, :create, :destroy]
     resources :projects, :as => 'p' do
       resources :versions, :as => 'v' do
-        member do
-          get :download
-          get :upload
-          get :vote_up
-          get :vote_down
-        end
         resources :comments, :only => [:index, :create, :destroy]
         resource :archive, :only => [:show]
         resources :votes

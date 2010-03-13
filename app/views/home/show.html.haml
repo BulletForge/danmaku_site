@@ -18,7 +18,7 @@
       %h2
         Featured Project
       %h3
-        = @featured_project.title
+        = link_to @featured_project.title, user_project_path(@featured_project.user, @featured_project)
       #featured-image
         - unless @featured_project.youtube_video_id.blank?
           = render :partial => 'versions/youtube', :locals => {:project => @featured_project}
@@ -40,13 +40,27 @@
           .title Downloads:
           .content= @featured_project.downloads.to_s
           %br{:style=>"clear:both"}
+        .comments.stats
+          .title Comments:
+          .content
+            = @featured_project.versions.last.comments.count
+            = link_to "(see all comments)", user_project_version_path(@featured_project.user, @featured_project, @featured_project.versions.last, :anchor => "comments")
+          %br{:style=>"clear:both"}
         .win-votes.stats
           .title Win votes:
-          .content= @featured_project.win_votes.to_s
+          .content
+            = @featured_project.win_votes.to_s
+            - if can? :create, @featured_project.versions.last.votes.build
+              - if current_user && !current_user.voted_on?(@featured_project.versions.last)
+                = link_to "(Vote Up)", user_project_version_votes_path(@featured_project.user, @featured_project, @featured_project.versions.last, :format => :json), :id => "vote_up"
           %br{:style=>"clear:both"}
         .fail-votes.stats
           .title Fail votes:
-          .content= @featured_project.fail_votes.to_s
+          .content
+            = @featured_project.fail_votes.to_s
+            - if can? :create, @featured_project.versions.last.votes.build
+              - if current_user && !current_user.voted_on?(@featured_project.versions.last)
+                = link_to "(Vote Down)", user_project_version_votes_path(@featured_project.user, @featured_project, @featured_project.versions.last, :format => :json), :id => "vote_down"
           %br{:style=>"clear:both"}
         .description
           .title

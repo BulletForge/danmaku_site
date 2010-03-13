@@ -1,4 +1,4 @@
-%h3
+%h3#comments
   Latest comments for this version
 - version.comments.order("created_at DESC").limit(5).each do |comment|
   = render :partial => 'shared/comment', :locals => {:user => user, :project => project, :version => version, :comment => comment, :destroy_path => 'version'}

@@ -31,7 +31,7 @@
       %br
       - if @project.tags
         Tags:
-        - @project.tags.reverse.each do |tag|
+        - @project.tags.each do |tag|
           = link_to tag.name, projects_path(:search => {:tagged_with => tag.name}, :search_type => :tags)
         %br
 

@@ -35,7 +35,7 @@
     |
     - if p.tags
       Tags:
-      - p.tags.reverse.each do |tag|
+      - p.tags.each do |tag|
         = link_to h(tag.name), projects_path(:search => {:tagged_with => tag.name}, :search_type => :tags)
     - else
       No description

@@ -66,5 +66,5 @@
           .title
             Description
           .content
-            = truncate @featured_project.versions.last.description, 700
+            = truncate @featured_project.versions.last.description, :length => 700
             = link_to "Read more", user_project_path(@featured_project.user, @featured_project)

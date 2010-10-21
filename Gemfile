@@ -1,22 +1,19 @@
 source :gemcutter
 
-gem 'rack', '1.1.0'
-gem "rails", '3.0.0.beta'
+gem "rails", '~> 3.0.0'
 gem 'pg'
-gem 'compass', '0.10.0.pre8'
-gem 'haml', '2.2.20'
-gem 'will_paginate', '3.0.pre'
-gem 'responders', '0.5.2'
-gem 'has_scope', '0.4.2'
-gem 'inherited_resources', '1.1.0'
-gem 'cancan', '1.0.2'
-gem 'acts-as-taggable-on', '2.0.0.pre1'
-#gem 'meta_search', '0.2.2'
+gem 'compass', '~> 0.10.0'
+gem 'haml'
+gem 'will_paginate'
+gem 'inherited_resources'
+gem 'cancan'
+gem 'acts-as-taggable-on'
+gem 'authlogic'
 
 group :development do
-  gem 'mongrel', '1.1.5'
+  gem 'sqlite3-ruby'
 end
 
 group :production do
-  gem 'thin', '1.2.7'
+  gem 'thin'
 end

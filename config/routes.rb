@@ -1,9 +1,9 @@
 BulletForge::Application.routes.draw do
 
-  resources :users, :as => 'u' do
+  resources :users, :path => 'u' do
     resources :comments, :only => [:index, :create, :destroy]
-    resources :projects, :as => 'p' do
-      resources :versions, :as => 'v' do
+    resources :projects, :path => 'p' do
+      resources :versions, :path => 'v' do
         resources :comments, :only => [:index, :create, :destroy]
         resource :archive, :only => [:show]
         resources :votes

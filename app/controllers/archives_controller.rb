@@ -44,6 +44,11 @@ class ArchivesController < ApplicationController
   
   
   def build_resource
-    @archive ||= end_of_association_chain.build_archive(:attachment => params[:Filedata], :attachable => @version)
+    eoa = end_of_association_chain
+    p "========================================================================"
+    p @version
+    p params[:Filedata]
+    p eoa
+    @archive ||= eoa.build_archive(:attachment => params[:Filedata])
   end
 end

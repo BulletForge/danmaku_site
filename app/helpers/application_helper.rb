@@ -12,7 +12,7 @@ module ApplicationHelper
   
   def swf_upload_area(title, options)
     # get session key
-    session_key = ActionController::Base.session_options[:key]
+    session_key = Rails.application.config.session_options[:key]
 
     post_params = options.delete(:post_params) || {}     
     post_params['authenticity_token'] = CGI::escape(form_authenticity_token)

@@ -10,6 +10,7 @@ gem 'cancan'
 gem 'acts-as-taggable-on'
 gem 'authlogic'
 gem 'formtastic'
+gem 'paperclip'
 
 group :development do
   gem 'sqlite3-ruby'

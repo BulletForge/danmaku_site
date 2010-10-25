@@ -37,37 +37,16 @@ after 'deploy:update_code', :roles => :app do
 end
 
 namespace :deploy do
-  task :default do
-    update
-    restart
-  end
-
-  namespace :web do
-    desc "Serve up a custom maintenance page."
-    task :disable, :roles => :web do
-      require 'erb'
-
-      on_rollback { run "rm #{shared_path}/system/maintenance.html" }
-      reason = ENV['REASON']
-      deadline = ENV['UNTIL']
-
-      template = File.read("app/views/maintenance/index.html.erb")
-      page = ERB.new(template).result(binding)
-      put page, "#{shared_path}/system/maintenance.html", :mode => 0644
-    end
-  end
 
   task :restart, :roles => :app do
-    web.disable
-    run "thin restart -C /etc/thin/bulletforge.yml && sleep 10"
-    web.enable
+    run "touch #{current_path}/tmp/restart.txt"
   end
 
   task :start, :roles => :app do
-    run "thin start -C /etc/thin/bulletforge.yml"
+    #do nothing
   end
 
   task :stop, :roles => :app do
-    run "thin stop -C /etc/thin/bulletforge.yml"
+    #do nothing
   end
 end

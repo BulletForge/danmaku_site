@@ -9,6 +9,7 @@ gem 'inherited_resources'
 gem 'cancan'
 gem 'acts-as-taggable-on'
 gem 'authlogic'
+gem 'formtastic'
 
 group :development do
   gem 'sqlite3-ruby'

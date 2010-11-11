@@ -11,6 +11,7 @@ gem 'acts-as-taggable-on'
 gem 'authlogic'
 gem 'formtastic'
 gem 'paperclip'
+gem 'right_aws'
 
 group :development do
   gem 'sqlite3-ruby'

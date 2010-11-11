@@ -47,7 +47,7 @@
   	},
 
   	uploadError: function(file, errorCode, message) {
-  		alert('something went wrong');
+  		alert(message);
   	},
   	
   	uploadSuccess: function(file, serverData) {

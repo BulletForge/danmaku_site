@@ -10,8 +10,8 @@ gem 'cancan'
 gem 'acts-as-taggable-on'
 gem 'authlogic'
 gem 'formtastic'
-gem 'paperclip'
-gem 'aws-s3'
+gem 's3_swf_upload', :git => 'git://github.com/nathancolgate/s3-swf-upload-plugin'
+gem 'aws-s3', :require => 'aws/s3'
 
 group :development do
   gem 'sqlite3-ruby'

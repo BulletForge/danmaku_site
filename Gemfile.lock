@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/nathancolgate/s3-swf-upload-plugin
+  revision: b53f8d147f4ee5317da07bb37f12196f641a40cd
+  specs:
+    s3_swf_upload (0.3.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -60,9 +66,6 @@ GEM
       mime-types
       treetop (>= 1.4.5)
     mime-types (1.16)
-    paperclip (2.3.4)
-      activerecord
-      activesupport
     pg (0.9.0)
     polyglot (0.3.1)
     rack (1.2.1)
@@ -109,9 +112,9 @@ DEPENDENCIES
   formtastic
   haml
   inherited_resources
-  paperclip
   pg
   rails (~> 3.0.0)
+  s3_swf_upload!
   sqlite3-ruby
   thin
   will_paginate

@@ -12,6 +12,7 @@ gem 'authlogic'
 gem 'formtastic'
 gem 'paperclip'
 gem 'right_aws'
+gem 'aws-s3'
 
 group :development do
   gem 'sqlite3-ruby'

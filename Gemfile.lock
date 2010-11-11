@@ -85,9 +85,6 @@ GEM
       thor (~> 0.14.0)
     rake (0.8.7)
     responders (0.6.2)
-    right_aws (2.0.0)
-      right_http_connection (>= 1.2.1)
-    right_http_connection (1.2.4)
     sqlite3-ruby (1.3.1)
     thin (1.2.7)
       daemons (>= 1.0.9)
@@ -115,7 +112,6 @@ DEPENDENCIES
   paperclip
   pg
   rails (~> 3.0.0)
-  right_aws
   sqlite3-ruby
   thin
   will_paginate

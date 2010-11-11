@@ -11,7 +11,6 @@ gem 'acts-as-taggable-on'
 gem 'authlogic'
 gem 'formtastic'
 gem 'paperclip'
-gem 'right_aws'
 gem 'aws-s3'
 
 group :development do

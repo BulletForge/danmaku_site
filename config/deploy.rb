@@ -20,7 +20,7 @@ role :db,  'ec2-75-101-244-26.compute-1.amazonaws.com', :primary => true
 ###########################################
 
 # production only...
-set :branch, 'master'
+set :branch, 's3'
 set :rails_env, 'production'
 set :deploy_to, '/home/deploy/projects/bulletforge'
 

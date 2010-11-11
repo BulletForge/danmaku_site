@@ -1,0 +1,4 @@
+development:
+  key: < your amazon s3 key >
+  secret: < your amazon s3 secret >
+  bucket: < your bucket >

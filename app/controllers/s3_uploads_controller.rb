@@ -32,8 +32,7 @@ class S3UploadsController < ApplicationController
         ['eq', '$success_action_status', '201']
     ]
 }").gsub(/\n|\r/, '')
-
-    signature = b64_hmac_sha1(secret_key, policy)
+    signature = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'), secret_key, policy)).gsub("\n","")
 
     respond_to do |format|
       format.xml {

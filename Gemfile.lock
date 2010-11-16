@@ -1,8 +1,8 @@
 GIT
-  remote: git://github.com/nathancolgate/s3-swf-upload-plugin
-  revision: b53f8d147f4ee5317da07bb37f12196f641a40cd
+  remote: git://github.com/Blargel/s3-swf-upload-plugin
+  revision: 4115b1872c4074a7ab9e05f2a5b8e6c9880de1de
   specs:
-    s3_swf_upload (0.3.0)
+    s3_swf_upload (0.3.1)
 
 GEM
   remote: http://rubygems.org/

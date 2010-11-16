@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/Blargel/s3-swf-upload-plugin
-  revision: df1149ed2808fc1ef91f44089216b6f336c73d09
+  revision: a6435e415799c7d68aafd9bca661ad26e74e8d77
   specs:
     s3_swf_upload (0.3.1)
 

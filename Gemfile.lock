@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/Blargel/s3-swf-upload-plugin
-  revision: a6435e415799c7d68aafd9bca661ad26e74e8d77
+  revision: 4b3fd4f6837c9312b4ddcc38af0d9797d40b26dd
   specs:
     s3_swf_upload (0.3.1)
 
@@ -97,7 +97,7 @@ GEM
       eventmachine (>= 0.12.6)
       rack (>= 1.0.0)
     thor (0.14.4)
-    treetop (1.4.8)
+    treetop (1.4.9)
       polyglot (>= 0.3.1)
     tzinfo (0.3.23)
     will_paginate (2.3.15)

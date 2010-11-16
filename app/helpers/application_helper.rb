@@ -43,10 +43,11 @@ module ApplicationHelper
     link_to( options[:as], projects_path(:search => search_params) )
   end
   
-  def s3_swf_upload_area
+  def s3_swf_upload_area(key_prefix)
     raw s3_swf_upload_tag(
       :fileTypes => '*.zip;*.rar;*.7z;*.tar;',
       :fileTypeDescs => 'Archive files.',
+      :keyPrefix => key_prefix,
       :selectMultipleFiles => false, 
       :onQueueChange => 'queueChangeHandler(queue);', 
       :onUploadingStart => 'uploadingStartHandler();', 

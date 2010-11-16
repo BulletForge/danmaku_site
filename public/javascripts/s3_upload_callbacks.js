@@ -1,16 +1,16 @@
 var queueBytesLoaded = 0;
-var myQueue = null;
+var file = null;
 
 var queueChangeHandler = function(queue){
-	myQueue = queue;
-	$('#s3-swf-upload-bar > span.name').html(queue.files[0].name)
-	$('#s3-swf-upload-bar > span.size').html(readableBytes(queue.files[0].size))
+	file = queue.files[0];
+	$('#s3-swf-upload-bar > span.name').html(file.name)
+	$('#s3-swf-upload-bar > span.size').html(readableBytes(file.size))
 };
 
 var uploadingFinishHandler = function(){
 	$('#s3-swf-upload-bar > span.progress').css('width', '100%');
 	$('#s3-swf-upload-bar > span.progress > span.percentage').html('100%');
-  	alert('All files have been successfully uploaded');
+  	postArchiveData();
 };
 
 var progressHandler = function(progress_event){
@@ -26,7 +26,18 @@ var readableBytes = function(bytes) {
 	return (bytes/Math.pow(1024, Math.floor(e))).toFixed(2)+" "+s[e];
 }
 
-var uploadingFinishHandler = function(upload_options, event){
-	console.log(upload_options)
-	console.log(event)
+var postArchiveData = function(){
+	var key = s3_swf_1_object.keyPrefix + file.name;
+	$.ajax({
+		url:  "/upload/archive",
+        type: "POST",
+        contentType: "application/json; charset-utf-8",
+        data: JSON.stringify({archive: {s3_key: key, attachment_file_name: file.name}, user_id: user_id, project_id: project_id, version_id: version_id}),
+        dataType: "json",
+        success: function(data, status, request){
+            $(data.replace_dom).html(data.partial)
+        },
+        error: function(request, status, error){
+        }
+	});
 }

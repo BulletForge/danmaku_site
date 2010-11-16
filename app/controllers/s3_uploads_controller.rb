@@ -18,7 +18,7 @@ class S3UploadsController < ApplicationController
     https           = 'false'
     error_message   = ''
     expiration_date = 1.hours.from_now.utc.strftime('%Y-%m-%dT%H:%M:%S.000Z')
-
+    
     policy = Base64.encode64(
 "{
     'expiration': '#{expiration_date}',

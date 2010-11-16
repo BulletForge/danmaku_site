@@ -18,37 +18,35 @@ class ArchivesController < ApplicationController
   def show
     show! do |format|
       @version.increment_download_counter!
-      format.html { redirect_to @version.archive.attachment.url }
+      format.html { redirect_to @version.archive.attachment_url }
     end
   end
   
-  create! do |success, failure|
-    success.json {
-      str = render_to_string :template => 'versions/_archive.html.erb', :locals => { :user => @user, :project => @project, :version => @version }, :layout => false
-      render :json => { 
-        :success => true, 
-        :replace_dom => '#archive', 
-        :partial => str
-      }.to_json
-    }
-    failure.json { render :json => { :success => false, :errors => @archive.errors }.to_json }
+  def create
+    @user = User.find_by_permalink! params[:user_id]
+    @project = @user.projects.find_by_permalink! params[:project_id]
+    @version = @project.versions.find_by_permalink! params[:version_id]
+    
+    @archive = Archive.new(params[:archive])
+    @archive.import_s3_data
+    @archive.attachable = @version
+    
+    create! do |success, failure|
+      success.json {
+        str = render_to_string :template => 'versions/_archive.html.erb', :locals => { :user => @user, :project => @project, :version => @version }, :layout => false
+        render :json => { 
+          :success => true, 
+          :replace_dom => '#archive', 
+          :partial => str
+        }.to_json
+      }
+      failure.json { render :json => { :success => false, :errors => @archive.errors }.to_json }
+    end
   end
 
   
   destroy! do |success, failure|
     success.json { render :json => { :success => true }.to_json}
     failure.json { render :json => { :success => false, :errors => @archive.errors }.to_json }
-  end
-
-  private
-  
-  
-  def build_resource
-    eoa = end_of_association_chain
-    p "========================================================================"
-    p @version
-    p params[:Filedata]
-    p eoa
-    @archive ||= eoa.build_archive(:attachment => params[:Filedata])
   end
 end

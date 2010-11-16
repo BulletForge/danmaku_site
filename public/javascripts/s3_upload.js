@@ -110,8 +110,9 @@ function s3_swf_init(id, options)
 		onUploadComplete: onUploadComplete,
 		onUploadIOError: onUploadIOError,
 		onUploadSecurityError: onUploadSecurityError,
-		onUploadError: onUploadError
+		onUploadError: onUploadError,
 		
+		keyPrefix: keyPrefix
   }
 
   return(s3_swf);

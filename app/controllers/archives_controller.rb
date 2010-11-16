@@ -23,11 +23,6 @@ class ArchivesController < ApplicationController
   end
   
   def create
-    @user = User.find_by_permalink! params[:user_id]
-    @project = @user.projects.find_by_permalink! params[:project_id]
-    @version = @project.versions.find_by_permalink! params[:version_id]
-    
-    @archive = Archive.new(params[:archive])
     @archive.import_s3_data
     @archive.attachable = @version
     
@@ -43,10 +38,12 @@ class ArchivesController < ApplicationController
       failure.json { render :json => { :success => false, :errors => @archive.errors }.to_json }
     end
   end
-
   
-  destroy! do |success, failure|
-    success.json { render :json => { :success => true }.to_json}
-    failure.json { render :json => { :success => false, :errors => @archive.errors }.to_json }
+  def destroy
+    destroy! do |success, failure|
+      success.json { render :json => { :success => true }.to_json}
+      failure.json { render :json => { :success => false, :errors => @archive.errors }.to_json }
+    end
   end
+  
 end

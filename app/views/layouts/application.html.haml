@@ -5,7 +5,7 @@
     %title= h(@title || "BulletForge")
     %meta{ :name => "keywords", :content => "danmakufu scripts, danmakufu projects, danmakufu, shmup, game scripts" }
     %meta{ :name => "description", :content => "Dedicated Danmakufu Project Hosting" }
-    = javascript_include_tag 'json2', 'jquery-1.3.2', 'jquery.metadata', 'swfupload', 'swfupload.queue', 'swfupload_plugin', 'application'
+    = javascript_include_tag 'json2', 'jquery-1.3.2', 'jquery.metadata', 's3_upload.js', 's3_upload_callbacks.js', 'application'
     = stylesheet_link_tag "screen", :media => "screen, projection"
     = stylesheet_link_tag "formtastic", :media => "screen, projection"
     = stylesheet_link_tag "formtastic_changes", :media => "screen, projection"

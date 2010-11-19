@@ -1,7 +1,32 @@
-.bar
-    width: 200px
-    height: 16px
+#s3-swf-upload
+  #s3-swf-upload-bar
+    width: 400px
+    height: 26px
+    font-size: 1.2em
     border: 1px solid black
-    .progress
-        height: 100%
-        background-color: red
+    position: relative
+    margin-bottom: 8px
+    span.progress
+      height: 100%
+      display: none
+      position: absolute
+      text-align: right
+      background-color: #99FF99
+      span.percentage
+        color= !widget_bg_color
+        padding-right: 10px
+    span.name
+      display: block
+      position: absolute
+      left: 5px
+      padding-left: 5px
+    span.size
+      display: block
+      position: absolute
+      left: 280px
+      text-align: right
+      padding-right: 5px
+  #s3-swf-upload-start
+    display: block
+    float: left
+    margin-right: 10px

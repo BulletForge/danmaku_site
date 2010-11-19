@@ -10,31 +10,6 @@ module ApplicationHelper
     link_to image, user_project_path(project.user, project)
   end
   
-  def swf_upload_area(title, options)
-    # get session key
-    session_key = Rails.application.config.session_options[:key]
-
-    post_params = options.delete(:post_params) || {}     
-    post_params['authenticity_token'] = CGI::escape(form_authenticity_token)
-    post_params[session_key.to_s] = CGI::escape(cookies[session_key])
-    post_params = post_params
-    options = options.reverse_merge({'post_params' => post_params})
-    
-    %Q{<div class="swfUploadArea">
-        <script type="application/json">
-          #{options.to_json}
-        </script>
-        <div class="embedArea">
-            <div class="embedButton">
-              <input type="button" value="#{title}" />
-              <div class="placeHolder" id="swfUploadButton"></div>
-            </div>
-        </div>
-        <ul class="uploadContainer">
-        </ul>
-    </div>}.html_safe
-  end
-  
   def w3c_date(date)
      date.utc.strftime("%Y-%m-%dT%H:%M:%S+00:00")
   end
@@ -66,5 +41,24 @@ module ApplicationHelper
     search_params = params[:search] || {}
     search_params = search_params.merge( :order => direction(options[:by]) )
     link_to( options[:as], projects_path(:search => search_params) )
+  end
+  
+  def s3_swf_upload_area(key_prefix)
+    raw s3_swf_upload_tag(
+      :fileTypes => '*.zip;*.rar;*.7z;*.tar;',
+      :fileTypeDescs => 'Archive files.',
+      :keyPrefix => key_prefix,
+      :selectMultipleFiles => false, 
+      :onQueueChange => 'queueChangeHandler(queue);', 
+      :onUploadingStart => 'uploadingStartHandler();', 
+      :onSignatureIOError => "alert('Signature IO Error');", 
+      :onSignatureXMLError => "alert('Signature XML Error');", 
+      :onSignatureSecurityError => "alert('Signature Security Error');", 
+      :onUploadError => "alert('Upload Error');", 
+      :onUploadIOError => "alert('Upload IO Error');", 
+      :onUploadSecurityError => "alert('Upload Security Error');", 
+      :onUploadProgress => 'progressHandler(progress_event);', 
+      :onUploadComplete => 'uploadingFinishHandler(upload_options,event);'
+    )
   end
 end

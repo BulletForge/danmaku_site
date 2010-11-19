@@ -4,10 +4,11 @@ set :scm, :git
 #set :deploy_via, :remote_cache
 set :use_sudo, false
 set :user, 'deploy'
+set :scm_passphrase, "z/pjEeS3]UqFOc3hx1bNo0,p"
 
-role :app, 'bulletforge.org'
-role :web, 'bulletforge.org'
-role :db,  'bulletforge.org', :primary => true
+role :app, 'ec2-75-101-244-26.compute-1.amazonaws.com'
+role :web, 'ec2-75-101-244-26.compute-1.amazonaws.com'
+role :db,  'ec2-75-101-244-26.compute-1.amazonaws.com', :primary => true
 
 ###########################################
 # let you to use local ssh keys
@@ -19,9 +20,9 @@ role :db,  'bulletforge.org', :primary => true
 ###########################################
 
 # production only...
-set :branch, 'master'
+set :branch, 's3'
 set :rails_env, 'production'
-set :deploy_to, '/var/www/bulletforge'
+set :deploy_to, '/home/deploy/projects/bulletforge'
 
 
 after 'deploy:update_code', :roles => :app do

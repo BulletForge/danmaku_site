@@ -3,7 +3,7 @@
     = link_to "Download", user_project_version_archive_path(user, project, version)
     %br
     File size:
-    = number_to_human_size(version.archive.attachment.size)
+    = number_to_human_size(version.archive.attachment_file_size)
     %br
   - elsif can?(:update, version)
     %h4
@@ -14,8 +14,20 @@
     \.
     %br
     Accepted file types are .zip, .rar, .7z, and .tar.
-    = swf_upload_area "Attach script", :upload_url => '/upload/archive', :file_types => "*.zip; *.rar; *.7z; *.tar", :button_style => "font-family: Arial, sans-serif; font-size: 14pt; font-weight:bold;", :single_file => true, :file_size_limit => Archive::MAX_FILE_SIZE, :post_params => { :user_id => user.permalink, :project_id => project.permalink, :version_id => version.permalink, :format => :json }
+    %br/
+    #s3-swf-upload
+      #s3-swf-upload-bar
+        %span.progress
+          %span.percentage
+        %span.name
+        %span.size
+      = s3_swf_upload_area("archives/" + version.id.to_s + "/")
+      %input{:type => "submit", :id => "s3-swf-upload-start", :value => "Upload", :onclick => "s3_swf_1_object.startUploading();"}
   - else
     The author has not uploaded a script for this version.
     %br
     Please check back later.
+  :javascript
+    version_id = '#{version.permalink}';
+    project_id = '#{project.permalink}';
+    user_id = '#{user.permalink}';

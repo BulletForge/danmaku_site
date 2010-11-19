@@ -1,6 +1,4 @@
 config/*.yml
-app/stylesheets/.sass-cache
-public/stylesheets/*
 log/*.log
 tmp/**/*
 doc/api

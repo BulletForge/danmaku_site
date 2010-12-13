@@ -7,10 +7,11 @@ var queueChangeHandler = function(queue){
 	$('#s3-swf-upload-bar > span.size').html(readableBytes(file.size))
 };
 
-var uploadingFinishHandler = function(){
+var uploadingFinishHandler = function(upload_options){
 	$('#s3-swf-upload-bar > span.progress').css('width', '100%');
 	$('#s3-swf-upload-bar > span.progress > span.percentage').html('100%');
-  	postArchiveData();
+	key = upload_options.key
+  	postArchiveData(key);
 };
 
 var progressHandler = function(progress_event){
@@ -26,8 +27,7 @@ var readableBytes = function(bytes) {
 	return (bytes/Math.pow(1024, Math.floor(e))).toFixed(2)+" "+s[e];
 }
 
-var postArchiveData = function(){
-	var key = s3_swf_1_object.keyPrefix + file.name;
+var postArchiveData = function(key){
 	$.ajax({
 		url:  "/upload/archive",
         type: "POST",

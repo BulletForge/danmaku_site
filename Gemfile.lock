@@ -4,6 +4,14 @@ GIT
   specs:
     s3_swf_upload (0.3.1)
 
+GIT
+  remote: git://github.com/lightyear/paperclip
+  revision: 16c22840b8792cccba0b8c449c3bd024103fbf1f
+  specs:
+    paperclip (2.3.5)
+      activerecord
+      activesupport
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -66,9 +74,6 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.16)
-    paperclip (2.3.5)
-      activerecord
-      activesupport
     pg (0.9.0)
     polyglot (0.3.1)
     rack (1.2.1)
@@ -115,7 +120,7 @@ DEPENDENCIES
   formtastic
   haml
   inherited_resources
-  paperclip
+  paperclip!
   pg
   rails (~> 3.0.0)
   s3_swf_upload!

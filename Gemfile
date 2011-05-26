@@ -10,7 +10,7 @@ gem 'cancan'
 gem 'acts-as-taggable-on'
 gem 'authlogic'
 gem 'formtastic'
-gem 'paperclip'
+gem 'paperclip', :git => 'git://github.com/lightyear/paperclip'
 gem 's3_swf_upload', :git => 'git://github.com/Blargel/s3-swf-upload-plugin'
 gem 'aws-s3', :require => 'aws/s3'
 

@@ -43,9 +43,6 @@ class ProjectsController < ApplicationController
         @search = @search.tagged_with(tagged_with)
       end
       
-      p "==============="
-      p params[:search][:order]
-      
       if !params[:search][:order].blank?
         order = params[:search][:order].split("_by_")
         direction = order[0]
@@ -56,9 +53,6 @@ class ProjectsController < ApplicationController
         else
           direction = "DESC"
         end
-        
-        p "==================="
-        p column
         
         if ["created_at", "title", "win_votes", "downloads"].include? column
           @search = @search.order("#{column} #{direction}")

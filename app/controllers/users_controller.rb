@@ -21,6 +21,6 @@ class UsersController < ApplicationController
   protected
   # Paginate the users collection  
   def _collection
-    end_of_association_chain.paginate(:per_page => 10, :page => params[:page], :order => 'created_at DESC')
+    @users ||= end_of_association_chain.find(:all).paginate(:per_page => 10, :page => params[:page], :order => 'created_at DESC')
   end
 end

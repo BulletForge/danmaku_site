@@ -43,7 +43,7 @@ class Project < ActiveRecord::Base
   end
 
   def self.featured
-    Project.find().order("created_at DESC").limit(100).max do |p1, p2|
+    Project.order("created_at DESC").limit(100).max do |p1, p2|
       p1.downloads <=> p2.downloads
     end
   end

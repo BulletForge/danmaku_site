@@ -45,7 +45,7 @@ module ApplicationHelper
   
   def s3_swf_upload_area(key_prefix)
     raw s3_swf_upload_tag(
-      :fileTypes => '*.zip;*.rar;*.7z;*.tar;',
+      :fileTypes => '*.zip;*.rar;*.7z;*.tar;*.dat',
       :fileTypeDescs => 'Archive files.',
       :keyPrefix => key_prefix,
       :selectMultipleFiles => false, 

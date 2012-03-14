@@ -30,18 +30,14 @@ class ProjectsController < ApplicationController
       title_like = params[:search]["title_like"].blank? ? nil : params[:search]["title_like"]
       user_login_like = params[:search]["user_login_like"].blank? ? nil : params[:search]["user_login_like"]
       tagged_with = params[:search]["tagged_with"].blank? ? nil : params[:search]["tagged_with"]
-    
-      if title_like
-        @search = @search.where("UPPER(title) LIKE UPPER( ? )", "%#{title_like}%")
-      end
-    
-      if user_login_like
-        @search = @search.joins(:user).where("UPPER(users.login) LIKE UPPER( ? )", "%#{user_login_like}%")
-      end
-    
-      if tagged_with
-        @search = @search.tagged_with(tagged_with)
-      end
+      category_is = params[:search]["category_is"].blank? ? nil : params[:search]["category_is"]
+      danmakufu_version_is = params[:search]["danmakufu_version_is"].blank? ? nil : params[:search]["danmakufu_version_is"]
+
+      @search = @search.where("UPPER(title) LIKE UPPER( ? )", "%#{title_like}%")                           if title_like
+      @search = @search.joins(:user).where("UPPER(users.login) LIKE UPPER( ? )", "%#{user_login_like}%")   if user_login_like
+      @search = @search.tagged_with(tagged_with)                                                           if tagged_with
+      @search = @search.joins(:category).where("categories.id = ?", category_is)                           if category_is
+      @search = @search.joins(:danmakufu_version).where("danmakufu_versions.id = ?", danmakufu_version_is) if danmakufu_version_is
       
       if !params[:search][:order].blank?
         order = params[:search][:order].split("_by_")

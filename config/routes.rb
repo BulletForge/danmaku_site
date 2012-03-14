@@ -20,6 +20,8 @@ BulletForge::Application.routes.draw do
   
   post '/upload/archive' => 'archives#create', :as => :upload_archive 
   post '/upload/image' => 'images#create', :as => :upload_image
+
+  get '/search' => 'search#advanced_search', :as => :search
   
   root :to => 'home#show'  
   match '/:controller(/:action(/:id))'

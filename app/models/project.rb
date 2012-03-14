@@ -1,6 +1,7 @@
 class Project < ActiveRecord::Base
   belongs_to :user
   belongs_to :category
+  belongs_to :danmakufu_version
   has_many   :versions, :dependent => :destroy
   has_many   :comments, :through => :versions
   has_many   :images,   :as => :attachable, :dependent => :destroy

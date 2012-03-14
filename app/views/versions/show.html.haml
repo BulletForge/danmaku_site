@@ -29,6 +29,9 @@
       Category:
       = @project.category.name
       %br
+      Danmakufu Version:
+      = @project.danmakufu_version.name
+      %br
       - if @project.tags
         Tags:
         - @project.tags.each do |tag|

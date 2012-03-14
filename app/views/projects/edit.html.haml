@@ -4,6 +4,7 @@
 - semantic_form_for setup_project(@project), :url => user_project_path(@user, @project), :html => { :multipart => true } do |form|
   - form.inputs do
     = form.input :title, :required => true
+	= form.input :danmakufu_version
     = form.input :category
     = form.input :youtube_video_id, :hint => "e.g. if the url is 'http://www.youtube.com/watch?v=skocYq7gPFs', then the video id is 'skocYq7gPFs'", :label => "Youtube Video ID"
     = form.input :tag_list, :label => "Tags", :hint => "Tags are separated by commas (\",\")"

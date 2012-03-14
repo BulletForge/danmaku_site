@@ -32,11 +32,11 @@ class ProjectsController < ApplicationController
       tagged_with = params[:search]["tagged_with"].blank? ? nil : params[:search]["tagged_with"]
     
       if title_like
-        @search = @search.where("title LIKE ?", "%#{title_like}%")
+        @search = @search.where("UPPER(title) LIKE UPPER( ? )", "%#{title_like}%")
       end
     
       if user_login_like
-        @search = @search.joins(:user).where("users.login LIKE ?", "%#{user_login_like}%")
+        @search = @search.joins(:user).where("UPPER(users.login) LIKE UPPER( ? )", "%#{user_login_like}%")
       end
     
       if tagged_with

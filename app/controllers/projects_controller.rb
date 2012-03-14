@@ -58,9 +58,10 @@ class ProjectsController < ApplicationController
           @search = @search.order("#{column} #{direction}")
         end
       end
+    else
+      @search = @search.all
     end
     
-    #@search ||= end_of_association_chain.search( params[:search] )
     @search.paginate( :per_page => 10, :page => params[:page] )
   end
 end

@@ -1,8 +1,8 @@
 class User < ActiveRecord::Base
-  has_many :projects
+  has_many :projects, :dependent => :destroy
   has_many :versions, :through => :projects
   has_many :authored_comments, :class_name => "Comment", :foreign_key => "author_id"
-  has_many :comments, :as => :commentable
+  has_many :comments, :as => :commentable, :dependent => :destroy
   
   acts_as_authentic do |config|
     config.merge_validates_format_of_email_field_options :message => "Email must look like an email."

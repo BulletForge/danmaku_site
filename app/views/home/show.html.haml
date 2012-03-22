@@ -1,70 +1,77 @@
-#home
-  #announcements
-    %h2
-      BulletForge is still in beta.
-    %p
-      We need more projects from people like you!
-      %br
-      - unless current_user
-        = link_to "Signup to upload a project now!", new_user_path
-        %br
-        %br
-        Already have an account?
-        %br
-        = link_to "Log in now!", login_path
-      = link_to "Upload a project now!", new_user_project_path(current_user) if current_user
+%section#featured-project
   - if @featured_project
-    #featured
-      %h2
-        Featured Project
-      %h3
-        = link_to @featured_project.title, user_project_path(@featured_project.user, @featured_project)
-      #featured-image
+    .page-header
+      %h1 Featured Project
+    .row
+      .span6
         - unless @featured_project.youtube_video_id.blank?
           = render :partial => 'versions/youtube', :locals => {:project => @featured_project}
         - else
           = preview_image(@featured_project, :normal)
-      #featured-content
-        - if @featured_project.versions.last.archive
-          .download-now
-            =link_to "Download Now", user_project_version_archive_path(@featured_project.user, @featured_project, @featured_project.versions.last)
-        .author.stats
-          .title Author:
-          .content= link_to @featured_project.user.login, user_path(@featured_project.user)
-          %br{:style=>"clear:both"}
-        .category.stats
-          .title Category:
-          .content= @featured_project.category.name
-          %br{:style=>"clear:both"}
-        .downloads.stats
-          .title Downloads:
-          .content= @featured_project.downloads.to_s
-          %br{:style=>"clear:both"}
-        .comments.stats
-          .title Comments:
-          .content
-            = @featured_project.versions.last.comments.count
-            = link_to "(see all comments)", user_project_version_path(@featured_project.user, @featured_project, @featured_project.versions.last, :anchor => "comments")
-          %br{:style=>"clear:both"}
-        .win-votes.stats
-          .title Win votes:
-          .content
-            = @featured_project.win_votes.to_s
-            - if can? :create, @featured_project.versions.last.votes.build
-              - if current_user && !current_user.voted_on?(@featured_project.versions.last)
-                = link_to "(Vote Up)", user_project_version_votes_path(@featured_project.user, @featured_project, @featured_project.versions.last, :format => :json), :id => "vote_up"
-          %br{:style=>"clear:both"}
-        .fail-votes.stats
-          .title Fail votes:
-          .content
-            = @featured_project.fail_votes.to_s
-            - if can? :create, @featured_project.versions.last.votes.build
-              - if current_user && !current_user.voted_on?(@featured_project.versions.last)
-                = link_to "(Vote Down)", user_project_version_votes_path(@featured_project.user, @featured_project, @featured_project.versions.last, :format => :json), :id => "vote_down"
-          %br{:style=>"clear:both"}
-        .description
-          .title
-            Description
-          .content
-            = truncate @featured_project.versions.last.description, :length => 700
-            = link_to "Read more", user_project_path(@featured_project.user, @featured_project)
+      .span6
+        %h2= link_to @featured_project.title, user_project_path(@featured_project.user, @featured_project)
+        %p
+          %strong Author:
+          = link_to @featured_project.user.login, user_path(@featured_project.user)
+        %p
+          %strong Tags:
+          = tag_list(@featured_project)
+        %p
+          %strong Category:
+          = @featured_project.category.name
+        %p
+          %strong Danmakufu Version:
+          = @featured_project.danmakufu_version.name
+        %p
+          %strong Downloads:
+          = @featured_project.downloads.to_s
+        %p
+          %strong Comments:
+          = @featured_project.versions.last.comments.count
+          = link_to "(see all comments)", user_project_version_path(@featured_project.user, @featured_project, @featured_project.versions.last, :anchor => "comments")
+        %p
+          %strong Up votes:
+          = @featured_project.win_votes.to_s
+          - if can? :create, @featured_project.versions.last.votes.build
+            - if current_user && !current_user.voted_on?(@featured_project.versions.last)
+              = link_to "(Vote Up)", user_project_version_votes_path(@featured_project.user, @featured_project, @featured_project.versions.last, :format => :json), :id => "vote_up"
+        %p
+          %strong Down votes:
+          = @featured_project.fail_votes.to_s
+          - if can? :create, @featured_project.versions.last.votes.build
+            - if current_user && !current_user.voted_on?(@featured_project.versions.last)
+              = link_to "(Vote Down)", user_project_version_votes_path(@featured_project.user, @featured_project, @featured_project.versions.last, :format => :json), :id => "vote_down"
+        %p
+          = truncate @featured_project.versions.last.description, :length => 700
+          = link_to "Read more", user_project_path(@featured_project.user, @featured_project)
+        =link_to "Download Now", user_project_version_archive_path(@featured_project.user, @featured_project, @featured_project.versions.last), :class => "btn btn-primary"
+
+%section#popular-projects{ :style => "padding-top:30px;"}
+  .page-header
+    %h1 Popular Projects
+  .row
+    .span4
+      %h3 Most Downloaded
+      - Project.order('downloads DESC').limit(5).each do |project|
+        = link_to( project.title + " (" + project.downloads.to_s + " downloads)", user_project_path(project.user, project) )
+        %br
+      %br
+      = link_to "See more...", projects_path(:search => {:order => :descend_by_downloads})
+
+    .span4
+      %h3
+        Highest Rated
+      - Project.order('win_votes DESC').limit(5).each do |project|
+        = link_to( project.title + " (" + project.win_votes.to_s + " win votes)", user_project_path(project.user, project) )
+        %br
+      %br
+      = link_to "See more...", projects_path(:search => {:order => :descend_by_win_votes})
+
+    .span4
+      %h3
+        Latest
+      - Project.order('created_at DESC').limit(5).each do |project|
+        = link_to( project.title + " (" + project.created_at.strftime('%b %d %Y, %I:%m %p') + ")", user_project_path(project.user, project) )
+        %br
+      %br
+      = link_to "See more...", projects_path(:search => {:order => :descend_by_created_at})

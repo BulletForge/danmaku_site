@@ -1,5 +1,6 @@
 // setting metadata default params
 $.metadata.setType('elem', 'script');
+$(".alert").alert()
 
 var voting_ajax = function(el, vote){
     $.ajax({

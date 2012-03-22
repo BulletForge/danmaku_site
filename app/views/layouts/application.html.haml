@@ -6,44 +6,23 @@
     %meta{ :name => "keywords", :content => "danmakufu scripts, danmakufu projects, danmakufu, shmup, game scripts" }
     %meta{ :name => "description", :content => "Dedicated Danmakufu Project Hosting" }
     = stylesheet_link_tag 'bootstrap'
-    = javascript_include_tag 'json2', 'jquery-1.3.2', 'jquery.metadata', 's3_upload.js', 's3_upload_callbacks.js', 'application'
+    = javascript_include_tag 'json2', 'jquery-1.7.2', 'jquery.metadata', 's3_upload.js', 's3_upload_callbacks.js'
+    = javascript_include_tag 'bootstrap-alert', 'application'
   %body
+
     = render :partial => 'layouts/navbar'
-    #content.container
+
+    .container{ :style => "padding-top: 80px;"}
       - if flash[:notice]
-        .flash.notice= flash[:notice]
+        .alert.alert-success.fade.in
+          %a.close{ :"data-dismiss" => "alert", :href => "#" } ×
+          = flash[:notice]
       - if flash[:error]
-        .flash.errors= flash[:error]
-      = yield  
-    #footer
-      #most-downloaded
-        .content
-          %h3 Most Downloaded
-          - Project.order('downloads DESC').limit(5).each do |project|
-            = link_to( project.title + " (" + project.downloads.to_s + " downloads)", user_project_path(project.user, project) )
-            %br
-          %br
-          = link_to "See more...", projects_path(:search => {:order => :descend_by_downloads})
+        .alert.alert-error.fade.in
+          %a.close{ :"data-dismiss" => "alert", :href => "#" } ×
+          = flash[:error]
 
-      #highest-rated
-        .content
-          %h3
-            Highest Rated
-          - Project.order('win_votes DESC').limit(5).each do |project|
-            = link_to( project.title + " (" + project.win_votes.to_s + " win votes)", user_project_path(project.user, project) )
-            %br
-          %br
-          = link_to "See more...", projects_path(:search => {:order => :descend_by_win_votes})
-
-      #latest
-        .content
-          %h3
-            Latest
-          - Project.order('created_at DESC').limit(5).each do |project|
-            = link_to( project.title + " (" + project.created_at.strftime('%b %d %Y, %I:%m %p') + ")", user_project_path(project.user, project) )
-            %br
-          %br
-          = link_to "See more...", projects_path(:search => {:order => :descend_by_created_at})
+      = yield
 
     - if Rails.env.production?
       :javascript

@@ -1,13 +1,14 @@
-= link_to comment.author.login, user_path(comment.author)
-= comment.created_at.strftime '%d %B %Y, %I:%m %p'
-%br
+.row{ :style => "padding-top:15px;"}
+  .span12
+    = link_to comment.author.login, user_path(comment.author)
+    \-
+    = comment.created_at.strftime '%B %d %Y, %I:%m %p'
 
-- if can? :destroy, comment
-  - path = user_comment_path(user, comment) if destroy_path == 'user'
-  - path = user_project_version_comment_path(user, project, version, comment) if destroy_path == 'version'
-  = link_to "Remove", path, :method => :delete, :confirm => "Are you sure you want to delete this comment?"
-  %br
-
-= h comment.content
-%br
-%br
+.row{ :style => "padding-left:15px"}
+  .span12
+    - if can? :destroy, comment
+      - path = user_comment_path(user, comment) if destroy_path == 'user'
+      - path = user_project_version_comment_path(user, project, version, comment) if destroy_path == 'version'
+      = link_to "Remove", path, :method => :delete, :confirm => "Are you sure you want to delete this comment?"
+      %br
+    = h comment.content

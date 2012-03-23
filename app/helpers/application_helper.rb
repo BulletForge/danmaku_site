@@ -8,7 +8,7 @@ module ApplicationHelper
       image = image_tag 'nopreviewthumb.png'
     end
     image = image_tag project.images.first.attachment.url(type) unless project.images.empty?
-    link_to image, user_project_path(project.user, project)
+    link_to image, user_project_path(project.user, project), :class => "thumbnail"
   end
   
   def w3c_date(date)
@@ -69,7 +69,12 @@ module ApplicationHelper
       :onUploadIOError => "alert('Upload IO Error');", 
       :onUploadSecurityError => "alert('Upload Security Error');", 
       :onUploadProgress => 'progressHandler(progress_event);', 
-      :onUploadComplete => 'uploadingFinishHandler(upload_options,event);'
+      :onUploadComplete => 'uploadingFinishHandler(upload_options,event);',
+      :buttonUpPath => '/flash/s3_up_button.png',
+      :buttonOverPath => '/flash/s3_over_button.png',
+      :buttonDownPath => '/flash/s3_down_button.png',
+      :buttonWidth => 66,
+      :buttonHeight => 27
     )
   end
 

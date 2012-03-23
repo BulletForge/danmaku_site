@@ -14,7 +14,7 @@ class CommentsController < ApplicationController
     if @comment.save
       flash[:notice] = "Comment successfully posted."
     else
-      flash[:notice] = "Comment posting failed."
+      flash[:error] = "Comment posting failed."
     end
     redirect_back    
   end

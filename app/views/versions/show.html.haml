@@ -1,50 +1,38 @@
 = render :partial => 'management_toolbar', :locals => {:user => @user, :project => @project, :version => @version}
-#project-show
-  .heading
-    = h @project.title
-    %span.version-number
-      (v
-      = h @version.version_number
-      )
 
-  .body
-    .project-left
-      #images
-      = render :partial => 'archive', :locals => {:user => @user, :project => @project, :version => @version}
-      #statistics
-        #downloads
-          Version downloads:
-          = @version.download_count
-          %br
-          Total downloads:
-          = @project.downloads
-          %br
-        %br
-        = render :partial => 'votes', :locals => { :user => @user, :project => @project, :version => @version }
+%section#project-show
+  .page-header
+    %h1
+      = h(@project.title)
+      %small
+        version
+        = h(@version.version_number)
 
-    .project-right
-      Author:
-      = link_to @project.user.login, user_path(@project.user)
-      %br
-      Category:
-      = @project.category.name
-      %br
-      Danmakufu Version:
-      = @project.danmakufu_version.name
-      %br
-      - if @project.tags
-        Tags:
-        - @project.tags.each do |tag|
-          = link_to tag.name, projects_path(:search => {:tagged_with => tag.name}, :search_type => :tags)
-        %br
+  %ul.nav.nav-tabs
+    %li.active
+      %a{ :href => "#details", :"data-toggle" => "tab" }
+        Details
+    %li
+      %a{ :href => "#images", :"data-toggle" => "tab" }
+        Images
+    %li
+      %a{ :href => "#video", :"data-toggle" => "tab" }
+        Video
+    %li
+      %a{ :href => "#versions", :"data-toggle" => "tab" }
+        Versions
 
-      Last updated at:
-      = @project.versions.last.created_at
-      %br
-      %br
-      = raw simple_format((@version.description))
+  .tab-content
+    #details.tab-pane.active
+      = render :partial => "details", :locals => {:user => @user, :project => @project, :version => @version}
 
+    #images.tab-pane
+      = render :partial => "images", :locals => {:project => @project}
 
-= render :partial => "youtube", :locals => {:project => @project}
-= render :partial => "version_list", :locals => {:user => @user, :project => @project}
-= render :partial => "comments", :locals => {:user => @user, :project => @project, :version => @version}
+    #video.tab-pane
+      = render :partial => "youtube", :locals => {:project => @project}
+
+    #versions.tab-pane
+      = render :partial => "version_list", :locals => {:user => @user, :project => @project}
+
+  = render :partial => "comments", :locals => {:user => @user, :project => @project, :version => @version}

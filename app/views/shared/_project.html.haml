@@ -41,6 +41,7 @@
           Tags:
         = tag_list(p)
         %br
+        %br
         - if p.versions.last && !p.versions.last.description.blank?
           %p= h truncate p.versions.last.description, :length => 300
         - else

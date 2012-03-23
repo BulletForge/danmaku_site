@@ -14,4 +14,4 @@
   = label_tag 'search[danmakufu_version_is]', "Danmakufu Version:"
   = select_tag 'search[danmakufu_version_is]', options_from_collection_for_select(DanmakufuVersion.all, 'id', 'name'), :include_blank => true
   %br
-  = submit_tag "Search", :id => "search_submit"
+  = submit_tag "Search", :id => "search_submit", :class => "btn btn-primary"

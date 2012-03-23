@@ -8,8 +8,7 @@ var queueChangeHandler = function(queue){
 };
 
 var uploadingFinishHandler = function(upload_options){
-	$('#s3-swf-upload-bar > span.progress').css('width', '100%');
-	$('#s3-swf-upload-bar > span.progress > span.percentage').html('100%');
+	$('#s3-swf-upload-bar > .progress > .bar').css('width', '100%');
 	key = upload_options.key
   	postArchiveData(key);
 };
@@ -17,8 +16,7 @@ var uploadingFinishHandler = function(upload_options){
 var progressHandler = function(progress_event){
 	$('#file_todo_list:first-child > span.file_size').css('display', 'none');
 	var current_percentage = Math.floor((parseInt(progress_event.bytesLoaded)/parseInt(progress_event.bytesTotal))*100)+'%';
-	$('#s3-swf-upload-bar > span.progress').css({display: 'block', width: current_percentage});
-	$('#s3-swf-upload-bar > span.progress > span.percentage').html(current_percentage);
+	$('#s3-swf-upload-bar > .progress > .bar').css('width', current_percentage);
 };
 
 var readableBytes = function(bytes) {

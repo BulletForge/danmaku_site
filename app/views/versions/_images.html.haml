@@ -1,0 +1,6 @@
+- unless project.images.empty?
+  %ul.thumbnails
+    - project.images.each do |image|
+      %li.span3
+        %a.thumbnail{ :href => image.attachment.url }
+          = image_tag image.attachment.url(:normal)

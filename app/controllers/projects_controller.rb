@@ -54,8 +54,6 @@ class ProjectsController < ApplicationController
           @search = @search.order("#{column} #{direction}")
         end
       end
-    else
-      @search = @search.all
     end
     
     @search.paginate( :per_page => 10, :page => params[:page] )

@@ -52,8 +52,6 @@ GEM
       xml-simple
     builder (2.1.2)
     cancan (1.4.1)
-    compass (0.10.6)
-      haml (>= 3.0.4)
     daemons (1.1.0)
     erubis (2.6.6)
       abstract (>= 1.0.0)
@@ -105,7 +103,7 @@ GEM
     treetop (1.4.9)
       polyglot (>= 0.3.1)
     tzinfo (0.3.23)
-    will_paginate (2.3.15)
+    will_paginate (3.0.3)
     xml-simple (1.0.12)
 
 PLATFORMS
@@ -116,7 +114,6 @@ DEPENDENCIES
   authlogic
   aws-s3
   cancan
-  compass (~> 0.10.0)
   formtastic
   haml
   inherited_resources

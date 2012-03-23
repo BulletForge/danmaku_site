@@ -1,5 +1,5 @@
-%h1
-  = @user.login
+.page-header
+  %h1= @user.login
 = link_to "Edit Account", edit_user_path(@user) if can?(:update, @user)
 
 #project-list
@@ -20,7 +20,7 @@
 - if can?(:create, @user.comments.build)
   - form_for :comment, :url => user_comments_path(@user) do |f|
     = f.hidden_field :author_id, :value => current_user.id
-    = f.text_area :content
+    = f.text_area :content, :style => "width:400px; height:250px;"
     %br
     = f.submit 'Post Comment'
 - else

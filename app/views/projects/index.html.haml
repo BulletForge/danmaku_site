@@ -8,9 +8,9 @@
   |
   = order @search, :by => :downloads, :as => "Downloads"
 #project-list
-  = will_paginate @projects, :class => "pagination pagination-centered"
+  = will_paginate @projects
 
   - @projects.each do |p|
     = render :partial => 'shared/project', :locals => {:p => p}
 
-  = will_paginate @projects, :class => "pagination pagination-centered"
+  = will_paginate @projects

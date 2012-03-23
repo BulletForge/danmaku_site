@@ -1,3 +1,5 @@
+require 'will_paginate/array'
+
 class UsersController < ApplicationController
   inherit_resources
   include PermalinkResources
@@ -21,6 +23,32 @@ class UsersController < ApplicationController
   protected
   # Paginate the users collection  
   def _collection
-    @users ||= end_of_association_chain.find(:all).paginate(:per_page => 10, :page => params[:page], :order => 'created_at DESC')
+    @users ||= end_of_association_chain
+
+    order_collection
+
+    @users.paginate(:per_page => 10, :page => params[:page], :order => 'created_at DESC')
+  end
+
+  def order_collection
+    order = params[:search] && params[:search][:order]
+    order ||= "ascend_by_login"
+
+    order_arr = order.split("_by_")
+    direction = order_arr[0]
+    column = order_arr[1]
+    
+    if direction == "ascend"
+      direction = "ASC"
+    else
+      direction = "DESC"
+    end
+    
+    if ["created_at", "login"].include? column
+      @users = @users.order("#{column} #{direction}")
+    elsif "projects_count" == column
+      @users = @users.all.sort_by{ |u| u.projects.count }
+      @users.reverse if direction == "ASC"
+    end
   end
 end

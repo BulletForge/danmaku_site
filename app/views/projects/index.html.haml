@@ -1,16 +1,25 @@
-#order-projects
-  Order by:
-  = order @search, :by => :created_at, :as => "Date"
-  |
-  = order @search, :by => :title, :as => "Title"
-  |
-  = order @search, :by => :win_votes, :as => "Rating"
-  |
-  = order @search, :by => :downloads, :as => "Downloads"
-#project-list
-  = will_paginate @projects
+%section#project-search
+  .page-header
+    %h1
+      Projects
+      - if @user
+        %small
+          by
+          = @user.login
 
-  - @projects.each do |p|
+  = will_paginate @projects, :inner_window => 2
+
+  Order: &nbsp
+  = order @search, :by => :created_at, :as => "Date", :path => "projects"
+  &nbsp
+  = order @search, :by => :title, :as => "Title", :path => "projects"
+  &nbsp
+  = order @search, :by => :win_votes, :as => "Rating", :path => "projects"
+  &nbsp
+  = order @search, :by => :downloads, :as => "Downloads", :path => "projects"
+
+  - @projects.each_with_index do |p, i|
     = render :partial => 'shared/project', :locals => {:p => p}
+    = "<hr />".html_safe unless i == 9
 
-  = will_paginate @projects
+  = will_paginate @projects, :inner_window => 2

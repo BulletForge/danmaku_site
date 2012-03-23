@@ -1,43 +1,47 @@
-.project-index-block
-  .heading
-    .title
-      = link_to h(p.title), user_project_path(p.user, p)
-    .stats
-      Win:
-      = p.win_votes
-      Fail:
-      = p.fail_votes
-      %br
-      Downloads:
-      = p.downloads
-
-  .preview
+.row{ :style => "padding-top:10px; padding-bottom:10px;" }
+  %h2
+    = link_to h(p.title), user_project_path(p.user, p)
+    %small
+      by
+      = link_to p.user.login, user_path(p.user)
+.row{ :style => "padding-bottom:10px;" }
+  .span3{ :style => "text-align:center;"}
     = preview_image p, :thumb
-
-  .body
-    Author:
-    = link_to p.user.login, user_path(p.user)
-    %br
-    - if p.versions.last
-      Latest version:
-      = h p.versions.last.version_number
-      %br
-    - else
-      No versions
-      %br
-    %br
-    - if p.versions.last && !p.versions.last.description.blank?
-      %p= h truncate p.versions.last.description, :length => 512
-    - else
-      %p No description
-    Category:
-    = p.category.name
-    |
-    Danmakufu Version:
-    = p.danmakufu_version.name
-    |
-    - if p.tags
-      Tags:
-      = tag_list(p)
-    - else
-      No description
+  .span9
+    .row
+      .span3
+        - if p.versions.last
+          %strong
+            Latest version:
+          = h p.versions.last.version_number
+        - else
+          No versions
+        %br
+        %strong
+          Up Votes:
+        = p.win_votes
+        %br
+        %strong
+          Down Votes:
+        = p.fail_votes
+        %br
+        %strong
+          Downloads:
+        = p.downloads
+      .span6  
+        %strong
+          Category:
+        = p.category.name
+        %br
+        %strong
+          Danmakufu Version:
+        = p.danmakufu_version.name  
+        %br
+        %strong
+          Tags:
+        = tag_list(p)
+        %br
+        - if p.versions.last && !p.versions.last.description.blank?
+          %p= h truncate p.versions.last.description, :length => 300
+        - else
+          %p No description

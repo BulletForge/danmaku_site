@@ -1,4 +1,5 @@
 # Methods added to this helper will be available to all templates in the application.
+
 module ApplicationHelper
   def preview_image(project, type)
     if type == :normal
@@ -40,7 +41,17 @@ module ApplicationHelper
   def order(search, options)
     search_params = params[:search] || {}
     search_params = search_params.merge( :order => direction(options[:by]) )
-    link_to( options[:as], projects_path(:search => search_params) )
+
+    case options[:path]
+    when "projects"
+      path = projects_path(:search => search_params)
+    when "users"
+      path = users_path(:search => search_params)
+    else
+      path = root_path
+    end
+
+    link_to( options[:as], path, options )
   end
   
   def s3_swf_upload_area(key_prefix)

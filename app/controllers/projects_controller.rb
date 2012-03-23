@@ -23,9 +23,18 @@ class ProjectsController < ApplicationController
 
 
   private
-  # Paginate the projects collection  
+  # Filter, order, and paginate the collection  
   def _collection
     @search = end_of_association_chain
+
+    filter_collection
+    order_collection
+    
+    @search.paginate( :per_page => 10, :page => params[:page] )
+  end
+
+  # Applies filtering based off the search param.
+  def filter_collection
     if params[:search]
       title_like = params[:search]["title_like"].blank? ? nil : params[:search]["title_like"]
       user_login_like = params[:search]["user_login_like"].blank? ? nil : params[:search]["user_login_like"]
@@ -38,24 +47,26 @@ class ProjectsController < ApplicationController
       @search = @search.tagged_with(tagged_with)                                                           if tagged_with
       @search = @search.joins(:category).where("categories.id = ?", category_is)                           if category_is
       @search = @search.joins(:danmakufu_version).where("danmakufu_versions.id = ?", danmakufu_version_is) if danmakufu_version_is
-      
-      if !params[:search][:order].blank?
-        order = params[:search][:order].split("_by_")
-        direction = order[0]
-        column = order[1]
-        
-        if direction == "ascend"
-          direction = "ASC"
-        else
-          direction = "DESC"
-        end
-        
-        if ["created_at", "title", "win_votes", "downloads"].include? column
-          @search = @search.order("#{column} #{direction}")
-        end
-      end
+    end
+  end
+
+  # Applies ordering based off the search order param. Defaults to "descend_by_created_at"
+  def order_collection
+    order = params[:search] && params[:search][:order]
+    order ||= "descend_by_created_at"
+
+    order_arr = order.split("_by_")
+    direction = order_arr[0]
+    column = order_arr[1]
+    
+    if direction == "ascend"
+      direction = "ASC"
+    else
+      direction = "DESC"
     end
     
-    @search.paginate( :per_page => 10, :page => params[:page] )
+    if ["created_at", "title", "win_votes", "downloads"].include? column
+      @search = @search.order("#{column} #{direction}")
+    end
   end
 end

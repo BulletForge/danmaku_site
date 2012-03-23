@@ -48,7 +48,7 @@ class UsersController < ApplicationController
       @users = @users.order("#{column} #{direction}")
     elsif "projects_count" == column
       @users = @users.all.sort_by{ |u| u.projects.count }
-      @users = @users.reverse if direction == "ASC"
+      @users = @users.reverse if direction == "DESC"
     end
   end
 end

@@ -25,7 +25,12 @@ class ProjectsController < ApplicationController
   private
   # Filter, order, and paginate the collection  
   def _collection
-    @search = end_of_association_chain.where(:unlisted => false)
+    if current_user && current_user.admin?
+      unlisted = params[:search]["unlisted"].blank? ? false : params[:search]["unlisted"]
+    else
+      unlisted = false
+    end
+    @search = end_of_association_chain.where(:unlisted => unlisted)
 
     filter_collection
     order_collection

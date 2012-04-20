@@ -3,9 +3,9 @@
 = link_to "Edit Account", edit_user_path(@user) if can?(:update, @user)
 
 #project-list
-  - if @user == current_user && !@user.projects.where(:unlisted => true).empty?
+  - if can?(:update, @user) && !@user.projects.where(:unlisted => true).empty?
     %h2{ :style => "margin-top: 20px;"}
-      Your Unlisted Projects
+      Unlisted Projects
     -@user.projects.where(:unlisted => true).each do |p|
       = render :partial => 'shared/project', :locals => {:p => p}
 

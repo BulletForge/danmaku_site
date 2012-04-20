@@ -1,7 +1,6 @@
 module Authorization
   
   def require_user
-    p "====================== require_user"
     unless current_user
       store_location
       flash[:notice] = "You must be logged in to access this page"
@@ -11,7 +10,6 @@ module Authorization
   end
 
   def require_no_user
-    p "====================== require_no_user"
     if current_user
       flash[:notice] = "You must be logged out to access this page"
       redirect_to request.request_uri || root_path
@@ -50,13 +48,11 @@ module Authorization
   
   # Require current user to be the @user found from params
   def require_matching_user
-    p "====================== require_matching_user"
     access_denied! if !current_user || !user_to_match || current_user != user_to_match
   end
   
   # Require the current user to be the owner of the project
   def require_owner
-    p "====================== require_owner"
     access_denied! if !current_user || !ownable || !current_user.owner_of?(ownable)
   end
 

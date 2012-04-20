@@ -15,3 +15,9 @@
   = select_tag 'search[danmakufu_version_is]', options_from_collection_for_select(DanmakufuVersion.all, 'id', 'name'), :include_blank => true
   %br
   = submit_tag "Search", :id => "search_submit", :class => "btn btn-primary"
+
+%br
+%br
+
+- if current_user && current_user.admin?
+  = link_to "Unlisted projects", projects_path({:search => {:unlisted => true}})

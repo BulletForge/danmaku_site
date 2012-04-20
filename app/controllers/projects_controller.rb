@@ -25,11 +25,11 @@ class ProjectsController < ApplicationController
   private
   # Filter, order, and paginate the collection  
   def _collection
-    @search = end_of_association_chain
+    @search = end_of_association_chain.where(:unlisted => false)
 
     filter_collection
     order_collection
-    
+
     @search.paginate( :per_page => 10, :page => params[:page] )
   end
 

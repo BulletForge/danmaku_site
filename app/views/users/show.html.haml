@@ -3,10 +3,16 @@
 = link_to "Edit Account", edit_user_path(@user) if can?(:update, @user)
 
 #project-list
-  %h2
+  - if @user == current_user && !@user.projects.where(:unlisted => true).empty?
+    %h2{ :style => "margin-top: 20px;"}
+      Your Unlisted Projects
+    -@user.projects.where(:unlisted => true).each do |p|
+      = render :partial => 'shared/project', :locals => {:p => p}
+
+  %h2{ :style => "margin-top: 20px;"}
     = @user.login
     's Projects
-  - @user.projects.limit(5).each do |p|
+  - @user.projects.where(:unlisted => false).limit(5).each do |p|
     = render :partial => 'shared/project', :locals => {:p => p}
   = link_to "See all of "+@user.login+"'s projects", user_projects_path(@user)
 

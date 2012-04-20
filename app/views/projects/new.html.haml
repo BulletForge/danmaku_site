@@ -7,6 +7,7 @@
     = form.input :danmakufu_version
     = form.input :category
     = form.input :tag_list, :label => "Tags", :hint => "Tags are separated by commas (\",\")"
+    = form.input :unlisted, :label => "Unlisted?", :hint => "Unlisted projects will not show up in search or on the front page."
 
   - form.semantic_fields_for :versions do |version|
     - version.inputs do

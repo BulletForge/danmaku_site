@@ -52,7 +52,7 @@
   .row
     .span4
       %h3 Most Downloaded
-      - Project.order('downloads DESC').limit(5).each do |project|
+      - Project.most_downloaded.each do |project|
         = link_to( project.title + " (" + project.downloads.to_s + " downloads)", user_project_path(project.user, project) )
         %br
       %br
@@ -61,7 +61,7 @@
     .span4
       %h3
         Highest Rated
-      - Project.order('win_votes DESC').limit(5).each do |project|
+      - Project.highest_rated.each do |project|
         = link_to( project.title + " (" + project.win_votes.to_s + " win votes)", user_project_path(project.user, project) )
         %br
       %br
@@ -70,7 +70,7 @@
     .span4
       %h3
         Latest
-      - Project.order('created_at DESC').limit(5).each do |project|
+      - Project.latest.each do |project|
         = link_to( project.title + " (" + project.created_at.strftime('%b %d %Y, %I:%m %p') + ")", user_project_path(project.user, project) )
         %br
       %br

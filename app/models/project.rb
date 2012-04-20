@@ -48,4 +48,16 @@ class Project < ActiveRecord::Base
       p1.downloads <=> p2.downloads
     end
   end
+
+  def self.most_downloaded
+    Project.order('downloads DESC').limit(5)
+  end
+
+  def self.highest_rated
+    Project.order('win_votes DESC').limit(5)
+  end
+
+  def self.latest
+    Project.order('created_at DESC').limit(5)
+  end
 end

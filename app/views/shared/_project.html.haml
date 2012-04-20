@@ -1,9 +1,10 @@
 .row{ :style => "padding-top:10px; padding-bottom:10px;" }
-  %h2
-    = link_to h(p.title), user_project_path(p.user, p)
-    %small
-      by
-      = link_to p.user.login, user_path(p.user)
+  .span12
+    %h2
+      = link_to h(p.title), user_project_path(p.user, p)
+      %small
+        by
+        = link_to p.user.login, user_path(p.user)
 .row{ :style => "padding-bottom:10px;" }
   .span3{ :style => "text-align:center;"}
     = preview_image p, :thumb

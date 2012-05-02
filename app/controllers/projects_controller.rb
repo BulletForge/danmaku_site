@@ -25,7 +25,7 @@ class ProjectsController < ApplicationController
   private
   # Filter, order, and paginate the collection  
   def _collection
-    if current_user && current_user.admin?
+    if current_user && current_user.admin? && params[:search]
       unlisted = params[:search]["unlisted"].blank? ? false : params[:search]["unlisted"]
     else
       unlisted = false

@@ -1,9 +1,8 @@
 .navbar.navbar-fixed-top
   .navbar-inner
     .container
-      = link_to "BulletForge", "#", :class => "brand"
+      = link_to "BulletForge", root_path, :class => "brand"
       %ul.nav
-        %li= link_to "Home", root_path
         %li= link_to "Browse", projects_path
         %li= link_to "Users", users_path
         %li= link_to "Adv. Search", search_path

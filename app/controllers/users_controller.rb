@@ -8,6 +8,7 @@ class UsersController < ApplicationController
   before_filter :collection, :only =>[:index]
   before_filter :resource, :only => [:show, :edit, :update, :destroy]
   before_filter :build_resource, :only => [:new, :create, :index]
+  before_filter :sanitize_params, :only => [:update, :create]
   
   authorize_resource
   
@@ -21,6 +22,11 @@ class UsersController < ApplicationController
   end
 
   protected
+
+  def sanitize_params
+    params[:user].delete :admin unless current_user && current_user.admin
+  end
+
   # Paginate the users collection  
   def _collection
     @users ||= end_of_association_chain

@@ -39,16 +39,17 @@ module ApplicationHelper
   end
   
   def order(search, options)
-    search_params = params[:search] || {}
-    search_params = search_params.merge( :order => direction(options[:by]) )
+    if params[:search]
+      search_params = params[:search].dup || {}
+      search_params = search_params.merge( :order => direction(options[:by]) )
+      new_params = {:search => search_params}
+    else
+      new_params = {:search => {:order => direction(options[:by])}}
+    end
 
-    path = request.env['PATH_INFO'] + "?" + parameterize(search_params)
+    path = request.env['PATH_INFO'] + "?" + new_params.to_query
 
     link_to( options[:as], path, options )
-  end
-
-  def parameterize(params)
-    URI.escape(params.collect{|k,v| "#{k}=#{v}"}.join('&'))
   end
   
   def s3_swf_upload_area(key_prefix)

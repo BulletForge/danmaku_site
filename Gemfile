@@ -1,6 +1,6 @@
 source :gemcutter
 
-gem "rails", '~> 3.0.0'
+gem "rails", '~> 3.0.19'
 gem 'pg'
 gem 'haml'
 gem 'will_paginate'

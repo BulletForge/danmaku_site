@@ -94,7 +94,7 @@ GEM
       rake (>= 0.8.7)
       rdoc (~> 3.4)
       thor (~> 0.14.4)
-    rake (10.0.3)
+    rake (0.8.7)
     rdoc (3.12)
       json (~> 1.4)
     responders (0.6.2)
@@ -125,6 +125,7 @@ DEPENDENCIES
   paperclip!
   pg
   rails (~> 3.0.19)
+  rake (= 0.8.7)
   s3_swf_upload!
   sqlite3-ruby
   thin

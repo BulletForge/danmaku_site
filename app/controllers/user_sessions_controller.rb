@@ -11,7 +11,7 @@ class UserSessionsController < ApplicationController
   
   create! do |success, failure|
     success.html {
-      user = UserSession.find
+      user = UserSession.find.record
       user.ip_address = request.remote_ip
       user.save
       flash[:notice] = "Successfully logged in!"

@@ -35,7 +35,10 @@ class Ability
       can :update, User do |u|
         u == user
       end
-      
+
+      # cannot delete his own profile, admin only
+      cannot :destroy, User
+
       # he can vote if he cannot manage the version
       can :create, Vote do |vote|
         cannot?(:manage, vote.voteable)

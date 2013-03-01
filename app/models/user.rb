@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   has_many :projects, :dependent => :destroy
   has_many :versions, :through => :projects
-  has_many :authored_comments, :class_name => "Comment", :foreign_key => "author_id"
+  has_many :authored_comments, :class_name => "Comment", :foreign_key => "author_id", :dependent => :destroy
   has_many :comments, :as => :commentable, :dependent => :destroy
   
   acts_as_authentic do |config|

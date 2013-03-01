@@ -1,6 +1,9 @@
 .row{ :style => "padding-top:15px;"}
   .span12
-    = link_to comment.author.login, user_path(comment.author)
+    if comment.author
+      = link_to comment.author.login, user_path(comment.author)
+    else
+      %i Deleted User
     \-
     = comment.created_at.strftime '%B %d %Y, %I:%m %p'
 

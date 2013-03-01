@@ -77,7 +77,6 @@ module ApplicationHelper
   end
 
   def tag_list(project)
-    puts project
     tag_list = project.tags.map do |tag| 
       link_to h(tag.name), projects_path(:search => {:tagged_with => tag.name}, :search_type => :tags)
     end

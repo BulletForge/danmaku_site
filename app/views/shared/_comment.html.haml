@@ -4,7 +4,6 @@
       = link_to comment.author.login, user_path(comment.author)
     else
       %i Deleted User
-    \-
     = comment.created_at.strftime '%B %d %Y, %I:%m %p'
 
 .row{ :style => "padding-left:15px"}

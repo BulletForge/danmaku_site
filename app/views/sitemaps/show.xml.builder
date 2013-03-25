@@ -31,7 +31,7 @@ xml.urlset "xmlns" => "http://www.google.com/schemas/sitemap/0.84" do
       xml.changefreq  "weekly"
     end
     
-    user.projects.order("created_at DESC").each do |project|
+    user.projects.where("unlisted = false").order("created_at DESC").each do |project|
       xml.url do
         xml.loc         user_project_url( user, project )
         xml.lastmod     w3c_date(Time.now)

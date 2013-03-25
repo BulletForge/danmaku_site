@@ -71,7 +71,7 @@
       %h3
         Latest
       - Project.latest.each do |project|
-        = link_to( project.title + " (" + project.created_at.strftime('%b %d %Y, %I:%m %p') + ")", user_project_path(project.user, project) )
+        = link_to( project.title + " (" + project.created_at.strftime('%b %e %Y, %I:%M %p') + ")", user_project_path(project.user, project) )
         %br
       %br
       = link_to "See more...", projects_path(:search => {:order => :descend_by_created_at})

@@ -9,9 +9,9 @@ class UsersController < ApplicationController
   before_filter :resource, :only => [:show, :edit, :update, :destroy]
   before_filter :build_resource, :only => [:new, :create, :index]
   before_filter :sanitize_params, :only => [:update, :create]
-  
+
   authorize_resource
-  
+
 
   # Change default flash notice and redirect
   create! do |success, failure|
@@ -19,6 +19,31 @@ class UsersController < ApplicationController
       #flash "Successfully registered!"
       redirect_back_or_default root_path
     }
+  end
+
+  def delete
+    @user = User.find_by_permalink params[:id]
+    authorize! :destroy, @user
+  end
+
+  def destroy
+    @user = User.find_by_permalink params[:id]
+    authorize! :destroy, @user
+
+    if params[:commit] == "Cancel"
+      flash[:notice] = "Canceled account deletion."
+      redirect_to user_path(@user)
+      return
+    end
+
+    if current_user == @user && !@user.valid_password?(params[:password])
+      flash[:error] = "Invalid password."
+      redirect_to user_delete_path(@user)
+    else
+      flash[:notice] = "Successfully deleted account."
+      @user.destroy
+      redirect_to root_path
+    end
   end
 
   protected

@@ -1,0 +1,16 @@
+.page-header
+  %h1 Deleting Account 
+
+%h3 Are you sure you want to delete this account?
+
+- if current_user == @user
+  %p Please type in your password and click Confirm to delete this account.
+  = form_tag user_path(@user), :method => "delete" do
+    = password_field_tag :password
+    %br/
+    = submit_tag "Cancel"
+    = submit_tag "Confirm"
+- else
+  = form_tag user_path(@user), :method => "delete" do
+    = submit_tag "Cancel"
+    = submit_tag "Confirm"

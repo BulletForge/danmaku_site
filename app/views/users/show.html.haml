@@ -3,7 +3,7 @@
 
 %ul.nav.nav-pills
   %li= link_to "Edit Account", edit_user_path(@user) if can?(:update, @user)
-  %li= link_to "Delete Account", user_path(@user), :method => :delete, :confirm => "Are you sure you want to delete this user?" if can?(:destroy, @user)
+  %li= link_to "Delete Account", user_delete_path(@user) if can?(:destroy, @user)
 
 #project-list
   - if can?(:update, @user) && !@user.projects.where(:unlisted => true).empty?

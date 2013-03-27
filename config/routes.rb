@@ -11,6 +11,8 @@ BulletForge::Application.routes.draw do
     end
   end
 
+  get '/u/:id/delete' => 'users#delete', :as => :user_delete
+
   resource :user_session
   resource :sitemap, :only => [:show]
   resources :projects, :only => [:index]

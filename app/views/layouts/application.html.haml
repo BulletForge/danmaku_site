@@ -5,7 +5,12 @@
     %title= h(@title || "BulletForge")
     %meta{ :name => "keywords", :content => "danmakufu scripts, danmakufu projects, danmakufu, shmup, game scripts" }
     %meta{ :name => "description", :content => "Dedicated Danmakufu Project Hosting" }
-    = stylesheet_link_tag 'bootstrap'
+
+    - if Time.now.month == 4 && Time.now.day == 1
+      = stylesheet_link_tag 'geo-bootstrap'
+    - else
+      = stylesheet_link_tag 'bootstrap'
+
     = javascript_include_tag 'jquery.min', 'jquery.metadata', 'jquery_ujs'
     = javascript_include_tag 'json2', 's3_upload.js', 's3_upload_callbacks.js'
     = javascript_include_tag 'bootstrap-alert', 'bootstrap-tab', 'application'

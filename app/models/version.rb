@@ -5,11 +5,12 @@ class Version < ActiveRecord::Base
   has_many   :comments, :as => :commentable, :dependent => :destroy
   
   validates_presence_of :version_number, :message => "Version number is required."
+  validate :version_number_excludes_new_by_permalink, :version_number_is_unique_by_permalink
 
   acts_as_voteable
-
   has_permalink :version_number, :update => true, :unique => false
-  validate :version_number_excludes_new_by_permalink, :version_number_is_unique_by_permalink
+
+  after_update :update_project_updated_at
 
   def version_number_excludes_new_by_permalink
     errors.add(:version_number, "Version number cannot be named 'new'") if
@@ -34,10 +35,19 @@ class Version < ActiveRecord::Base
       update_project_download_counter_cache
     end
   end
-  
+
+  def latest_version?
+    self == project.latest_version
+  end
+
   private
+
   def update_project_download_counter_cache
     project.update_attributes!(:downloads => project.calculate_download_count)
   end
-  
+
+  def update_project_updated_at
+    # update_all does not trigger callbacks.
+    Project.where(:id => project.id).update_all(:updated_at => updated_at) if latest_version?
+  end
 end

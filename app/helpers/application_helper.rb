@@ -82,4 +82,8 @@ module ApplicationHelper
     end
     tag_list.join(", ").html_safe
   end
+
+  def no_bot_index?
+    @project && @project.unlisted?
+  end
 end

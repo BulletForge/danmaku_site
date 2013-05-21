@@ -1,6 +1,9 @@
 !!!
 %html{html_attrs}
   %head
+    - if no_bot_index?
+      %meta{:name => "robots", :content => "noindex"}
+
     %meta{"http-equiv" => 'Content-Type', :content => 'text/html;charset=utf-8'}
     %title= h(@title || "BulletForge")
     %meta{ :name => "keywords", :content => "danmakufu scripts, danmakufu projects, danmakufu, shmup, game scripts" }

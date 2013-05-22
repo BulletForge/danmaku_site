@@ -31,7 +31,7 @@ class Version < ActiveRecord::Base
   
   def increment_download_counter!
     Version.transaction do
-      update_attributes(:download_count => self.download_count += 1)
+      Version.where(:id => id).update_all(:download_count => self.download_count += 1)
       update_project_download_counter_cache
     end
   end
@@ -43,7 +43,7 @@ class Version < ActiveRecord::Base
   private
 
   def update_project_download_counter_cache
-    project.update_attributes!(:downloads => project.calculate_download_count)
+    Project.where(:id => project.id).update_all(:downloads => project.calculate_download_count)
   end
 
   def update_project_updated_at

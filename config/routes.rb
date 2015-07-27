@@ -4,7 +4,6 @@ BulletForge::Application.routes.draw do
     resources :projects, :path => 'p' do
       resources :versions, :path => 'v' do
         resource :archive, :only => [:show]
-        resources :votes
       end
     end
   end

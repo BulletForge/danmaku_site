@@ -6,7 +6,6 @@ class Version < ActiveRecord::Base
   validates_presence_of :version_number, :message => "Version number is required."
   validate :version_number_excludes_new_by_permalink, :version_number_is_unique_by_permalink
 
-  acts_as_voteable
   has_permalink :version_number, :update => true, :unique => false
 
   after_update :update_project_updated_at

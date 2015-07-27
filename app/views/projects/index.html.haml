@@ -16,8 +16,6 @@
   &nbsp
   = order @search, :by => :title, :as => "Title"
   &nbsp
-  = order @search, :by => :win_votes, :as => "Rating"
-  &nbsp
   = order @search, :by => :downloads, :as => "Downloads"
 
   - @projects.each_with_index do |p, i|

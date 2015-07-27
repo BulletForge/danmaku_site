@@ -36,14 +36,6 @@ class Project < ActiveRecord::Base
     versions.inject(0) {|c, v| c += v.download_count }
   end
 
-  def calculate_win_votes
-    versions.inject(0) { |c, v| c += v.votes_for }
-  end
-
-  def calculate_fail_votes
-    versions.inject(0) { |c, v| c += v.votes_against }
-  end
-
   def latest_version
     sorted_versions = versions.sort {|v1, v2| v1.updated_at <=> v2.updated_at }
     sorted_versions.first
@@ -57,10 +49,6 @@ class Project < ActiveRecord::Base
 
   def self.most_downloaded
     Project.where(:unlisted => false).order('downloads DESC').limit(5)
-  end
-
-  def self.highest_rated
-    Project.where(:unlisted => false).order('win_votes DESC').limit(5)
   end
 
   def self.latest

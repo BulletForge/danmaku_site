@@ -31,9 +31,6 @@
 
 %br
 
-#votes
-  = render :partial => 'votes', :locals => { :user => @user, :project => @project, :version => @version }
-
 %br
 .well
   = raw simple_format((@version.description))

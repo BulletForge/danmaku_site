@@ -26,18 +26,6 @@
           %strong Downloads:
           = @featured_project.downloads.to_s
         %p
-          %strong Up votes:
-          = @featured_project.win_votes.to_s
-          - if can? :create, @featured_project.versions.last.votes.build
-            - if current_user && !current_user.voted_on?(@featured_project.versions.last)
-              = link_to "(Vote Up)", user_project_version_votes_path(@featured_project.user, @featured_project, @featured_project.versions.last, :format => :json), :id => "vote_up"
-        %p
-          %strong Down votes:
-          = @featured_project.fail_votes.to_s
-          - if can? :create, @featured_project.versions.last.votes.build
-            - if current_user && !current_user.voted_on?(@featured_project.versions.last)
-              = link_to "(Vote Down)", user_project_version_votes_path(@featured_project.user, @featured_project, @featured_project.versions.last, :format => :json), :id => "vote_down"
-        %p
           = truncate @featured_project.versions.last.description, :length => 700
           = link_to "Read more", user_project_path(@featured_project.user, @featured_project)
         =link_to "Download Now", user_project_version_archive_path(@featured_project.user, @featured_project, @featured_project.versions.last), :class => "btn btn-primary"
@@ -46,7 +34,7 @@
   .page-header
     %h1 Popular Projects
   .row
-    .span4
+    .span6
       %h3 Most Downloaded
       - Project.most_downloaded.each do |project|
         = link_to( project.title + " (" + project.downloads.to_s + " downloads)", user_project_path(project.user, project) )
@@ -54,16 +42,7 @@
       %br
       = link_to "See more...", projects_path(:search => {:order => :descend_by_downloads})
 
-    .span4
-      %h3
-        Highest Rated
-      - Project.highest_rated.each do |project|
-        = link_to( project.title + " (" + project.win_votes.to_s + " win votes)", user_project_path(project.user, project) )
-        %br
-      %br
-      = link_to "See more...", projects_path(:search => {:order => :descend_by_win_votes})
-
-    .span4
+    .span6
       %h3
         Latest
       - Project.latest.each do |project|

@@ -13,7 +13,6 @@ class User < ActiveRecord::Base
     config.merge_validates_length_of_password_confirmation_field_options :message => "Password confirmation is too short."
     config.merge_validates_length_of_password_field_options :message => "Password is too short."
   end
-  acts_as_voter
 
   has_permalink :login, :update => true, :unique => false
   validates_exclusion_of :permalink, :in => ["new"], :message => "Username cannot be 'new'."

@@ -36,11 +36,6 @@ class Ability
         u == user
       end
 
-      # he can vote if he cannot manage the version
-      can :create, Vote do |vote|
-        cannot?(:manage, vote.voteable)
-      end
-
       # manage his own projects
       can :manage, Project do |project|
         project.user == user

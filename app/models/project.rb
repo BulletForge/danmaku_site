@@ -3,7 +3,6 @@ class Project < ActiveRecord::Base
   belongs_to :category
   belongs_to :danmakufu_version
   has_many   :versions, :dependent => :destroy
-  has_many   :comments, :through => :versions
   has_many   :images,   :as => :attachable, :dependent => :destroy
 
   accepts_nested_attributes_for :versions
@@ -12,7 +11,7 @@ class Project < ActiveRecord::Base
 
   acts_as_taggable_on :tags
   has_permalink :title, :update => true, :unique => false
-  
+
   validates_presence_of :title, :message => "Title is required."
   validate :title_excludes_new_by_permalink, :title_is_unique_by_permalink
 

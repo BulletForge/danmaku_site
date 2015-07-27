@@ -26,10 +26,6 @@
           %strong Downloads:
           = @featured_project.downloads.to_s
         %p
-          %strong Comments:
-          = @featured_project.versions.last.comments.count
-          = link_to "(see all comments)", user_project_version_path(@featured_project.user, @featured_project, @featured_project.versions.last, :anchor => "comments")
-        %p
           %strong Up votes:
           = @featured_project.win_votes.to_s
           - if can? :create, @featured_project.versions.last.votes.build

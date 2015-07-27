@@ -2,8 +2,7 @@ class Version < ActiveRecord::Base
   belongs_to :project
   has_one    :user, :through => :project
   has_one    :archive, :as => :attachable, :dependent => :destroy
-  has_many   :comments, :as => :commentable, :dependent => :destroy
-  
+
   validates_presence_of :version_number, :message => "Version number is required."
   validate :version_number_excludes_new_by_permalink, :version_number_is_unique_by_permalink
 
@@ -24,11 +23,11 @@ class Version < ActiveRecord::Base
         version_with_permalink && version_with_permalink != self
     end
   end
-  
+
   def to_param
     permalink
   end
-  
+
   def increment_download_counter!
     Version.transaction do
       Version.where(:id => id).update_all(:download_count => self.download_count += 1)

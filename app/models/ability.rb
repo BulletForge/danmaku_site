@@ -12,7 +12,7 @@ class Ability
       can :read, :all
       return
     end
-    
+
     # admin
     if user && user.admin?
       # can do everything
@@ -22,15 +22,15 @@ class Ability
       cannot :create, UserSession
       return
     end
-    
+
     # regular user
     if user
       # cannot login, he already did
       cannot :create, UserSession
-      
+
       # can logout
       can :destroy, UserSession
-      
+
       # manage his own profile
       can :manage, User do |u|
         u == user
@@ -39,8 +39,8 @@ class Ability
       # he can vote if he cannot manage the version
       can :create, Vote do |vote|
         cannot?(:manage, vote.voteable)
-      end      
-      
+      end
+
       # manage his own projects
       can :manage, Project do |project|
         project.user == user
@@ -50,26 +50,18 @@ class Ability
       can :manage, Image do |image|
         image.project && can?(:manage, image.project)
       end
-      
+
       # manage versions
       can :manage, Version do |version|
         version.project && can?(:manage, version.project)
       end
-      
+
       # manage archives
       can :manage, Archive do |archive|
         archive.version && can?(:manage, archive.version)
       end
-      
-      can :create, Comment
-      
-      # destroy comments if he wrote the comment
-      # or he can manage the user or project the comment refers to
-      can :destroy, Comment do |comment|
-        comment.author == user || comment.commentable == user || ( comment.commentable.is_a?(Version) && can?(:manage, comment.commentable) )
-      end
-      
+
       can :read, :all
-    end        
+    end
   end
 end

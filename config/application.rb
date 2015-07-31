@@ -6,8 +6,8 @@ require 'rails/all'
 Bundler.require(:default, Rails.env) if defined?(Bundler)
 
 module BulletForge
-  mattr_accessor :s3_key, :s3_secret, :s3_bucket
-  
+  mattr_accessor :s3_key, :s3_secret, :s3_bucket, :mailgun_api_key, :mailgun_domain
+
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers

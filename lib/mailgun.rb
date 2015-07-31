@@ -4,12 +4,22 @@ module Mailgun
     DOMAIN  = BulletForge.mailgun_domain
 
     def send_password_reset user
-      send_email(
-        user.email,
-        "BulletForge <no-reply@bulletforge.org>",
-        "Your Password Reset Request",
-        password_reset_email_body(user)
-      )
+      send_email({
+        "to"      => user.email,
+        "from"    => "BulletForge <no-reply@bulletforge.org>",
+        "subject" => "Your Password Reset Request",
+        "text"    => password_reset_email_body(user)
+      })
+    end
+
+    def send_user_message sender, recipient, message
+      send_email({
+        "to"         => recipient.email,
+        "from"       => "BulletForge <no-reply@bulletforge.org>",
+        "subject"    => "Message from #{sender.login}",
+        "text"       => user_message_email_body(sender, message),
+        "h:Reply-To" => sender.email
+      })
     end
 
     private
@@ -25,15 +35,10 @@ module Mailgun
       @http
     end
 
-    def send_email to, from, subject, body
-      request = Net::HTTP::Post.new("/v3/#{DOMAIN}")
+    def send_email opts={}
+      request = Net::HTTP::Post.new("/v3/#{DOMAIN}/messages")
       request.basic_auth("api", API_KEY)
-      request.set_form_data({
-        "to"      => to,
-        "from"    => from,
-        "subject" => subject,
-        "text"    => body
-      })
+      request.set_form_data(opts)
 
       response = http.request(request)
       response.kind_of?(Net::HTTPSuccess)
@@ -48,6 +53,17 @@ http://www.bulletforge.org/reset_password?token=#{user.password_token}
 
 The link will stop working after a successful reset or after 24 hours have passed.
 If you did not request a password reset, you may safely disregard this email.
+      END
+    end
+
+    def user_message_email_body sender, message
+      <<-END
+You have a received a message from #{sender.login}.
+You can reply to the user by replying to this email.
+
+----
+
+#{message}
       END
     end
   end

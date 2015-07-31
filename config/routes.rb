@@ -2,9 +2,8 @@ BulletForge::Application.routes.draw do
 
   resources :users, :path => 'u' do
     resources :projects, :path => 'p' do
-      resources :versions, :path => 'v' do
-        resource :archive, :only => [:show]
-      end
+      resource :archive, :only => [:show]
+      get '/v(/:id(/archive))' => 'versions#redirect' # legacy routing
     end
   end
 

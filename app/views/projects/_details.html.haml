@@ -17,20 +17,17 @@
     %br
 
     %strong Last updated at:
-    = project.versions.last.updated_at.strftime('%B %e %Y, %I:%M %p')
+    = project.updated_at.strftime('%B %e %Y, %I:%M %p')
     %br
 
   .span6
     #archive
-      = render :partial => 'archive', :locals => {:user => user, :project => project, :version => version}
-    %strong Version downloads:
-    = @version.download_count
-    %br
-    %strong Total downloads:
+      = render :partial => 'archive', :locals => {:user => user, :project => project}
+    %strong Downloads:
     = @project.downloads
 
 %br
 
 %br
 .well
-  = raw simple_format((@version.description))
+  = raw simple_format((@project.description))

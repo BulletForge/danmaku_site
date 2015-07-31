@@ -1,9 +1,0 @@
-- if can? :update, @project
-  .subnav
-    %ul.nav.nav-pills
-      %li= link_to "New Version", new_user_project_version_path(@user, @project)
-      %li= link_to "Edit Version", edit_user_project_version_path(@user, @project, @version)
-      - if @project.versions.count > 1
-        %li= link_to("Delete Version", user_project_version_path(@user, @project, @version), :method => :delete, :confirm => "Are you sure you want to delete this version?")
-      %li= link_to "Edit Project", edit_user_project_path(@user, @project)
-      %li= link_to "Delete Project", user_project_path(@user, @project), :method => :delete, :confirm => "Are you sure you want to delete this project?"

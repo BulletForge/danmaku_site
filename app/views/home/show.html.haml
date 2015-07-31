@@ -5,7 +5,7 @@
     .row
       .span6
         - unless @featured_project.youtube_video_id.blank?
-          = render :partial => 'versions/youtube', :locals => {:project => @featured_project}
+          = render :partial => 'projects/youtube', :locals => {:project => @featured_project}
         - else
           = preview_image(@featured_project, :normal)
       .span6
@@ -26,9 +26,9 @@
           %strong Downloads:
           = @featured_project.downloads.to_s
         %p
-          = truncate @featured_project.versions.last.description, :length => 700
+          = truncate @featured_project.description, :length => 700
           = link_to "Read more", user_project_path(@featured_project.user, @featured_project)
-        =link_to "Download Now", user_project_version_archive_path(@featured_project.user, @featured_project, @featured_project.versions.last), :class => "btn btn-primary"
+        =link_to "Download Now", user_project_archive_path(@featured_project.user, @featured_project), :class => "btn btn-primary"
 
 %section#popular-projects{ :style => "padding-top:30px;"}
   .page-header

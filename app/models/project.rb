@@ -2,10 +2,9 @@ class Project < ActiveRecord::Base
   belongs_to :user
   belongs_to :category
   belongs_to :danmakufu_version
-  has_many   :versions, :dependent => :destroy
-  has_many   :images,   :as => :attachable, :dependent => :destroy
+  has_many   :images,  :as => :attachable, :dependent => :destroy
+  has_one    :archive, :as => :attachable, :dependent => :destroy
 
-  accepts_nested_attributes_for :versions
   accepts_nested_attributes_for :images, :allow_destroy => true,
     :reject_if => proc { |attrs| attrs.all? { |k, v| v.blank? } }
 
@@ -13,9 +12,8 @@ class Project < ActiveRecord::Base
   has_permalink :title, :update => true, :unique => false
 
   validates_presence_of :title, :message => "Title is required."
+  validates_presence_of :version_number, :message => "Version number is required."
   validate :title_excludes_new_by_permalink, :title_is_unique_by_permalink
-
-  after_update :update_latest_version_updated_at
 
   def title_excludes_new_by_permalink
     errors.add(:title, "Title cannot be named 'new'") if
@@ -32,13 +30,8 @@ class Project < ActiveRecord::Base
     permalink
   end
 
-  def calculate_download_count
-    versions.inject(0) {|c, v| c += v.download_count }
-  end
-
-  def latest_version
-    sorted_versions = versions.sort {|v1, v2| v1.updated_at <=> v2.updated_at }
-    sorted_versions.first
+  def increment_download_counter!
+    Project.where(:id => id).update_all(:downloads => self.downloads += 1)
   end
 
   def self.featured
@@ -53,12 +46,5 @@ class Project < ActiveRecord::Base
 
   def self.latest
     Project.where(:unlisted => false).order('created_at DESC').limit(5)
-  end
-
-  private
-
-  def update_latest_version_updated_at
-    # update_all does not trigger callbacks.
-    Version.where(:id => latest_version.id).update_all(:updated_at => updated_at)
   end
 end

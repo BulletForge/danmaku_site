@@ -46,14 +46,9 @@ class Ability
         image.project && can?(:manage, image.project)
       end
 
-      # manage versions
-      can :manage, Version do |version|
-        version.project && can?(:manage, version.project)
-      end
-
       # manage archives
       can :manage, Archive do |archive|
-        archive.version && can?(:manage, archive.version)
+        archive.project && can?(:manage, archive.project)
       end
 
       can :read, :all

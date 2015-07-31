@@ -1,4 +1,4 @@
-= render :partial => 'management_toolbar', :locals => {:user => @user, :project => @project, :version => @version}
+= render :partial => 'management_toolbar', :locals => {:user => @user, :project => @project}
 
 %section#project-show
   .page-header
@@ -6,7 +6,7 @@
       = h(@project.title)
       %small
         version
-        = h(@version.version_number)
+        = h(@project.version_number)
 
   %ul.nav.nav-tabs
     %li.active
@@ -18,19 +18,13 @@
     %li
       %a{ :href => "#video", :"data-toggle" => "tab" }
         Video
-    %li
-      %a{ :href => "#versions", :"data-toggle" => "tab" }
-        Versions
 
   .tab-content
     #details.tab-pane.active
-      = render :partial => "details", :locals => {:user => @user, :project => @project, :version => @version}
+      = render :partial => "details", :locals => {:user => @user, :project => @project}
 
     #images.tab-pane
       = render :partial => "images", :locals => {:project => @project}
 
     #video.tab-pane
       = render :partial => "youtube", :locals => {:project => @project}
-
-    #versions.tab-pane
-      = render :partial => "version_list", :locals => {:user => @user, :project => @project}

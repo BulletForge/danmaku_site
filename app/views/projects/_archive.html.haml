@@ -1,10 +1,10 @@
-- if version.archive
-  = link_to "Download", user_project_version_archive_path(user, project, version), :class => "btn btn-primary"
+- if project.archive
+  = link_to "Download", user_project_archive_path(user, project), :class => "btn btn-primary"
   %br
   %strong File Size:
-  = number_to_human_size(version.archive.attachment_file_size)
+  = number_to_human_size(project.archive.attachment_file_size)
   %br
-- elsif can?(:update, version)
+- elsif can?(:update, project)
   %h4
     Upload your script now!
   %p
@@ -18,14 +18,13 @@
   #s3-swf-upload-bar
     .progress.progress-striped.active
       .bar
-  = s3_swf_upload_area("archives/" + version.id.to_s + "/")
+  = s3_swf_upload_area("archives/" + Time.now.to_f.to_s + "/")
   %input{:type => "submit", :id => "s3-swf-upload-start", :value => "Upload", :onclick => "s3_swf_1_object.startUploading();", :class => "btn", :style => "margin-top:-20px"}
 
 - else
-  The author has not uploaded a script for this version.
+  The author has not uploaded a script for this project.
   %br
   Please check back later.
 :javascript
-  version_id = '#{version.permalink}';
   project_id = '#{project.permalink}';
   user_id = '#{user.permalink}';

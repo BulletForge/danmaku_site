@@ -4,15 +4,12 @@
 
   - form.inputs do
     = form.input :title, :required => true
+    = form.input :version_number, :required => true
     = form.input :danmakufu_version
     = form.input :category
+    = form.input :description
     = form.input :tag_list, :label => "Tags", :hint => "Tags are separated by commas (\",\")"
     = form.input :unlisted, :label => "Unlisted?", :hint => "Unlisted projects will not show up in search or on the front page."
-
-  - form.semantic_fields_for :versions do |version|
-    - version.inputs do
-      = version.input :version_number, :required => true
-      = version.input :description
 
   = form.buttons
 

@@ -11,12 +11,9 @@
   .span9
     .row
       .span3
-        - if p.versions.last
-          %strong
-            Latest version:
-          = h p.versions.last.version_number
-        - else
-          No versions
+        %strong
+          Version:
+        = h p.version_number
         %br
         %strong
           Downloads:
@@ -35,7 +32,7 @@
         = tag_list(p)
         %br
         %br
-        - if p.versions.last && !p.versions.last.description.blank?
-          %p= h truncate p.versions.last.description, :length => 300
+        - if !p.description.blank?
+          %p= h truncate p.description, :length => 300
         - else
           %p No description

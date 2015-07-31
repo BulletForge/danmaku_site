@@ -35,7 +35,7 @@ module Mailgun
       @http
     end
 
-    def send_email opts={}
+    def send_email opts
       request = Net::HTTP::Post.new("/v3/#{DOMAIN}/messages")
       request.basic_auth("api", API_KEY)
       request.set_form_data(opts)

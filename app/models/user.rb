@@ -35,14 +35,13 @@ class User < ActiveRecord::Base
   end
 
   def owner_of?(ownable)
-    return false if ownable.class != Project && ownable.class != Version
+    return false if ownable.class != Project
     ownable.user == self
   end
 
   def to_param
     permalink
   end
-
 
   def self.current
     Thread.current[:current_user]

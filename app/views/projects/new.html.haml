@@ -1,15 +1,14 @@
 .page-header
   %h1 Creating New Project
-- semantic_form_for setup_project(@project), :url => user_projects_path(@user) do |form|
-
-  - form.inputs do
-    = form.input :title, :required => true
-    = form.input :version_number, :required => true
-    = form.input :danmakufu_version
-    = form.input :category
-    = form.input :description
-    = form.input :tag_list, :label => "Tags", :hint => "Tags are separated by commas (\",\")"
-    = form.input :unlisted, :label => "Unlisted?", :hint => "Unlisted projects will not show up in search or on the front page."
-
-  = form.buttons
+.row
+  - semantic_form_for setup_project(@project), :url => user_projects_path(@user) do |form|
+    - form.inputs do
+      = form.input :title, :required => true
+      = form.input :danmakufu_version
+      = form.input :version_number, :required => true
+      = form.input :category
+      = form.input :description
+      = form.input :tag_list, :label => "Tags", :hint => "Tags are separated by commas"
+      = form.input :unlisted, :label => "Unlisted?", :hint => "Unlisted projects will not show up in search or on the front page."
+    = form.actions
 

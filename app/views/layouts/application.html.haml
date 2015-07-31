@@ -13,6 +13,8 @@
       = stylesheet_link_tag 'geo-bootstrap'
     - else
       = stylesheet_link_tag 'bootstrap'
+    = stylesheet_link_tag 'formtastic'
+    = stylesheet_link_tag 'formtastic-overrides'
 
     = javascript_include_tag 'jquery.min', 'jquery.metadata', 'jquery_ujs'
     = javascript_include_tag 'json2', 's3_upload.js', 's3_upload_callbacks.js'
@@ -32,6 +34,9 @@
           = flash[:error]
 
       = yield
+
+      %br
+      %br
 
     - if Rails.env.production?
       :javascript

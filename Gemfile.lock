@@ -46,7 +46,7 @@ GEM
     arel (2.0.10)
     authlogic (2.1.6)
       activesupport
-    aws-s3 (0.6.2)
+    aws-s3 (0.6.3)
       builder
       mime-types
       xml-simple
@@ -56,13 +56,11 @@ GEM
     erubis (2.6.6)
       abstract (>= 1.0.0)
     eventmachine (0.12.10)
-    formtastic (1.2.4)
-      actionpack (>= 2.3.7)
-      activesupport (>= 2.3.7)
-      i18n (~> 0.4)
+    formtastic (2.3.1)
+      actionpack (>= 3.0)
     haml (3.0.23)
     has_scope (0.5.0)
-    i18n (0.5.0)
+    i18n (0.5.4)
     inherited_resources (1.1.2)
       has_scope (~> 0.5.0)
       responders (~> 0.6.0)
@@ -75,7 +73,7 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    mime-types (1.21)
+    mime-types (1.25.1)
     pg (0.18.2)
     polyglot (0.3.3)
     rack (1.2.8)
@@ -110,9 +108,9 @@ GEM
     treetop (1.4.12)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (0.3.35)
+    tzinfo (0.3.44)
     will_paginate (3.0.3)
-    xml-simple (1.0.12)
+    xml-simple (1.1.5)
 
 PLATFORMS
   ruby
@@ -122,7 +120,7 @@ DEPENDENCIES
   authlogic
   aws-s3
   cancan
-  formtastic (~> 1.2.2)
+  formtastic (~> 2.0)
   haml
   inherited_resources
   jquery-rails (~> 2.1)

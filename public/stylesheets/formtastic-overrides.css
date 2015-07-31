@@ -1,0 +1,13 @@
+.formtastic input,
+.formtastic select {
+  padding: 0 0.5em;
+}
+
+.formtastic textarea {
+  padding: 0.5em;
+}
+
+.formtastic input,
+.formtastic select {
+  height: 30px;
+}

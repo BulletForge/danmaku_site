@@ -37,9 +37,8 @@ class ArchivesController < ApplicationController
   end
 
   def destroy
-    destroy! do |success, failure|
-      success.json { render :json => { :success => true }.to_json}
-      failure.json { render :json => { :success => false, :errors => @archive.errors }.to_json }
+    destroy! do |format|
+      format.html {redirect_to user_project_path(@user, @project)}
     end
   end
 

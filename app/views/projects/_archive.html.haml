@@ -1,5 +1,7 @@
 - if project.archive
   = link_to "Download", user_project_archive_path(user, project), :class => "btn btn-primary"
+  - if can?(:update, project)
+    = link_to "Delete", user_project_archive_path(user, project), :method => :delete, :confirm => "Are you sure you want to delete this project's download?", :class => "btn"
   %br
   %strong File Size:
   = number_to_human_size(project.archive.attachment_file_size)

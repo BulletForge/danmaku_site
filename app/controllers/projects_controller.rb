@@ -14,6 +14,7 @@ class ProjectsController < ApplicationController
   # Change redirect
   destroy! do |success, failure|
     success.html {redirect_to user_path(@user)}
+    failure.html {redirect_to user_project_path(@user, @project)}
   end
 
   private

@@ -74,6 +74,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.25.1)
+    permalink_fu (1.0.0)
     pg (0.18.2)
     polyglot (0.3.3)
     rack (1.2.8)
@@ -125,6 +126,7 @@ DEPENDENCIES
   inherited_resources
   jquery-rails (~> 2.1)
   paperclip!
+  permalink_fu
   pg
   rails (~> 3.0.20)
   rake (= 0.8.7)

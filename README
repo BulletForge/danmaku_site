@@ -1,4 +1,6 @@
-This is the source code for bulleteforge.org
+This is the source code for http://www.bulletforge.org
 
 TODO:
-* Fix archive and image upload. (not working for Archive and Images, possibly paperclip is not working yet. )
+  * User emailing
+  * Automatic password reset
+  * Redo the search page (new_search branch)

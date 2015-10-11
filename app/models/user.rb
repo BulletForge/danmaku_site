@@ -1,6 +1,5 @@
 class User < ActiveRecord::Base
   has_many :projects, :dependent => :destroy
-  has_many :versions, :through => :projects
 
   acts_as_authentic do |config|
     config.merge_validates_format_of_email_field_options :message => "Email must look like an email."

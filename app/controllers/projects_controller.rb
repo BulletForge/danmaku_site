@@ -10,6 +10,21 @@ class ProjectsController < ApplicationController
 
   authorize_resource
 
+  def report
+    @user = User.find_by_permalink!(params[:user_id])
+    @project = Project.where(:user_id => @user.id, :permalink => params[:project_id]).first
+  end
+
+  def send_report
+    @user = User.find_by_permalink!(params[:user_id])
+    @project = Project.where(:user_id => @user.id, :permalink => params[:project_id]).first
+
+    admins = User.where(:admin => true)
+    recipients = admins.map {|user| user.email}.join(",")
+    Mailgun.send_report(current_user, @project, params[:message], recipients)
+
+    redirect_to user_project_path(@user.permalink, @project.permalink)
+  end
 
   # Change redirect
   destroy! do |success, failure|

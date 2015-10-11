@@ -4,6 +4,8 @@ BulletForge::Application.routes.draw do
     resources :projects, :path => 'p' do
       resource :archive, :only => [:show, :destroy]
       get '/v(/:id(/archive))' => 'versions#redirect' # legacy routing
+      get '/report' => 'projects#report'
+      post '/report' => 'projects#send_report', :as => :send_report
     end
   end
 

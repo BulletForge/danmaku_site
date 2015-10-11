@@ -23,8 +23,12 @@
   .span6
     #archive
       = render :partial => 'archive', :locals => {:user => user, :project => project}
+
     %strong Downloads:
     = @project.downloads
+    %br
+
+    = link_to("Report this project", user_project_report_path(project.user, project))
 
 %br
 

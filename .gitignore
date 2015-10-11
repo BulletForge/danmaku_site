@@ -12,3 +12,4 @@ db/development.sqlite3
 public/system/*
 bin/
 .bundle
+tmtags

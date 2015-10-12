@@ -28,7 +28,8 @@
     = @project.downloads
     %br
 
-    = link_to("Report this project", user_project_report_path(project.user, project))
+    - if current_user
+      = link_to("Report this project", user_project_report_path(project.user, project))
 
 %br
 

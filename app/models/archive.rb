@@ -17,6 +17,8 @@ class Archive < Asset
   end
 
   def destroy_s3_data
+    return unless AWS::S3::S3Object.exists? s3_key, S3SwfUpload::S3Config.bucket
+
     s3_archive = find_s3_archive
     s3_archive.delete
 

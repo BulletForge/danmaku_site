@@ -19,7 +19,7 @@ function s3_swf_init(id, options)
   buttonHeight              = (options.buttonHeight != undefined) ?             options.buttonHeight :              50;
   flashVersion              = (options.flashVersion != undefined) ?             options.flashVersion :              '9.0.0';
   queueSizeLimit            = (options.queueSizeLimit != undefined) ?           options.queueSizeLimit :            10;
-  fileSizeLimit             = (options.fileSizeLimit != undefined) ?            options.fileSizeLimit :             524288000;
+  fileSizeLimit             = (options.fileSizeLimit != undefined) ?            options.fileSizeLimit :             314572800;
   fileTypes                 = (options.fileTypes != undefined) ?                options.fileTypes :                 "*.*";
   fileTypeDescs             = (options.fileTypeDescs != undefined) ?            options.fileTypeDescs :             "All Files";
   selectMultipleFiles       = (options.selectMultipleFiles != undefined) ?      options.selectMultipleFiles :       true;

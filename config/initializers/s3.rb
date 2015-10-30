@@ -1,4 +1,4 @@
-if Rails.env.production? 
+if Rails.env.production?
   BulletForge.s3_key = ENV['S3_KEY']
   BulletForge.s3_secret = ENV['S3_SECRET']
   BulletForge.s3_bucket = ENV['S3_BUCKET']

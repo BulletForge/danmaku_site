@@ -16,6 +16,7 @@ gem 'aws-s3', :require => 'aws/s3'
 gem 'formtastic', '~> 2.0', :require => 'formtastic'
 gem 'jquery-rails', '~> 2.1'
 gem 'permalink_fu'
+gem 'rails_12factor'
 
 group :development do
   gem 'sqlite3-ruby'

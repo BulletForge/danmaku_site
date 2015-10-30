@@ -90,6 +90,11 @@ GEM
       activesupport (= 3.0.20)
       bundler (~> 1.0)
       railties (= 3.0.20)
+    rails_12factor (0.0.3)
+      rails_serve_static_assets
+      rails_stdout_logging
+    rails_serve_static_assets (0.0.4)
+    rails_stdout_logging (0.0.4)
     railties (3.0.20)
       actionpack (= 3.0.20)
       activesupport (= 3.0.20)
@@ -129,6 +134,7 @@ DEPENDENCIES
   permalink_fu
   pg
   rails (~> 3.0.20)
+  rails_12factor
   rake (= 0.8.7)
   s3_swf_upload!
   sqlite3-ruby

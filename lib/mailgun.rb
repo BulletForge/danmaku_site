@@ -16,19 +16,9 @@ module Mailgun
       send_email({
         "to"         => recipient.email,
         "from"       => "BulletForge <no-reply@bulletforge.org>",
-        "subject"    => "#{sender.login} has sent you a message",
+        "subject"    => "Message from #{sender.login}",
         "text"       => user_message_email_body(sender, message),
         "h:Reply-To" => sender.email
-      })
-    end
-
-    def send_report reporter, project, message, recipients
-      send_email({
-        "to" => recipients,
-        "from" => "BulletForge <no-reply@bulletforge.org>",
-        "subject" => "#{reporter.login} has reported a project",
-        "text" => report_email_body(project, message),
-        "h:Reply-To" => reporter.email
       })
     end
 
@@ -62,7 +52,7 @@ To reset your password, please click on the link below:
 http://www.bulletforge.org/reset_password?token=#{user.password_token}
 
 The link will stop working after a successful reset or after 24 hours have passed.
-If you did not request a password reset, you may disregard this email.
+If you did not request a password reset, you may safely disregard this email.
       END
     end
 
@@ -73,16 +63,6 @@ You can reply to the user by replying to this email.
 
 ----
 
-#{message}
-      END
-    end
-
-    def report_email_body project, message
-      <<-END
-Reported project:
-http://bulletforge.org/u/#{project.user.permalink}/p/#{project.permalink}/
-
-Reporter's message:
 #{message}
       END
     end

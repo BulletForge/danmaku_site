@@ -41,10 +41,10 @@ class Project < ActiveRecord::Base
   end
 
   def self.most_downloaded
-    Project.where(:unlisted => false).order('downloads DESC').limit(5)
+    Project.joins(:archive).where("unlisted = false AND attachable_id IS NOT NULL").order('downloads DESC').limit(5)
   end
 
   def self.latest
-    Project.where(:unlisted => false).order('created_at DESC').limit(5)
+    Project.joins(:archive).where("unlisted = false AND attachable_id IS NOT NULL").order('created_at DESC').limit(5)
   end
 end

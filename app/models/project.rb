@@ -34,17 +34,29 @@ class Project < ActiveRecord::Base
     Project.where(:id => id).update_all(:downloads => self.downloads += 1)
   end
 
+  def takedown(reason)
+    Project.where(:id => id).update_all(:soft_deleted => true, :deleted_reason => reason)
+    images.destroy_all if images && images.present?
+    archive.destroy if archive
+  end
+
   def self.featured
-    Project.where(:unlisted => false).order("created_at DESC").limit(100).max do |p1, p2|
+    self.publically_viewable.order("created_at DESC").limit(100).max do |p1, p2|
       p1.downloads <=> p2.downloads
     end
   end
 
+  def self.publically_viewable
+    self.joins(:archive).
+      where(:unlisted => false, :soft_deleted => false).
+      where("attachable_id IS NOT NULL")
+  end
+
   def self.most_downloaded
-    Project.joins(:archive).where("unlisted = false AND attachable_id IS NOT NULL").order('downloads DESC').limit(5)
+    self.joins(:archive).publically_viewable.order('downloads DESC').limit(5)
   end
 
   def self.latest
-    Project.joins(:archive).where("unlisted = false AND attachable_id IS NOT NULL").order('created_at DESC').limit(5)
+    self.joins(:archive).publically_viewable.order('created_at DESC').limit(5)
   end
 end

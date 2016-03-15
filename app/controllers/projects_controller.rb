@@ -21,6 +21,7 @@ class ProjectsController < ApplicationController
   # Filter, order, and paginate the collection
   def _collection
     @search = end_of_association_chain.joins(:archive).where("unlisted = false AND attachable_id IS NOT NULL")
+    @search = @search.where(:soft_deleted => false)
 
     if current_user && current_user.admin? && params[:search]
       unlisted = params[:search]["unlisted"].blank? ? false : params[:search]["unlisted"]

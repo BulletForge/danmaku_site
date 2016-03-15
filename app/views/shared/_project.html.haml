@@ -1,38 +1,39 @@
-.row{ :style => "padding-top:10px; padding-bottom:10px;" }
-  .span12
-    %h2
-      = link_to h(p.title), user_project_path(p.user, p)
-      %small
-        by
-        = link_to p.user.login, user_path(p.user)
-.row{ :style => "padding-bottom:10px;" }
-  .span3{ :style => "text-align:center;"}
-    = preview_image p, :thumb
-  .span9
-    .row
-      .span3
-        %strong
-          Version:
-        = h p.version_number
-        %br
-        %strong
-          Downloads:
-        = p.downloads
-      .span6
-        %strong
-          Category:
-        = p.category.name
-        %br
-        %strong
-          Danmakufu Version:
-        = p.danmakufu_version.name
-        %br
-        %strong
-          Tags:
-        = tag_list(p)
-        %br
-        %br
-        - if !p.description.blank?
-          %p= h truncate p.description, :length => 300
-        - else
-          %p No description
+- if !p.soft_deleted || can?(:manage, p)
+  .row{ :style => "padding-top:10px; padding-bottom:10px;" }
+    .span12
+      %h2
+        = link_to h((p.soft_deleted ? "[DELETED BY ADMIN] " : "") + p.title), user_project_path(p.user, p)
+        %small
+          by
+          = link_to p.user.login, user_path(p.user)
+  .row{ :style => "padding-bottom:10px;" }
+    .span3{ :style => "text-align:center;"}
+      = preview_image p, :thumb
+    .span9
+      .row
+        .span3
+          %strong
+            Version:
+          = h p.version_number
+          %br
+          %strong
+            Downloads:
+          = p.downloads
+        .span6
+          %strong
+            Category:
+          = p.category.name
+          %br
+          %strong
+            Danmakufu Version:
+          = p.danmakufu_version.name
+          %br
+          %strong
+            Tags:
+          = tag_list(p)
+          %br
+          %br
+          - if !p.description.blank?
+            %p= h truncate p.description, :length => 300
+          - else
+            %p No description

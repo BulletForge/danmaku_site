@@ -1,4 +1,9 @@
 class Archive < Asset
+  AWS::S3::Base.establish_connection!(
+    :access_key_id     => S3SwfUpload::S3Config.access_key_id,
+    :secret_access_key => S3SwfUpload::S3Config.secret_access_key
+  )
+
   before_destroy :destroy_s3_data
   MAX_FILE_SIZE = '300 MB'
 
@@ -31,11 +36,6 @@ class Archive < Asset
   private
 
   def find_s3_archive
-    AWS::S3::Base.establish_connection!(
-      :access_key_id     => S3SwfUpload::S3Config.access_key_id,
-      :secret_access_key => S3SwfUpload::S3Config.secret_access_key
-    )
-
     AWS::S3::S3Object.find s3_key, S3SwfUpload::S3Config.bucket
   end
 end

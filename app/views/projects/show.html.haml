@@ -1,4 +1,6 @@
 - if @project.soft_deleted
+  = p @project
+  = @project.soft_deleted
   .page-header
     %h1
       = h(@project.title)
@@ -8,6 +10,7 @@
   %p
     This project has been deleted for the following reason:
     = h(@project.deleted_reason)
+
 - else
 
   = render :partial => 'management_toolbar', :locals => {:user => @user, :project => @project}

@@ -3,7 +3,7 @@ require 'will_paginate/array'
 class UsersController < ApplicationController
   inherit_resources
   include PermalinkResources
-  
+
   # preload all resource / collection in before filter
   before_filter :collection, :only =>[:index]
   before_filter :resource, :only => [:show, :edit, :update, :destroy]
@@ -16,7 +16,10 @@ class UsersController < ApplicationController
   # Change default flash notice and redirect
   create! do |success, failure|
     success.html {
-      #flash "Successfully registered!"
+      user = UserSession.find.record
+      user.ip_address = request.remote_ip
+      user.save
+
       redirect_back_or_default root_path
     }
   end
@@ -52,7 +55,7 @@ class UsersController < ApplicationController
     params[:user].delete :admin unless current_user && current_user.admin
   end
 
-  # Paginate the users collection  
+  # Paginate the users collection
   def _collection
     @users ||= end_of_association_chain
 
@@ -68,13 +71,13 @@ class UsersController < ApplicationController
     order_arr = order.split("_by_")
     direction = order_arr[0]
     column = order_arr[1]
-    
+
     if direction == "ascend"
       direction = "ASC"
     else
       direction = "DESC"
     end
-    
+
     if ["created_at", "login"].include? column
       @users = @users.order("#{column} #{direction}")
     elsif "projects_count" == column

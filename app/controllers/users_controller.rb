@@ -17,7 +17,7 @@ class UsersController < ApplicationController
   create! do |success, failure|
     success.html {
       user = UserSession.find.record
-      user.ip_address = request.remote_ip
+      user.ip_address = request.headers["CF-Connecting-IP"] || request.remote_ip
       user.save
 
       redirect_back_or_default root_path

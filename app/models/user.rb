@@ -18,6 +18,8 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :permalink, :message => "Username is in use by another account."
   validate :login_excludes_new_by_permalink, :login_is_unique_by_permalink
 
+  before_save :check_suspicious
+
   def login_excludes_new_by_permalink
     errors.add(:login, "Username cannot be named 'new'.") if
       permalink == "new"
@@ -27,6 +29,10 @@ class User < ActiveRecord::Base
     user_with_permalink = User.find_by_permalink(permalink)
     errors.add(:login, "Username is in use by another account.") if
       user_with_permalink && user_with_permalink != self
+  end
+
+  def check_suspicious
+    self.suspicious = true if email.include?("trbvn.com")
   end
 
   def roles

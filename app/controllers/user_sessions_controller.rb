@@ -12,7 +12,7 @@ class UserSessionsController < ApplicationController
   create! do |success, failure|
     success.html {
       user = UserSession.find.record
-      user.ip_address = request.remote_ip
+      user.ip_address = current_ip_address
       user.save
       flash[:notice] = "Successfully logged in!"
       redirect_back_or_default root_path

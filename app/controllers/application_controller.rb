@@ -23,6 +23,6 @@ class ApplicationController < ActionController::Base
   end
 
   def current_ip_address
-    request.env['HTTP_X_REAL_IP'] || request.env['REMOTE_ADDR']
+    request.headers["CF-Connecting-IP"] || request.env['HTTP_X_REAL_IP'] || request.env['REMOTE_ADDR']
   end
 end

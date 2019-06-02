@@ -16,9 +16,11 @@ class UsersController < ApplicationController
   # Change default flash notice and redirect
   create! do |success, failure|
     success.html {
-      @user.ip_address = current_ip_address
-      @user.suspicious = true
-      @user.save
+      if user = UserSession.find
+        user = user.record
+        user.ip_address = request.headers["CF-Connecting-IP"] || request.remote_ip
+        user.save
+      end
 
       redirect_back_or_default root_path
     }

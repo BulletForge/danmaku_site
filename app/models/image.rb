@@ -1,5 +1,5 @@
 class Image < Asset
-  has_attached_file :attachment, 
+  has_attached_file :attachment,
     :styles => {
       :normal => "400x300>",
       :thumb => "160x120>"
@@ -11,4 +11,9 @@ class Image < Asset
       :bucket => S3SwfUpload::S3Config.bucket
     },
     :path => "/images/:id/:style.:extension"
+
+
+  def url(style=:normal)
+    attachment.url(style).gsub("http://", "https://")
+  end
 end

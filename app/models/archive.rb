@@ -18,7 +18,7 @@ class Archive < Asset
 
   def attachment_url
     s3_archive = find_s3_archive
-    s3_archive.url
+    s3_archive.url.gsub("http://", "https://")
   end
 
   def destroy_s3_data

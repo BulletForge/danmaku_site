@@ -7,7 +7,7 @@ module ApplicationHelper
     elsif type == :thumb
       image = image_tag 'nopreviewthumb.png'
     end
-    image = image_tag project.images.first.attachment.url(type) unless project.images.empty?
+    image = image_tag project.images.first.url(type) unless project.images.empty?
     link_to image, user_project_path(project.user, project), :class => "thumbnail"
   end
 

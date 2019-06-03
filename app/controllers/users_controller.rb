@@ -13,18 +13,22 @@ class UsersController < ApplicationController
   authorize_resource
 
 
-  # Change default flash notice and redirect
-  create! do |success, failure|
-    success.html {
-      if user = UserSession.find
-        user = user.record
-        user.ip_address = request.headers["CF-Connecting-IP"] || request.remote_ip
-        user.save
-      end
+  def create
+    @user = User.new(params[:user])
+    @user.ip_address = request.headers["CF-Connecting-IP"] || request.remote_ip
 
+    unless verify_recaptcha(:model => @user)
+      flash[:error] = "Please solve the captcha."
+    end
+
+    if @user.save
+      flash[:notice] = "User successfully created."
       redirect_back_or_default root_path
-    }
+    else
+      render :new
+    end
   end
+
 
   def delete
     @user = User.find_by_permalink params[:id]

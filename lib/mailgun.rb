@@ -12,16 +12,6 @@ module Mailgun
       })
     end
 
-    def send_user_message sender, recipient, message
-      send_email({
-        "to"         => recipient.email,
-        "from"       => "BulletForge <no-reply@bulletforge.org>",
-        "subject"    => "Message from #{sender.login}",
-        "text"       => user_message_email_body(sender, message),
-        "h:Reply-To" => sender.email
-      })
-    end
-
     private
 
     def http
@@ -52,18 +42,6 @@ To reset your password, please click on the link below:
 http://www.bulletforge.org/reset_password?token=#{user.password_token}
 
 The link will stop working after a successful reset or after 24 hours have passed.
-If you did not request a password reset, you may safely disregard this email.
-      END
-    end
-
-    def user_message_email_body sender, message
-      <<-END
-You have a received a message from #{sender.login}.
-You can reply to the user by replying to this email.
-
-----
-
-#{message}
       END
     end
   end

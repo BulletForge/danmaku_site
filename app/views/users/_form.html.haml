@@ -8,4 +8,6 @@
       = raw form.input :password, :label => "Change password", :hint => "Leave this blank to keep it the same." unless form.object.new_record?
       = raw form.input :password_confirmation
       = raw form.input :admin if has_role?(:admin)
+    - if form.object.new_record?
+      = recaptcha_tags
     = raw form.actions

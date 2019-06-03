@@ -17,6 +17,7 @@ gem 'formtastic', '~> 2.0', :require => 'formtastic'
 gem 'jquery-rails', '~> 2.1'
 gem 'permalink_fu'
 gem 'rails_12factor'
+gem 'recaptcha', '~> 0.4.0', :require => "recaptcha/rails"
 
 group :development do
   gem 'sqlite3-ruby'

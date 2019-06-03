@@ -17,8 +17,9 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     @user.ip_address = request.headers["CF-Connecting-IP"] || request.remote_ip
 
-    unless verify_recaptcha(:model => @user)
+    unless verify_recaptcha
       flash[:error] = "Please solve the captcha."
+      @user.errors[:base] << "Captcha was not solved"
     end
 
     if @user.save

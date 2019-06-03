@@ -19,7 +19,8 @@ class UsersController < ApplicationController
 
     unless verify_recaptcha
       flash[:error] = "Please solve the captcha."
-      @user.errors[:base] << "Captcha was not solved"
+      render :new
+      return
     end
 
     if @user.save

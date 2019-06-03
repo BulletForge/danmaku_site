@@ -15,11 +15,10 @@ module BulletForge
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
+    #config.force_ssl = false
+
     # Add additional load paths for your own custom dirs
     config.autoload_paths += %W( #{config.root}/lib )
-
-    # Add http and https support in parallel
-    config.middleware.insert_before ActionDispatch::Static, Rack::SSL, :exclude => proc { |env| env['HTTPS'] != 'on' }
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named

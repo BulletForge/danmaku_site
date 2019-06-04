@@ -2,8 +2,8 @@ source "https://rubygems.org"
 ruby "1.9.3"
 
 gem 'rake', '0.8.7'
-gem 'rack-cache', '~> 1.6.0'
-gem 'rails', '3.1.12'
+gem "rails", '~> 3.0.20'
+gem 'rack-ssl', :require => 'rack/ssl'
 gem 'pg'
 gem 'haml'
 gem 'will_paginate'

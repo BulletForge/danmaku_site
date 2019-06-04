@@ -3,7 +3,6 @@ ruby "1.9.3"
 
 gem 'rake', '0.8.7'
 gem "rails", '~> 3.0.20'
-gem 'rack-ssl', :require => 'rack/ssl'
 gem 'pg'
 gem 'haml'
 gem 'will_paginate'

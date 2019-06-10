@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
     config.merge_validates_length_of_password_field_options :message => "Password is too short."
   end
 
-  has_permalink :login, :update => true, :unique => false
+  has_permalink :login, :update => false, :unique => false
   validates_exclusion_of :permalink, :in => ["new"], :message => "Username cannot be 'new'."
   validates_uniqueness_of :permalink, :message => "Username is in use by another account."
   validate :login_excludes_new_by_permalink, :login_is_unique_by_permalink

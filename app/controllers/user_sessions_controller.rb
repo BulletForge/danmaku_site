@@ -13,6 +13,7 @@ class UserSessionsController < ApplicationController
     success.html {
       user = UserSession.find.record
       user.ip_address = current_ip_address
+      user.update_password_digest(params[:user_session][:password]) if user.password_digest.nil?
       user.save
       flash[:notice] = "Successfully logged in!"
       redirect_back_or_default root_path

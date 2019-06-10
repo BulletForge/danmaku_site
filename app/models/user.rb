@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :permalink, :message => "Username is in use by another account."
   validate :login_excludes_new_by_permalink, :login_is_unique_by_permalink
 
-  before_save :check_suspicious, :update_password_digest
+  before_save :check_suspicious
 
   def login_excludes_new_by_permalink
     errors.add(:login, "Username cannot be named 'new'.") if
@@ -42,13 +42,6 @@ class User < ActiveRecord::Base
   def owner_of?(ownable)
     return false if ownable.class != Project
     ownable.user == self
-  end
-
-  def update_password_digest(unencrypted_password=nil)
-    unencrypted_password ||= password
-    if unencrypted_password.present?
-      self.password_digest = BCrypt::Password.create(unencrypted_password)
-    end
   end
 
   def to_param

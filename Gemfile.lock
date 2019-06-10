@@ -50,7 +50,6 @@ GEM
       builder
       mime-types
       xml-simple
-    bcrypt (3.1.13)
     builder (2.1.2)
     cancan (1.4.1)
     daemons (1.1.0)
@@ -127,7 +126,6 @@ DEPENDENCIES
   acts-as-taggable-on
   authlogic
   aws-s3
-  bcrypt
   cancan
   formtastic (~> 2.0)
   haml

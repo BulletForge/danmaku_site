@@ -18,6 +18,7 @@ class UserSessionsController < ApplicationController
       redirect_back_or_default root_path
     }
     failure.html {
+      flash[:error] = "Incorrect username or password"
       render :action => :new
     }
   end

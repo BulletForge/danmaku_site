@@ -16,7 +16,7 @@ module ApplicationHelper
   end
 
   def setup_project(project)
-    returning(project) do |p|
+    project.tap do |p|
       while(p.images.length < 4) do
         p.images.build
       end

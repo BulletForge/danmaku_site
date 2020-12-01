@@ -143,5 +143,8 @@ DEPENDENCIES
   thin
   will_paginate
 
+RUBY VERSION
+   ruby 1.9.3p551
+
 BUNDLED WITH
-   1.11.2
+   1.17.3

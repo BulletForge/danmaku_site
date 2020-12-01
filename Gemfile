@@ -1,28 +1,30 @@
 source "https://rubygems.org"
-ruby "1.9.3"
+ruby '2.3.4'
 
-gem 'rake', '0.8.7'
-gem "rails", '~> 3.0.20'
-gem 'pg'
-gem 'haml'
+gem 'rake'
+gem "rails", '~> 3.2.22'
+gem 'pg', '~> 0.11'
+gem 'haml', '~> 4.0'
 gem 'will_paginate'
 gem 'inherited_resources'
 gem 'cancan'
 gem 'acts-as-taggable-on'
 gem 'authlogic'
-gem 'paperclip', :git => 'git://github.com/lightyear/paperclip'
+gem 'paperclip', '~> 4.0'
 gem 's3_swf_upload', :git => 'git://github.com/Blargel/s3-swf-upload-plugin'
-gem 'aws-s3', :require => 'aws/s3'
+gem 'aws-sdk', '~> 1.0'
 gem 'formtastic', '~> 2.0', :require => 'formtastic'
-gem 'jquery-rails', '~> 2.1'
 gem 'permalink_fu'
 gem 'rails_12factor'
 gem 'recaptcha', '~> 0.4.0', :require => "recaptcha/rails"
+gem 'puma'
+gem 'test-unit', '~> 3.0'
+gem 'jquery-rails'
+gem 'bootstrap-sass', '~> 2.0.2'
+gem 'sprockets-rails', :require => 'sprockets/railtie'
 
-group :development do
-  gem 'sqlite3-ruby'
-end
-
-group :production do
-  gem 'thin'
+group :assets do
+  gem 'sass-rails',   '~> 3.2.6'
+  gem 'coffee-rails', '~> 3.2.2'
+  gem 'uglifier',     '>= 1.0.3'
 end

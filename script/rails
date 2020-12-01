@@ -7,4 +7,6 @@ APP_PATH  = File.expand_path('../../config/application',  __FILE__)
 ROOT_PATH = File.expand_path('../..',  __FILE__)
 
 require BOOT_PATH
+require 'rack/handler'
+Rack::Handler::WEBrick = Rack::Handler.get(:puma)
 require 'rails/commands'

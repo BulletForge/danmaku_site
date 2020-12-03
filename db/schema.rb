@@ -1,102 +1,131 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `rails
+# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20201201045651) do
+ActiveRecord::Schema.define(version: 2020_12_03_054627) do
 
-  create_table "assets", :force => true do |t|
-    t.string   "attachment_file_name"
-    t.string   "attachment_content_type"
-    t.integer  "attachment_file_size"
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "assets", id: :serial, force: :cascade do |t|
+    t.string "attachment_file_name"
+    t.string "attachment_content_type"
+    t.integer "attachment_file_size"
     t.datetime "attachment_updated_at"
-    t.integer  "attachable_id"
-    t.string   "attachable_type"
+    t.integer "attachable_id"
+    t.string "attachable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "type"
-    t.string   "s3_key"
+    t.string "type"
+    t.string "s3_key"
   end
 
-  create_table "blocked_ips", :force => true do |t|
-    t.string   "ip_address"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "categories", :force => true do |t|
-    t.string   "name"
+  create_table "blocked_ips", id: :serial, force: :cascade do |t|
+    t.string "ip_address"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "danmakufu_versions", :force => true do |t|
-    t.string   "name"
+  create_table "categories", id: :serial, force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "projects", :force => true do |t|
-    t.string   "title"
+  create_table "danmakufu_versions", id: :serial, force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id"
-    t.string   "permalink"
-    t.integer  "category_id"
-    t.integer  "downloads",            :default => 0
-    t.string   "youtube_video_id"
-    t.integer  "win_votes",            :default => 0
-    t.integer  "fail_votes",           :default => 0
-    t.integer  "danmakufu_version_id", :default => 1
-    t.boolean  "unlisted",             :default => false
-    t.string   "version_number"
-    t.text     "description"
-    t.boolean  "soft_deleted",         :default => false
-    t.string   "deleted_reason"
   end
 
-  create_table "taggings", :force => true do |t|
-    t.integer  "tag_id"
-    t.integer  "taggable_id"
-    t.integer  "tagger_id"
-    t.string   "tagger_type"
-    t.string   "taggable_type"
-    t.string   "context"
-    t.datetime "created_at"
-  end
-
-  add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], :name => "taggings_idx", :unique => true
-  add_index "taggings", ["taggable_id", "taggable_type", "context"], :name => "index_taggings_on_taggable_id_and_taggable_type_and_context"
-
-  create_table "tags", :force => true do |t|
-    t.string  "name"
-    t.integer "taggings_count", :default => 0
-  end
-
-  add_index "tags", ["name"], :name => "index_tags_on_name", :unique => true
-
-  create_table "users", :force => true do |t|
-    t.string   "login"
-    t.string   "email"
-    t.string   "crypted_password"
-    t.string   "password_salt"
-    t.string   "persistence_token"
+  create_table "projects", id: :serial, force: :cascade do |t|
+    t.string "title"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "permalink"
-    t.boolean  "admin"
-    t.string   "ip_address"
-    t.string   "password_token"
+    t.integer "user_id"
+    t.string "permalink"
+    t.integer "category_id"
+    t.integer "downloads", default: 0
+    t.string "youtube_video_id"
+    t.integer "win_votes", default: 0
+    t.integer "fail_votes", default: 0
+    t.integer "danmakufu_version_id", default: 1
+    t.boolean "unlisted", default: false
+    t.string "version_number"
+    t.text "description"
+    t.boolean "soft_deleted", default: false
+    t.string "deleted_reason"
+  end
+
+  create_table "taggings", id: :serial, force: :cascade do |t|
+    t.integer "tag_id"
+    t.integer "taggable_id"
+    t.integer "tagger_id"
+    t.string "tagger_type"
+    t.string "taggable_type"
+    t.string "context"
+    t.datetime "created_at"
+    t.index ["context"], name: "index_taggings_on_context"
+    t.index ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+    t.index ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context"
+    t.index ["taggable_id", "taggable_type", "tagger_id", "context"], name: "taggings_idy"
+    t.index ["taggable_id"], name: "index_taggings_on_taggable_id"
+    t.index ["taggable_type"], name: "index_taggings_on_taggable_type"
+    t.index ["tagger_id", "tagger_type"], name: "index_taggings_on_tagger_id_and_tagger_type"
+    t.index ["tagger_id"], name: "index_taggings_on_tagger_id"
+  end
+
+  create_table "tags", id: :serial, force: :cascade do |t|
+    t.string "name"
+    t.integer "taggings_count", default: 0
+    t.index ["name"], name: "index_tags_on_name", unique: true
+  end
+
+  create_table "users", id: :serial, force: :cascade do |t|
+    t.string "login"
+    t.string "email"
+    t.string "crypted_password"
+    t.string "password_salt"
+    t.string "persistence_token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string "permalink"
+    t.boolean "admin"
+    t.string "ip_address"
+    t.string "password_token"
     t.datetime "password_token_expiration"
-    t.boolean  "suspicious",                :default => false
+    t.boolean "suspicious", default: false
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
 end

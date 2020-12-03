@@ -7,9 +7,9 @@ class ArchivesController < ApplicationController
   end
 
   # preload all resource / collection in before filter
-  before_filter :collection, :only =>[:index]
-  before_filter :resource, :only => [:show, :edit, :update, :destroy]
-  before_filter :build_resource, :only => [:new, :create, :index]
+  before_action :collection, :only =>[:index]
+  before_action :resource, :only => [:show, :edit, :update, :destroy]
+  before_action :build_resource, :only => [:new, :create, :index]
 
 
   def show

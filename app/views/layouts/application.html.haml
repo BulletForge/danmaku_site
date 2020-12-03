@@ -9,8 +9,11 @@
     %meta{ :name => "keywords", :content => "danmakufu scripts, danmakufu projects, danmakufu, shmup, game scripts" }
     %meta{ :name => "description", :content => "Dedicated Danmakufu Project Hosting" }
 
-    = stylesheet_link_tag 'application'
-    = javascript_include_tag 'application'
+    = csrf_meta_tags
+    = csp_meta_tag
+
+    = stylesheet_link_tag 'application', media: 'all'
+    = javascript_pack_tag 'application'
   %body
 
     = render :partial => 'layouts/navbar'

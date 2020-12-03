@@ -1,1 +1,0 @@
-BulletForge::Application.config.secret_token = 'd9c243a048bd9bf50e99d2ebe72b9a26c03ccf477bdf9251a07e135f2eeb1abc1f394f4938bbdff76c3dbd225d85373fa47b4834cc0e297e753d1c019b2ca449'

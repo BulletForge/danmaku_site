@@ -5,7 +5,7 @@ class S3UploadsController < ApplicationController
   # You might want to look at https and expiration_date below.
   #        Possibly these should also be configurable from S3Config...
 
-  skip_before_filter :verify_authenticity_token
+  skip_before_action :verify_authenticity_token
   include S3SwfUpload::Signature
   
   def index

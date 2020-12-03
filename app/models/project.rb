@@ -1,4 +1,4 @@
-class Project < ActiveRecord::Base
+class Project < ApplicationRecord
   belongs_to :user
   belongs_to :category
   belongs_to :danmakufu_version

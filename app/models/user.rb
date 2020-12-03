@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   has_many :projects, :dependent => :destroy
 
   acts_as_authentic do |config|

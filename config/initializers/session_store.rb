@@ -1,1 +1,0 @@
-BulletForge::Application.config.session_store :cookie_store, key: '_danmaku_site_session'

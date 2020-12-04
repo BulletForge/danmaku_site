@@ -1,10 +1,10 @@
-%ul.nav.pull-right
+%ul.navbar-nav.mt-2.mt-lg-0
   - if can? :destroy, UserSession
-    %li= link_to current_user.login, user_path(current_user)
-    %li= link_to "Log Out", logout_path
+    %li.nav-item= link_to current_user.login, user_path(current_user), class: "nav-link"
+    %li.nav-item= link_to "Log Out", logout_path, class: "nav-link"
     - if can?(:create, current_user.projects.build)
-      %li= link_to("New Project", new_user_project_path(current_user))
+      %li.nav-item= link_to("New Project", new_user_project_path(current_user), class: "nav-link")
 
   - if can? :create, UserSession
-    %li= link_to "Login", login_path
-    %li= link_to "Register", new_user_path
+    %li.nav-item= link_to "Login", login_path, class: "nav-link"
+    %li.nav-item= link_to "Register", new_user_path, class: "nav-link"

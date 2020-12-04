@@ -4,47 +4,40 @@
     - if no_bot_index?
       %meta{:name => "robots", :content => "noindex"}
 
-    %meta{"http-equiv" => 'Content-Type', :content => 'text/html;charset=utf-8'}
+    %meta{charset: 'utf-8'}
+    %meta{name: "viewport", content: "width=device-width, initial-scale=1, shrink-to-fit=no"}
+
     %title= h(@title || "BulletForge")
     %meta{ :name => "keywords", :content => "danmakufu scripts, danmakufu projects, danmakufu, shmup, game scripts" }
     %meta{ :name => "description", :content => "Dedicated Danmakufu Project Hosting" }
 
     = csrf_meta_tags
     = csp_meta_tag
+    = stylesheet_pack_tag 'application', media: 'all'
 
-    = stylesheet_link_tag 'application', media: 'all'
-    = javascript_pack_tag 'application'
   %body
-
     = render :partial => 'layouts/navbar'
 
-    .container{ :style => "padding-top: 80px;"}
-      .alert.alert-notice.fade.in
+    .container.mt-4
+      .alert.alert-warning.fade.show
         New user registration is now open again!
         %br
         Also, new development on BulletForge is now under way.
         = link_to "Join the Discord server", "https://discord.gg/vfHHsCn"
         for progress updates and to request features!
       - if flash[:notice]
-        .alert.alert-success.fade.in
-          %a.close{ :"data-dismiss" => "alert", :href => "#" } ×
+        .alert.alert-success.fade.show
           = flash[:notice]
+          %button.close{ "data-dismiss": "alert", type: "button" }
+            %span{"aria-hidden": "true"}
+              &times
       - if flash[:error]
-        .alert.alert-error.fade.in
-          %a.close{ :"data-dismiss" => "alert", :href => "#" } ×
+        .alert.alert-danger.fade.show
           = flash[:error]
-
+          %button.close{ "data-dismiss": "alert", type: "button" }
+            %span{"aria-hidden": "true"}
+              &times
       = yield
 
-      %br
-      %br
+    = javascript_pack_tag 'application'
 
-    - if Rails.env.production?
-      :javascript
-        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-      :javascript
-        try {
-          var pageTracker = _gat._getTracker("UA-15014212-1");
-          pageTracker._trackPageview();
-        } catch(err) {}

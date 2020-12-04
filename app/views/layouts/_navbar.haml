@@ -1,10 +1,8 @@
-.navbar.navbar-fixed-top
-  .navbar-inner
-    .container
-      = link_to "BulletForge", root_path, :class => "brand"
-      %ul.nav
-        %li= link_to "Browse", projects_path
-        %li= link_to "Users", users_path
-        %li= link_to "Adv. Search", search_path
-      = render :partial => "layouts/search"
-      = render :partial => "layouts/login"
+%nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.sticky-top
+  = link_to "BulletForge", root_path, class: "navbar-brand"
+  %ul.navbar-nav.mr-auto.mt-2.mt-lg-0
+    %li.nav-item= link_to "Browse", projects_path, class: "nav-link"
+    %li.nav-item= link_to "Users", users_path, class: "nav-link"
+    %li.nav-item= link_to "Adv. Search", search_path, class: "nav-link"
+  = render :partial => "layouts/search"
+  = render :partial => "layouts/login"

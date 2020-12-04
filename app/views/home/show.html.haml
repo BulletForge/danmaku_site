@@ -1,7 +1,8 @@
 %section#featured-project
   - if @featured_project
-    .page-header
-      %h1 Featured Project
+    %h1 Featured Project
+    .card
+
     .row
       .span6
         - unless @featured_project.youtube_video_id.blank?

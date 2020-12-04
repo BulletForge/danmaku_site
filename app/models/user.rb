@@ -2,15 +2,15 @@ class User < ApplicationRecord
   has_many :projects, :dependent => :destroy
 
   acts_as_authentic do |config|
-    config.merge_validates_format_of_email_field_options :message => "Email must look like an email."
-    config.merge_validates_length_of_email_field_options :message => "Email is too short."
-    config.merge_validates_uniqueness_of_email_field_options :message => "Email is in use by another account."
-    config.merge_validates_format_of_login_field_options :message => "Username can only use .-_@ as symbols."
-    config.merge_validates_length_of_login_field_options :message => "Username must be between 3 and 100 characters long."
-    config.validate_login_field false
-    config.merge_validates_confirmation_of_password_field_options :message => "Password does not match."
-    config.merge_validates_length_of_password_confirmation_field_options :message => "Password confirmation is too short."
-    config.merge_validates_length_of_password_field_options :message => "Password is too short."
+    # config.merge_validates_format_of_email_field_options :message => "Email must look like an email."
+    # config.merge_validates_length_of_email_field_options :message => "Email is too short."
+    # config.merge_validates_uniqueness_of_email_field_options :message => "Email is in use by another account."
+    # config.merge_validates_format_of_login_field_options :message => "Username can only use .-_@ as symbols."
+    # config.merge_validates_length_of_login_field_options :message => "Username must be between 3 and 100 characters long."
+    # config.validate_login_field false
+    # config.merge_validates_confirmation_of_password_field_options :message => "Password does not match."
+    # config.merge_validates_length_of_password_confirmation_field_options :message => "Password confirmation is too short."
+    # config.merge_validates_length_of_password_field_options :message => "Password is too short."
   end
 
   has_permalink :login, :update => false, :unique => false

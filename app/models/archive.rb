@@ -1,5 +1,5 @@
 class Archive < Asset
-  has_one_attached :file
+  has_one_attached :attachment
 
   # before_destroy :destroy_s3_data
   # MAX_FILE_SIZE = '300 MB'

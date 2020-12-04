@@ -1,0 +1,11 @@
+development:
+  api_key: test123
+  domain: something.mailgun.org
+
+test:
+  api_key: test123
+  domain: something.mailgun.org
+
+production:
+  api_key: test123
+  domain: something.mailgun.org

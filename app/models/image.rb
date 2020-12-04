@@ -1,5 +1,14 @@
 class Image < Asset
-  has_one_attached :file
+  VARIANTS = {
+    normal: {
+      resize_to_limit: [400, 300]
+    },
+    thumb: {
+      resize_to_limit: [160, 120]
+    }
+  }
+
+  has_one_attached :attachment
 
   # has_attached_file :attachment,
   #   :styles => {
@@ -15,7 +24,7 @@ class Image < Asset
   #   :path => "/images/:id/:style.:extension"
 
 
-  # def url(style=:normal)
-  #   attachment.url(style).gsub("http://", "https://")
-  # end
+  def url(variant=:normal)
+    attachment.variant(VARIANTS[variant])
+  end
 end

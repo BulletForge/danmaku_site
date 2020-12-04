@@ -1,3 +1,3 @@
 - unless project.youtube_video_id.blank?
   .embed-responsive.embed-responsive-16by9
-    %iframe.embed-responsive-item{src: "https://www.youtube.com/embed/#{project.youtube_video_id}" allowfullscreen}
+    %iframe.embed-responsive-item{src: "https://www.youtube.com/embed/#{project.youtube_video_id}", allowfullscreen: true}

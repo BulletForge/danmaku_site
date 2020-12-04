@@ -16,7 +16,7 @@ class Migrator
   attr_reader :s3_client, :model
 
   def initialize(s3_client, model)
-    @s3_client = s3_client
+    @s3 = s3_client
     @model = model
   end
 
@@ -50,6 +50,12 @@ class Migrator
     bucket.objects[s3_key]
   end
 
+  def md5
+    Digest::MD5.base64digest(file)
+  end
+
+  def file
+  end
 end
 
 Image.transaction do

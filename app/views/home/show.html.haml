@@ -1,35 +1,32 @@
-%section#featured-project
-  - if @featured_project
-    %h1 Featured Project
-    .card
-
-    .row
-      .span6
-        - unless @featured_project.youtube_video_id.blank?
-          = render :partial => 'projects/youtube', :locals => {:project => @featured_project}
-        - else
-          = preview_image(@featured_project, :normal)
-      .span6
-        %h2= link_to @featured_project.title, user_project_path(@featured_project.user, @featured_project)
-        %p
-          %strong Author:
-          = link_to @featured_project.user.login, user_path(@featured_project.user)
-        %p
-          %strong Tags:
-          = tag_list(@featured_project)
-        %p
-          %strong Category:
-          = @featured_project.category.name
-        %p
-          %strong Danmakufu Version:
-          = @featured_project.danmakufu_version.name
-        %p
-          %strong Downloads:
-          = @featured_project.downloads.to_s
-        %p
+- if @featured_project
+  .row.justify-content-center
+    .card.col-8
+      - unless @featured_project.youtube_video_id.blank?
+        = render :partial => 'projects/youtube', :locals => {:project => @featured_project}
+      - else
+        = preview_image(@featured_project, :original, class: "card-img-top")
+      .card-body
+        %h5.card-title
+          = @featured_project.title
+        %p.card-text
           = truncate @featured_project.description, :length => 700
-          = link_to "Read more", user_project_path(@featured_project.user, @featured_project)
-        =link_to "Download Now", user_project_archive_path(@featured_project.user, @featured_project), :class => "btn btn-primary"
+        %ul.list-group.list-group-flush
+          %li.list-group-item.d-flex.justify-content-between
+            %h5.mb-1 Author
+            = link_to @featured_project.user.login, user_path(@featured_project.user)
+          %li.list-group-item.d-flex.justify-content-between
+            %h5.mb-1 Tags
+            = tag_list(@featured_project)
+          %li.list-group-item.d-flex.justify-content-between
+            %h5.mb-1 Category
+            %div= @featured_project.category.name
+          %li.list-group-item.d-flex.justify-content-between
+            %h5.mb-1 Danmakufu Version
+            %div= @featured_project.danmakufu_version.name
+          %li.list-group-item.d-flex.justify-content-between
+            %h5.mb-1 Downloads
+            %div= @featured_project.downloads.to_s
+        =link_to "Download Now", user_project_archive_path(@featured_project.user, @featured_project), :class => "card-link"
 
 %section#popular-projects{ :style => "padding-top:30px;"}
   .page-header

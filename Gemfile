@@ -23,6 +23,7 @@ gem 'mini_magick'
 gem 'permalink_fu'
 gem 'recaptcha'
 gem 'will_paginate'
+gem 'paperclip'
 
 # Apple Silicon fix
 gem 'ffi', github: 'felipecsl/ffi', ref: '17dbdfc43d1f6db1cbd2ff14635ffa1a620380a6'

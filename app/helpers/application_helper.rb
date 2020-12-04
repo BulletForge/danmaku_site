@@ -1,12 +1,12 @@
 module ApplicationHelper
-  def preview_image(project, type)
+  def preview_image(project, type, opts = {})
     if type == :normal
-      image = image_tag 'nopreviewnormal.png'
+      image = image_tag 'nopreviewnormal.png', opts
     elsif type == :thumb
-      image = image_tag 'nopreviewthumb.png'
+      image = image_tag 'nopreviewthumb.png', opts
     end
-    image = image_tag project.images.first.url(type) unless project.images.empty?
-    link_to image, user_project_path(project.user, project), :class => "thumbnail"
+    image = image_tag project.images.first.url(type), opts unless project.images.empty?
+    link_to image, user_project_path(project.user, project)
   end
 
   def w3c_date(date)

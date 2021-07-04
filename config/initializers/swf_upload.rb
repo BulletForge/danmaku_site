@@ -15,7 +15,6 @@ module SwfUpload
     "dvi" => "application/x-dvi",
     "gz" => "application/x-gzip",
     "pac" => "application/x-ns-proxy-autoconfig",
-    "swf" => "application/x-shockwave-flash",
     "tar.gz" => "application/x-tgz",
     "tar" => "application/x-tar",
     "zip" => "application/zip",

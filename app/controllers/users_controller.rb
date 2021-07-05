@@ -57,7 +57,7 @@ class UsersController < ApplicationController
   protected
 
   def permitted_params
-    params.permit({user:%i[login email password password_confirmation]}, {"g-recaptcha-response-data":{}}, "g-recaptcha-response")
+    params.permit({ user: %i[login email password password_confirmation admin] }, :"g-recaptcha-response")
   end
 
   def sanitize_params

@@ -22,7 +22,7 @@ class ProjectsController < ApplicationController
     params.permit(project: [
       :title, :danmakufu_version_id, :version_number,
       :category_id, :description, :tag_list, :unlisted,
-      :youtube_video_id, { images_attributes: [:attachment] }
+      :youtube_video_id, { images_attributes: [:attachment, :_destroy, :id] }
     ])
   end
 

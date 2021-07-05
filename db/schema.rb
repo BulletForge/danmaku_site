@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_06_090046) do
+ActiveRecord::Schema.define(version: 2021_07_05_015242) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,7 +72,7 @@ ActiveRecord::Schema.define(version: 2020_12_06_090046) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer "user_id"
-    t.string "permalink", limit: 255
+    t.string "permalink", limit: 64
     t.integer "category_id"
     t.integer "downloads", default: 0
     t.string "youtube_video_id", limit: 255
@@ -119,7 +119,7 @@ ActiveRecord::Schema.define(version: 2020_12_06_090046) do
     t.string "persistence_token", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string "permalink", limit: 255
+    t.string "permalink", limit: 64
     t.boolean "admin"
     t.string "ip_address", limit: 255
     t.string "password_token", limit: 255

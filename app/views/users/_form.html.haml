@@ -8,5 +8,5 @@
       = raw form.input :password_confirmation, as: :password
       = raw form.input :admin if has_role?(:admin)
     - if form.object.new_record?
-      = recaptcha_v3 action: "registration"
+      = recaptcha_tags
     = raw form.actions

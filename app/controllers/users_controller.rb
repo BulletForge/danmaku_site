@@ -57,11 +57,11 @@ class UsersController < ApplicationController
   protected
 
   def permitted_params
-    params.permit(user: [:login, :email, :password, :password_confirmation, :admin])
+    params.permit user:%i[login email password password_confirmation], "g-recaptcha-response-data":{}
   end
 
   def sanitize_params
-    params[:user].delete :admin unless current_user && current_user.admin
+    params[:user].delete :admin unless current_user&.admin
   end
 
   # Paginate the users collection

@@ -14,7 +14,7 @@ class UsersController < ApplicationController
     @user = User.new(permitted_params[:user])
     @user.ip_address = request.headers["CF-Connecting-IP"] || request.remote_ip
 
-    unless verify_recaptcha(model: @user, action: "registration")
+    unless verify_recaptcha(model: @user)
       flash[:error] = "Please solve the captcha."
       render :new
       return
@@ -57,7 +57,7 @@ class UsersController < ApplicationController
   protected
 
   def permitted_params
-    params.permit user:%i[login email password password_confirmation], "g-recaptcha-response-data":{}
+    params.permit({user:%i[login email password password_confirmation]}, {"g-recaptcha-response-data":{}}, "g-recaptcha-response")
   end
 
   def sanitize_params

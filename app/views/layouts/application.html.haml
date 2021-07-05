@@ -24,12 +24,6 @@
     = render :partial => 'layouts/navbar'
 
     .container{ :style => "padding-top: 80px;"}
-      .alert.alert-notice.fade.in
-        New user registration is now open again!
-        %br
-        Also, new development on BulletForge is now under way.
-        = link_to "Join the Discord server", "https://discord.gg/vfHHsCn"
-        for progress updates and to request features!
       - if flash[:notice]
         .alert.alert-success.fade.in
           %a.close{ :"data-dismiss" => "alert", :href => "#" } ×

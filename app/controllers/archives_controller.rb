@@ -2,9 +2,14 @@ class ArchivesController < ApplicationController
   def show
     @user = User.find_by_permalink! params[:user_id]
     @project = @user.projects.find_by_permalink! params[:project_id]
-    @project.increment_download_counter!
+    @archive = @project.archive
 
-    redirect_to @project.archive.attachment_url
+    if @archive
+      @project.increment_download_counter!
+      redirect_to @project.archive.attachment_url
+    else
+      render_404
+    end
   end
 
   def create
@@ -32,8 +37,12 @@ class ArchivesController < ApplicationController
     @project = @user.projects.find_by_permalink! params[:project_id]
     @archive = @project.archive
 
-    @archive.destroy
-    redirect_to user_project_path(@user, @project)
+    if @archive
+      @archive.destroy
+      redirect_to user_project_path(@user, @project)
+    else
+      render_404
+    end
   end
 
   private

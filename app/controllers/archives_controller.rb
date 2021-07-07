@@ -25,14 +25,14 @@ class ArchivesController < ApplicationController
 
     create! do |success, failure|
       success.json {
-        str = render_to_string :template => 'projects/_archive.html.erb', :locals => { :user => @user, :project => @project }, :layout => false
-        render :json => {
-          :success => true,
-          :replace_dom => '#archive',
-          :partial => str
-        }.to_json
+        str = render_to_string template: 'projects/_archive.html.erb', locals: { user: @user, project: @project }, layout: false
+        render json: {
+          success: true,
+          replace_dom: '#archive',
+          partial: str
+        }
       }
-      failure.json { render :json => { :success => false, :errors => @archive.errors }.to_json }
+      failure.json { render json: { success: false, errors: @archive.errors } }
     end
   end
 

@@ -33,11 +33,9 @@ var postArchiveData = function(key){
         data: JSON.stringify({archive: {s3_key: key, attachment_file_name: file.name}, user_id: user_id, project_id: project_id, authenticity_token: authenticity_token}),
         dataType: "json",
         success: function(data, status, request){
-            console.log("data: ", data, ", status: ", status, ", request: ", request)
             $(data.replace_dom).html(data.partial)
         },
         error: function(request, status, error){
-          console.log('post archive data error: ', error)
         }
   });
 }

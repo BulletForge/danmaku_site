@@ -5,8 +5,6 @@ class Archive < Asset
   MAX_FILE_SIZE = '300 MB'
 
   def import_s3_data
-    s3_data = s3_archive.about
-
     self.attachment_content_type = s3_archive.content_type
     self.attachment_file_size = s3_archive.content_length
     self.attachment_updated_at = s3_archive.last_modified

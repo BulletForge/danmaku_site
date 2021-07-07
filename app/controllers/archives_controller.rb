@@ -45,6 +45,6 @@ class ArchivesController < ApplicationController
   private
 
   def permitted_params
-    params.permit(archive: [])
+    params.permit(archive: {})
   end
 end

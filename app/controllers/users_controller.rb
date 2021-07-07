@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  respond_to :html
   inherit_resources
   include PermalinkResources
 

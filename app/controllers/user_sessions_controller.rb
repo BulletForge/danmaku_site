@@ -1,4 +1,5 @@
 class UserSessionsController < ApplicationController
+  respond_to :html
   inherit_resources
   actions :new, :create, :destroy
 

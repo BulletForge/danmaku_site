@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+  respond_to :html
   inherit_resources
   include PermalinkResources
   belongs_to :user, :finder => :find_by_permalink!, :optional => true

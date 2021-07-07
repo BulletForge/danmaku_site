@@ -1,4 +1,5 @@
 class ArchivesController < ApplicationController
+  respond_to :html, :json
   inherit_resources
   acts_as_singleton!
   actions :create, :show, :destroy

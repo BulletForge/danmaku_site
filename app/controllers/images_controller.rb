@@ -1,4 +1,5 @@
 class ImagesController < ApplicationController
+  respond_to :html
   inherit_resources
   actions :create, :destroy
   belongs_to :user, :finder => :find_by_permalink! do

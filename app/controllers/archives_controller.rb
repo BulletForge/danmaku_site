@@ -27,19 +27,19 @@ class ArchivesController < ApplicationController
     create! do |success, failure|
       success.json {
         str = render_to_string template: 'projects/_archive.html.erb', locals: { user: @user, project: @project }, layout: false
-        render json: {
+        respond_with({
           success: true,
           replace_dom: '#archive',
           partial: str
-        }
+        })
       }
-      failure.json { render json: { success: false, errors: @archive.errors } }
+      failure.json { respond_with({ success: false, errors: @archive.errors }) }
     end
   end
 
   def destroy
     destroy! do |format|
-      format.html {redirect_to user_project_path(@user, @project)}
+      format.html { redirect_to user_project_path(@user, @project) }
     end
   end
 

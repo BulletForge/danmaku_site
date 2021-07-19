@@ -30,7 +30,7 @@ var postArchiveData = function(key){
     url:  "/upload/archive",
         type: "POST",
         contentType: "application/json; charset-utf-8",
-        data: JSON.stringify({archive: {s3_key: key, attachment_file_name: file.name}, user_id: user_id, project_id: project_id}),
+        data: JSON.stringify({archive: {s3_key: key, attachment_file_name: file.name}, user_id: user_id, project_id: project_id, authenticity_token: authenticity_token}),
         dataType: "json",
         success: function(data, status, request){
             $(data.replace_dom).html(data.partial)

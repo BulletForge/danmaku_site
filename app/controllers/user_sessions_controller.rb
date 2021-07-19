@@ -1,11 +1,12 @@
 class UserSessionsController < ApplicationController
+  respond_to :html
   inherit_resources
   actions :new, :create, :destroy
 
   # preload all resource / collection in before filter
-  before_filter :collection, :only =>[:index]
-  before_filter :resource, :only => [:show, :edit, :update, :destroy]
-  before_filter :build_resource, :only => [:new, :create, :index]
+  before_action :collection, :only =>[:index]
+  before_action :resource, :only => [:show, :edit, :update, :destroy]
+  before_action :build_resource, :only => [:new, :create, :index]
 
   authorize_resource
 
@@ -37,7 +38,10 @@ class UserSessionsController < ApplicationController
   end
 
   def build_resource
-    @user_session = UserSession.new(params[:user_session])
+    @user_session = UserSession.new(user_session_params.to_h)
   end
 
+  def user_session_params
+    params.fetch(:user_session, {}).permit(:login, :password, :remember_me)
+  end
 end

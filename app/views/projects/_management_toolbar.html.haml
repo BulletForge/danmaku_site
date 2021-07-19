@@ -1,5 +1,6 @@
 - if can? :update, project
-  .subnav
-    %ul.nav.nav-pills
-      %li= link_to "Edit Project", edit_user_project_path(user, project)
-      %li= link_to "Delete Project", user_project_path(user, project), :method => :delete, :confirm => "Are you sure you want to delete this project?"
+  .btn-group
+    %div
+      = button_to "Edit Project", edit_user_project_path(user, project), method: :get, class: 'btn'
+    %div
+      = button_to "Delete Project", user_project_path(user, project), method: :delete, data: {confirm: "Are you sure you want to delete this project?"}, class: 'btn btn-danger'

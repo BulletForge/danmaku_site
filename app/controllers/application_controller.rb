@@ -1,12 +1,8 @@
-# Filters added to this controller apply to all controllers in the application.
-# Likewise, all the methods added will be available for all controllers.
-
 class ApplicationController < ActionController::Base
-  #include ExceptionNotifiable
   include Authentication
   include InheritedResources::DSL
 
-  before_filter :block_ip_addresses
+  before_action :block_ip_addresses
 
   helper :all
   helper_method :current_user_session, :current_user, :set_current_user
@@ -14,6 +10,10 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied do |exception|
     flash[:error] = exception.message
     redirect_to root_url
+  end
+
+  def render_404
+    render file: "#{Rails.root}/public/404", layout: false, status: :not_found
   end
 
   protected

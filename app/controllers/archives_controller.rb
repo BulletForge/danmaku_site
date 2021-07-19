@@ -1,45 +1,53 @@
 class ArchivesController < ApplicationController
-  inherit_resources
-  acts_as_singleton!
-  actions :create, :show, :destroy
-  belongs_to :user, :finder => :find_by_permalink! do
-    belongs_to :project, :finder => :find_by_permalink!
-  end
-
-  # preload all resource / collection in before filter
-  before_filter :collection, :only =>[:index]
-  before_filter :resource, :only => [:show, :edit, :update, :destroy]
-  before_filter :build_resource, :only => [:new, :create, :index]
-
-
   def show
-    show! do |format|
+    @user = User.find_by_permalink! params[:user_id]
+    @project = @user.projects.find_by_permalink! params[:project_id]
+    @archive = @project.archive
+
+    if @archive
       @project.increment_download_counter!
-      format.html { redirect_to @project.archive.attachment_url }
+      redirect_to @project.archive.attachment_url
+    else
+      render_404
     end
   end
 
   def create
+    @user = User.find_by_permalink! params[:user_id]
+    @project = @user.projects.find_by_permalink! params[:project_id]
+    @archive = Archive.new permitted_params[:archive]
+
     @archive.import_s3_data
     @archive.attachable = @project
 
-    create! do |success, failure|
-      success.json {
-        str = render_to_string :template => 'projects/_archive.html.erb', :locals => { :user => @user, :project => @project }, :layout => false
-        render :json => {
-          :success => true,
-          :replace_dom => '#archive',
-          :partial => str
-        }.to_json
+    if @archive.save
+      str = render_to_string template: 'projects/_archive', locals: { user: @user, project: @project }, layout: false
+      render json: {
+        success: true,
+        replace_dom: '#archive',
+        partial: str
       }
-      failure.json { render :json => { :success => false, :errors => @archive.errors }.to_json }
+    else
+      render json: { success: false, errors: @archive.errors }
     end
   end
 
   def destroy
-    destroy! do |format|
-      format.html {redirect_to user_project_path(@user, @project)}
+    @user = User.find_by_permalink! params[:user_id]
+    @project = @user.projects.find_by_permalink! params[:project_id]
+    @archive = @project.archive
+
+    if @archive
+      @archive.destroy
+      redirect_to user_project_path(@user, @project)
+    else
+      render_404
     end
   end
 
+  private
+
+  def permitted_params
+    params.permit(archive: {})
+  end
 end

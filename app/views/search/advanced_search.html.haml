@@ -1,4 +1,4 @@
-- form_tag projects_path, :class => 'formtastic', :method => :get do
+= form_tag projects_path, :class => 'formtastic', :method => :get do
   = label_tag 'search[title_like]', "Title includes:"
   = text_field_tag 'search[title_like]'
   %br

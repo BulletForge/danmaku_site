@@ -1,9 +1,9 @@
 .page-header
   %h1= @user.login
 
-%ul.nav.nav-pills
-  %li= link_to "Edit Account", edit_user_path(@user) if can?(:update, @user)
-  %li= link_to "Delete Account", user_delete_path(@user) if can?(:destroy, @user)
+.btn-group
+  %div= button_to "Edit Account", edit_user_path(@user), method: :get, class: 'btn' if can?(:update, @user)
+  %div= button_to "Delete Account", user_delete_path(@user), method: :get, class: 'btn btn-danger' if can?(:destroy, @user)
 
 #project-list
   - if can?(:update, @user) && !@user.projects.where(:unlisted => true).empty?

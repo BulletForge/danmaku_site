@@ -1,15 +1,15 @@
 class ProjectsController < ApplicationController
+  respond_to :html
   inherit_resources
   include PermalinkResources
   belongs_to :user, :finder => :find_by_permalink!, :optional => true
 
   # preload all resource / collection in before filter
-  before_filter :collection, :only =>[:index]
-  before_filter :resource, :only => [:show, :edit, :update, :destroy]
-  before_filter :build_resource, :only => [:new, :create, :index]
+  before_action :collection, :only =>[:index]
+  before_action :resource, :only => [:show, :edit, :update, :destroy]
+  before_action :build_resource, :only => [:new, :create, :index]
 
   authorize_resource
-
 
   # Change redirect
   destroy! do |success, failure|
@@ -18,9 +18,18 @@ class ProjectsController < ApplicationController
   end
 
   private
+
+  def permitted_params
+    params.permit(project: [
+      :title, :danmakufu_version_id, :version_number,
+      :category_id, :description, :tag_list, :unlisted,
+      :youtube_video_id, { images_attributes: [:attachment, :_destroy, :id] }
+    ])
+  end
+
   # Filter, order, and paginate the collection
   def _collection
-    @search = end_of_association_chain.joins(:archive).where("unlisted = false AND attachable_id IS NOT NULL")
+    @search = end_of_association_chain.joins(:archive).where("attachable_id IS NOT NULL")
     @search = @search.where(:soft_deleted => false)
 
     if current_user && current_user.admin? && params[:search]
@@ -33,7 +42,7 @@ class ProjectsController < ApplicationController
     filter_collection
     order_collection
 
-    @search.paginate( :per_page => 10, :page => params[:page] )
+    @search.page(params[:page])
   end
 
   # Applies filtering based off the search param.

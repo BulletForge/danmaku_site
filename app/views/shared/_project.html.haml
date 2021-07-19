@@ -34,6 +34,6 @@
           %br
           %br
           - if !p.description.blank?
-            %p= h truncate p.description, :length => 300
+            %p= truncate strip_tags(p.description), :length => 300
           - else
             %p No description

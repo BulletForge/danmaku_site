@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.1'
+ruby '3.0.2'
 
 gem 'acts-as-taggable-on'
 gem 'authlogic'
@@ -22,12 +22,10 @@ gem 'rails', '~> 6.0.3', '>= 6.0.3.4'
 gem 'recaptcha'
 gem 'sass-rails', '>= 6'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
-gem 'webpacker', '~> 4.0'
+gem 'webpacker', '~> 5.x'
 gem 'will_paginate'
 gem 's3_swf_upload', require: 's3_swf_upload/view_helpers'
-
-# Apple Silicon fix
-gem 'ffi', github: 'felipecsl/ffi', ref: '17dbdfc43d1f6db1cbd2ff14635ffa1a620380a6'
+gem 'ffi'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]

@@ -27,6 +27,7 @@ gem 'will_paginate'
 gem 's3_swf_upload', require: 's3_swf_upload/view_helpers'
 gem 'ffi'
 
+
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'dotenv-rails'
@@ -41,3 +42,5 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'web-console', '>= 3.3.0'
 end
+
+gem "webrick", "~> 1.7"

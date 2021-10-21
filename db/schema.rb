@@ -37,62 +37,62 @@ ActiveRecord::Schema.define(version: 2021_07_05_015242) do
   end
 
   create_table "assets", id: :serial, force: :cascade do |t|
-    t.string "attachment_file_name"
-    t.string "attachment_content_type"
+    t.string "attachment_file_name", limit: 255
+    t.string "attachment_content_type", limit: 255
     t.integer "attachment_file_size"
     t.datetime "attachment_updated_at"
     t.integer "attachable_id"
-    t.string "attachable_type"
+    t.string "attachable_type", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string "type"
-    t.string "s3_key"
+    t.string "type", limit: 255
+    t.string "s3_key", limit: 255
   end
 
   create_table "blocked_ips", id: :serial, force: :cascade do |t|
-    t.string "ip_address"
+    t.string "ip_address", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "categories", id: :serial, force: :cascade do |t|
-    t.string "name"
+    t.string "name", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "danmakufu_versions", id: :serial, force: :cascade do |t|
-    t.string "name"
+    t.string "name", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "projects", id: :serial, force: :cascade do |t|
-    t.string "title"
+    t.string "title", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer "user_id"
     t.string "permalink", limit: 254
     t.integer "category_id"
     t.integer "downloads", default: 0
-    t.string "youtube_video_id"
+    t.string "youtube_video_id", limit: 255
     t.integer "win_votes", default: 0
     t.integer "fail_votes", default: 0
     t.integer "danmakufu_version_id", default: 1
     t.boolean "unlisted", default: false
-    t.string "version_number"
+    t.string "version_number", limit: 255
     t.text "description"
     t.boolean "soft_deleted", default: false
-    t.string "deleted_reason"
+    t.string "deleted_reason", limit: 255
   end
 
   create_table "taggings", id: :serial, force: :cascade do |t|
     t.integer "tag_id"
     t.integer "taggable_id"
     t.integer "tagger_id"
-    t.string "tagger_type"
-    t.string "taggable_type"
-    t.string "context"
+    t.string "tagger_type", limit: 255
+    t.string "taggable_type", limit: 255
+    t.string "context", limit: 255
     t.datetime "created_at"
     t.index ["context"], name: "index_taggings_on_context"
     t.index ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true
@@ -106,23 +106,23 @@ ActiveRecord::Schema.define(version: 2021_07_05_015242) do
   end
 
   create_table "tags", id: :serial, force: :cascade do |t|
-    t.string "name"
+    t.string "name", limit: 255
     t.integer "taggings_count", default: 0
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
-    t.string "login"
-    t.string "email"
-    t.string "crypted_password"
-    t.string "password_salt"
-    t.string "persistence_token"
+    t.string "login", limit: 255
+    t.string "email", limit: 255
+    t.string "crypted_password", limit: 255
+    t.string "password_salt", limit: 255
+    t.string "persistence_token", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string "permalink", limit: 254
     t.boolean "admin"
-    t.string "ip_address"
-    t.string "password_token"
+    t.string "ip_address", limit: 255
+    t.string "password_token", limit: 255
     t.datetime "password_token_expiration"
     t.boolean "suspicious", default: false
     t.integer "projects_count"

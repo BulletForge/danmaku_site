@@ -7,7 +7,7 @@
         - unless @featured_project.youtube_video_id.blank?
           = render :partial => 'projects/youtube', :locals => {:project => @featured_project}
         - else
-          = preview_image(@featured_project, :normal)
+          = preview_project_image(@featured_project, :normal)
       .span6
         %h2= link_to @featured_project.title, user_project_path(@featured_project.user, @featured_project)
         %p

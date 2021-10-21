@@ -10,5 +10,21 @@
       = form.input :description
       = form.input :tag_list, :label => "Tags", :hint => "Tags are separated by commas"
       = form.input :unlisted, :label => "Unlisted?", :hint => "Unlisted projects will not show up in search or on the front page."
+    %br
+    = form.semantic_fields_for :archive, @project.archive do |archive|
+      = archive.inputs do
+        - if archive.object.new_record?
+          = archive.input :attachment, as: :file, :label => "Upload Script Archive", input_html: { direct_upload: true }
+        - else
+          = archive.input :attachment, as: :file, :label => "Replace Script Archive", input_html: { direct_upload: true }
+    %br
+    = form.semantic_fields_for :images do |image|
+      = image.inputs do
+        - if image.object.new_record?
+          = image.input :attachment, as: :file, :label => "Image attachment", input_html: { direct_upload: true }
+        - else
+          = image_tag preview_image_url(image.object, :thumb)
+          = image.input :_destroy, :label => "Remove", :as => :boolean
+
     = form.actions
 

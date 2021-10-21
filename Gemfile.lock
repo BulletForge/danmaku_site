@@ -90,6 +90,7 @@ GEM
     cancancan (3.3.0)
     climate_control (0.2.0)
     concurrent-ruby (1.1.9)
+    connection_pool (2.2.5)
     crass (1.0.6)
     diff-lcs (1.4.4)
     dotenv (2.7.6)
@@ -100,6 +101,9 @@ GEM
     erubi (1.10.0)
     erubis (2.7.0)
     ffi (1.15.4)
+    file_validators (3.0.0)
+      activemodel (>= 3.2)
+      mime-types (>= 1.0)
     foreman (0.87.2)
     formtastic (4.0.0)
       actionpack (>= 5.2.0)
@@ -218,6 +222,7 @@ GEM
       ffi (~> 1.0)
     recaptcha (5.8.1)
       json
+    redis (4.5.1)
     regexp_parser (2.1.1)
     request_store (1.5.0)
       rack (>= 1.4)
@@ -256,6 +261,10 @@ GEM
       tilt
     semantic_range (3.0.0)
     sexp_processor (4.15.3)
+    sidekiq (6.2.2)
+      connection_pool (>= 2.2.2)
+      rack (~> 2.0)
+      redis (>= 4.2.0)
     solargraph (0.44.0)
       backport (~> 1.2)
       benchmark
@@ -321,8 +330,9 @@ DEPENDENCIES
   cancancan
   dotenv-rails
   ffi
+  file_validators
   foreman
-  formtastic (~> 4.0.0.rc1)
+  formtastic (~> 4.0.0)
   haml-rails
   image_processing (~> 1.2)
   inherited_resources
@@ -338,6 +348,7 @@ DEPENDENCIES
   rubocop
   s3_swf_upload
   sass-rails (>= 6)
+  sidekiq
   solargraph
   spring
   spring-watcher-listen (~> 2.0.0)

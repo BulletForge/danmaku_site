@@ -6,7 +6,7 @@ class ArchivesController < ApplicationController
 
     if @archive
       @project.increment_download_counter!
-      redirect_to @project.archive.attachment_url
+      redirect_to @project.archive.attachment.service_url
     else
       render_404
     end

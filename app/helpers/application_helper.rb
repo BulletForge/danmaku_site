@@ -1,14 +1,27 @@
 # Methods added to this helper will be available to all templates in the application.
 
 module ApplicationHelper
-  def preview_image(project, type)
-    if type == :normal
-      image = image_tag 'nopreviewnormal.png'
-    elsif type == :thumb
-      image = image_tag 'nopreviewthumb.png'
+  def preview_image_url(image, type = nil)
+    attachment = image&.attachment
+    return 'nopreviewnormal.png' unless attachment&.attached?
+
+    case type
+    when :normal
+      url_for attachment.variant(resize_to_fit: [400, 300])
+    when :thumb
+      url_for attachment.variant(resize_to_fit: [160, 120])
+    else
+      url_for attachment
     end
-    image = image_tag project.images.first.url(type) unless project.images.empty?
-    link_to image, user_project_path(project.user, project), :class => "thumbnail"
+  end
+
+  def preview_project_image_url(project, type)
+    preview_image_url(project.images.first, type)
+  end
+
+  def preview_project_image(project, type)
+    image_url = preview_project_image_url(project, type)
+    link_to image_tag(image_url), user_project_path(project.user, project), :class => "thumbnail"
   end
 
   def w3c_date(date)
@@ -20,6 +33,7 @@ module ApplicationHelper
       while(p.images.length < 4) do
         p.images.build
       end
+      p.build_archive if p.archive.nil?
     end
   end
 

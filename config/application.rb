@@ -35,7 +35,17 @@ module BulletForge
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+    config.action_view.embed_authenticity_token_in_remote_forms = true
 
     config.active_storage.variant_processor = :vips
+
+    # nil will use the "default" queue
+    # some of these options will not work with your Rails version
+    # add/remove as necessary
+    config.active_job.queue_adapter = :sidekiq
+    config.action_mailer.deliver_later_queue_name = :low
+    config.active_storage.queues.analysis = :default
+    config.active_storage.queues.mirror = :low
+    config.active_storage.queues.purge = :low
   end
 end

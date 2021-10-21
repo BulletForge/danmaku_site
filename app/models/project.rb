@@ -5,6 +5,7 @@ class Project < ApplicationRecord
   has_many   :images,  :as => :attachable, :dependent => :destroy
   has_one    :archive, :as => :attachable, :dependent => :destroy
 
+  accepts_nested_attributes_for :archive
   accepts_nested_attributes_for :images, :allow_destroy => true,
     :reject_if => proc { |attrs| attrs.all? { |k, v| v.blank? } }
 
@@ -58,5 +59,10 @@ class Project < ApplicationRecord
 
   def self.latest
     self.joins(:archive).publically_viewable.order('created_at DESC').limit(5)
+  end
+
+  def migrate_to_active_storage
+    archive.migrate_to_active_storage
+    images.find_each(&:migrate_to_active_storage)
   end
 end

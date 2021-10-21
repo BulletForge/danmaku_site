@@ -5,10 +5,10 @@ ruby '3.0.2'
 
 gem 'acts-as-taggable-on'
 gem 'authlogic'
-gem 'aws-sdk-s3', require: false
+gem 'aws-sdk-s3'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'cancancan'
-gem 'formtastic', '~> 4.0.0.rc1', require: 'formtastic'
+gem 'formtastic', '~> 4.0.0'
 gem 'haml-rails'
 gem 'image_processing', '~> 1.2'
 gem 'inherited_resources'
@@ -26,7 +26,8 @@ gem 'webpacker', '~> 5.x'
 gem 'will_paginate'
 gem 's3_swf_upload', require: 's3_swf_upload/view_helpers'
 gem 'ffi'
-
+gem 'file_validators'
+gem 'sidekiq'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]

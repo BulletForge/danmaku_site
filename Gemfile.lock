@@ -100,6 +100,8 @@ GEM
     e2mmap (0.1.0)
     erubi (1.10.0)
     erubis (2.7.0)
+    et-orbi (1.2.5)
+      tzinfo
     ffi (1.15.4)
     file_validators (3.0.0)
       activemodel (>= 3.2)
@@ -107,6 +109,9 @@ GEM
     foreman (0.87.2)
     formtastic (4.0.0)
       actionpack (>= 5.2.0)
+    fugit (1.5.2)
+      et-orbi (~> 1.1, >= 1.1.8)
+      raabro (~> 1.4)
     globalid (0.5.2)
       activesupport (>= 5.0)
     haml (5.2.2)
@@ -183,6 +188,7 @@ GEM
     pg (1.2.3)
     puma (4.3.10)
       nio4r (~> 2.0)
+    raabro (1.4.0)
     racc (1.6.0)
     rack (2.2.3)
     rack-proxy (0.7.0)
@@ -265,6 +271,9 @@ GEM
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
+    sidekiq-cron (1.2.0)
+      fugit (~> 1.1)
+      sidekiq (>= 4.2.1)
     solargraph (0.44.0)
       backport (~> 1.2)
       benchmark
@@ -349,6 +358,7 @@ DEPENDENCIES
   s3_swf_upload
   sass-rails (>= 6)
   sidekiq
+  sidekiq-cron
   solargraph
   spring
   spring-watcher-listen (~> 2.0.0)

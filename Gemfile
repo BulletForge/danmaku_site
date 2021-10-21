@@ -28,6 +28,7 @@ gem 's3_swf_upload', require: 's3_swf_upload/view_helpers'
 gem 'ffi'
 gem 'file_validators'
 gem 'sidekiq'
+gem 'sidekiq-cron'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]

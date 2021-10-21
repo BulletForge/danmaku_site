@@ -9,26 +9,3 @@
   %strong File Size:
   = number_to_human_size(project.archive.attachment_file_size)
   %br
-- elsif can?(:update, project)
-  %h4
-    Upload your script now!
-  %p
-  File size limit is
-  = Archive::MAX_FILE_SIZE
-  \.
-  %br
-  Accepted file types are .zip, .rar, .7z, .tar, and .dat.
-  %br
-  %br
-  = form_for(@)
-  = s3_swf_upload_area("archives/" + Time.now.to_f.to_s + "/")
-  %input{:type => "submit", :id => "s3-swf-upload-start", :value => "Upload", :onclick => "s3_swf_1_object.startUploading();", :class => "btn", :style => "margin-top:-20px"}
-
-- else
-  The author has not uploaded a script for this project.
-  %br
-  Please check back later.
-:javascript
-  project_id = '#{project.permalink}';
-  user_id = '#{user.permalink}';
-  authenticity_token = '#{form_authenticity_token}';

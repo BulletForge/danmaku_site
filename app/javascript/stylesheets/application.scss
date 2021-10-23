@@ -1,1 +1,35 @@
+/*
+ * Font Awesome Configs
+ */
+$fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
+
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/brands';
+
+
+/*
+ * Bootstrap 5 Configs
+ */
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+
+$body-bg: $gray-100;
+$input-focus-box-shadow: none;
+$container-max-widths: (
+  sm: 420px,
+  md: 720px,
+  lg: 960px
+);
+
 @import '~bootstrap/scss/bootstrap';
+
+/*
+ * Overrides
+ */
+.card-img-top {
+  width: 100%;
+  height: 20vw;
+  object-fit: cover;
+}

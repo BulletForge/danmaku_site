@@ -84,7 +84,7 @@ class ProjectsController < ApplicationController
   # Applies ordering based off the search order param. Defaults to "descend_by_created_at"
   def order_collection
     order = params[:search] && params[:search][:order]
-    order ||= 'descend_by_updated_at'
+    order ||= 'descend_by_downloads'
 
     order_arr = order.split('_by_')
     direction = order_arr[0]

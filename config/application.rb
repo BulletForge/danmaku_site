@@ -43,9 +43,9 @@ module BulletForge
     # some of these options will not work with your Rails version
     # add/remove as necessary
     config.active_job.queue_adapter = :sidekiq
-    config.action_mailer.deliver_later_queue_name = :low
-    config.active_storage.queues.analysis = :default
-    config.active_storage.queues.mirror = :low
-    config.active_storage.queues.purge = :low
+    config.action_mailer.deliver_later_queue_name = :default
+    config.active_storage.queues.analysis = :critical
+    config.active_storage.queues.mirror = :default
+    config.active_storage.queues.purge = :default
   end
 end

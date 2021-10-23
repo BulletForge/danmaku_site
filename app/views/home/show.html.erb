@@ -1,0 +1,22 @@
+<section class="d-flex flex-grow-1 text-center flex-column justify-content-center align-items-center">
+  <h2 class="my-5">
+    Looking for a Danmaku project?
+  </h2>
+  <div class="w-100">
+  <%= render "shared/search" %>
+  </div>
+    <div class="my-5">
+      <h2 class="mb-5">
+        Made something cool?
+      </h2>
+
+      <% if can?(:destroy, UserSession) %>
+        <%= link_to "Publish Danmaku Project", new_user_project_path(current_user), class: "btn btn-outline-primary btn-lg" %>
+      <% else %>
+        <%= link_to "Sign In to Publish", login_path, class: "btn btn-outline-primary btn-lg me-2" %>
+        or
+        <%= link_to "Sign Up", new_user_path %>
+      <% end %>
+    </div>
+</section>
+

@@ -1,5 +1,7 @@
 class Archive < Asset
-  MAX_FILE_SIZE = '300 MB'
+  before_destroy :destroy_s3_data
+
+  MAX_FILE_SIZE = '300 MB'.freeze
 
   def import_s3_data
     self.attachment_content_type = s3_archive.content_type

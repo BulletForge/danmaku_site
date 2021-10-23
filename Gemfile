@@ -26,7 +26,7 @@ gem 'webpacker', '~> 5.x'
 gem 'will_paginate'
 gem 's3_swf_upload', require: 's3_swf_upload/view_helpers'
 gem 'ffi'
-gem 'file_validators'
+gem 'active_storage_validations'
 gem 'sidekiq'
 gem 'sidekiq-cron'
 

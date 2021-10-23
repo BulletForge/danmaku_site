@@ -17,6 +17,8 @@
           = archive.input :attachment, as: :file, :label => "Upload Script Archive", input_html: { direct_upload: true }
         - else
           = archive.input :attachment, as: :file, :label => "Replace Script Archive", input_html: { direct_upload: true }
+        = form.semantic_errors :archive
+
     %br
     = form.semantic_fields_for :images do |image|
       = image.inputs do

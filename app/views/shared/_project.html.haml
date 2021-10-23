@@ -1,14 +1,16 @@
 - if !p.soft_deleted || can?(:manage, p)
-  .row{ :style => "padding-top:10px; padding-bottom:10px;" }
+  .card
+    = preview_project_image p, :cover, image_options: { class: 'card-img-top' }
+    .card-body
+      %h5.card-title
+        = h((p.soft_deleted ? "[DELETED BY ADMIN] " : "") + p.title)
+
     .span12
-      %h2
-        = link_to h((p.soft_deleted ? "[DELETED BY ADMIN] " : "") + p.title), user_project_path(p.user, p)
-        %small
-          by
-          = link_to p.user.login, user_path(p.user)
+      %small
+        by
+        = link_to p.user.login, user_path(p.user)
   .row{ :style => "padding-bottom:10px;" }
     .span3{ :style => "text-align:center;"}
-      = preview_project_image p, :thumb
     .span9
       .row
         .span3

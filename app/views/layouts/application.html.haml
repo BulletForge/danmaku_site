@@ -10,19 +10,12 @@
     %meta{ :name => "description", :content => "Dedicated Danmakufu Project Hosting" }
     = csrf_meta_tags
 
-    - if Time.now.month == 4 && Time.now.day == 1
-      = stylesheet_link_tag '/stylesheets/geo-bootstrap'
-    - else
-      = stylesheet_link_tag '/stylesheets/bootstrap'
-    = stylesheet_link_tag '/stylesheets/formtastic'
-    = stylesheet_link_tag '/stylesheets/formtastic-overrides'
-
+    = stylesheet_pack_tag 'application', media: 'all'
     = javascript_pack_tag 'application'
-  %body
-
-    = render :partial => 'layouts/navbar'
-
-    .container{ :style => "padding-top: 80px;"}
+  %body.vh-100.d-flex.flex-column
+    .flex-shrink-0
+      = render :partial => 'layouts/navbar'
+    .flex-grow-1.d-flex.flex-column
       - if flash[:notice]
         .alert.alert-success.fade.in
           %a.close{ :"data-dismiss" => "alert", :href => "#" } ×
@@ -32,10 +25,8 @@
           %a.close{ :"data-dismiss" => "alert", :href => "#" } ×
           = flash[:error]
 
-      = yield
-
-      %br
-      %br
+      .container-lg.d-flex.flex-grow-1.flex-column
+        = yield
 
     - if Rails.env.production?
       :javascript

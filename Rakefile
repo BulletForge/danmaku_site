@@ -6,19 +6,8 @@ Rails.application.load_tasks
 
 namespace :assets do
   task migrate_to_active_storage: :environment do
-    puts "Migrating Project Assets. Count: #{Project.count}"
-    count = 1
-
-    Project.find_each do |project|
-      print "[#{count}] Migrating Project ID=#{project.id} ..."
-      begin 
-        project.migrate_to_active_storage
-      rescue => e
-        puts "  Error! Message: #{e}"
-      end
-      puts "  Done!"
-
-      count += 1
+    Project.where(soft_deleted: false).order(downloads: :desc).find_each do |project|
+      MigrateProjectsToActiveStorageJob.perform_later project.id
     end
   end
 end

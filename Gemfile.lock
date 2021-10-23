@@ -37,6 +37,8 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
+    active_storage_validations (0.9.5)
+      rails (>= 5.2.0)
     activejob (6.0.4.1)
       activesupport (= 6.0.4.1)
       globalid (>= 0.3.6)
@@ -103,9 +105,6 @@ GEM
     et-orbi (1.2.5)
       tzinfo
     ffi (1.15.4)
-    file_validators (3.0.0)
-      activemodel (>= 3.2)
-      mime-types (>= 1.0)
     foreman (0.87.2)
     formtastic (4.0.0)
       actionpack (>= 5.2.0)
@@ -331,6 +330,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_storage_validations
   acts-as-taggable-on
   authlogic
   aws-sdk-s3
@@ -339,7 +339,6 @@ DEPENDENCIES
   cancancan
   dotenv-rails
   ffi
-  file_validators
   foreman
   formtastic (~> 4.0.0)
   haml-rails

@@ -2,26 +2,33 @@
 
 module ApplicationHelper
   def preview_image_url(image, type = nil)
-    attachment = image&.attachment
-    return 'nopreviewnormal.png' unless attachment&.attached?
+    image&.url(type)
+  end
+
+  def preview_cover_image_url(cover_image, type = nil)
+    return if cover_image.nil?
 
     case type
+    when :cover
+      url_for cover_image.variant(resize_to_fill: [1200, 256])
     when :normal
-      url_for attachment.variant(resize_to_fit: [400, 300])
+      url_for cover_image.variant(resize_to_fit: [400, 300])
     when :thumb
-      url_for attachment.variant(resize_to_fit: [160, 120])
+      url_for cover_image.variant(resize_to_fit: [160, 120])
     else
-      url_for attachment
+      url_for cover_image
     end
   end
 
   def preview_project_image_url(project, type)
-    preview_image_url(project.images.first, type)
+    preview_cover_image_url(project.cover_images.first, type) ||
+      preview_image_url(project.images.first, type) ||
+      'nopreviewnormal.png'
   end
 
-  def preview_project_image(project, type)
+  def preview_project_image(project, type, image_options: {}, link_options: {})
     image_url = preview_project_image_url(project, type)
-    link_to image_tag(image_url), user_project_path(project.user, project), :class => "thumbnail"
+    link_to image_tag(image_url, image_options), user_project_path(project.user, project), link_options
   end
 
   def w3c_date(date)

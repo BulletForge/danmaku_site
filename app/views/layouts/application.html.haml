@@ -4,6 +4,8 @@
     - if no_bot_index?
       %meta{:name => "robots", :content => "noindex"}
 
+    %meta{charset: "UTF-8"}
+    %meta{name: "viewport", content: "width=device-width, initial-scale=1.0"}
     %meta{"http-equiv" => 'Content-Type', :content => 'text/html;charset=utf-8'}
     %title= h(@title || "BulletForge")
     %meta{ :name => "keywords", :content => "danmakufu scripts, danmakufu projects, danmakufu, shmup, game scripts" }
@@ -13,20 +15,21 @@
     = stylesheet_pack_tag 'application', media: 'all'
     = javascript_pack_tag 'application'
   %body.vh-100.d-flex.flex-column
-    .flex-shrink-0
+    %header.flex-shrink-0
       = render :partial => 'layouts/navbar'
-    .flex-grow-1.d-flex.flex-column
+    %main.flex-grow-1
       - if flash[:notice]
-        .alert.alert-success.fade.in
-          %a.close{ :"data-dismiss" => "alert", :href => "#" } ×
+        .alert.alert-success.alert-dismissible{role: 'alert'}
           = flash[:notice]
+          %button.btn-close{ 'data-bs-dismiss': 'alert', 'aria-label': 'Close' }
       - if flash[:error]
-        .alert.alert-error.fade.in
-          %a.close{ :"data-dismiss" => "alert", :href => "#" } ×
+        .alert.alert-danger.alert-dismissible{role: 'alert'}
           = flash[:error]
-
-      .container-lg.d-flex.flex-grow-1.flex-column
+          %button.btn-close{ 'data-bs-dismiss': 'alert', 'aria-label': 'Close' }
+      .container-lg.pt-5
         = yield
+    %footer.flex-shrink-0
+      = render :partial => 'layouts/footer'
 
     - if Rails.env.production?
       :javascript

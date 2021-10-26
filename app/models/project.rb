@@ -22,7 +22,6 @@ class Project < ApplicationRecord
   #
   # Decrecated
   #
-  validates_presence_of :archive
   has_many   :images,  :as => :attachable, :dependent => :destroy
   has_one    :archive, :as => :attachable, :dependent => :destroy
   accepts_nested_attributes_for :archive

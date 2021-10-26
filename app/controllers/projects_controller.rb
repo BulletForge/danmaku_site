@@ -31,8 +31,8 @@ class ProjectsController < ApplicationController
           :tag_list,
           :unlisted,
           :youtube_video_id,
-          { images_attributes: %i[attachment _destroy] },
-          { archive_attributes: %i[attachment _destroy] }
+          :script_archive,
+          cover_images: [],
         ]
     )
   end

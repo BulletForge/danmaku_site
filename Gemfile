@@ -46,3 +46,4 @@ group :development do
 end
 
 gem "webrick", "~> 1.7"
+gem "bootstrap_form", git: "https://github.com/bootstrap-ruby/bootstrap_form.git", branch: "bootstrap-5"

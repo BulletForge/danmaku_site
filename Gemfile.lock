@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/bootstrap-ruby/bootstrap_form.git
+  revision: dd64827bed6c8fff3688628b221e3b5255623afd
+  branch: bootstrap-5
+  specs:
+    bootstrap_form (5.0.0.alpha1)
+      actionpack (>= 5.2)
+      activemodel (>= 5.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -335,6 +344,7 @@ DEPENDENCIES
   authlogic
   aws-sdk-s3
   bootsnap (>= 1.4.2)
+  bootstrap_form!
   byebug
   cancancan
   dotenv-rails

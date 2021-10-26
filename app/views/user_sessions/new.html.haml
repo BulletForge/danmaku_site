@@ -1,0 +1,9 @@
+%h1.mb-4.h-3 Sign In
+
+= bootstrap_form_with model: @user_session, url: user_session_path, local: true do |f|
+  = f.alert_message "Unable to Sign In"
+  = f.text_field :login, label: "Username"
+  = f.password_field :password
+  .d-grid
+    = f.submit "Sign In", class: 'btn btn-outline-primary'
+

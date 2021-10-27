@@ -41,16 +41,6 @@ class Ability
         project.user == user
       end
 
-      # manage his own image if he can manage the project
-      can :manage, Image do |image|
-        image.project && can?(:manage, image.project)
-      end
-
-      # manage archives
-      can :manage, Archive do |archive|
-        archive.project && can?(:manage, archive.project)
-      end
-
       can :read, :all
     end
   end

@@ -1,10 +1,6 @@
 # Methods added to this helper will be available to all templates in the application.
 
 module ApplicationHelper
-  def preview_image_url(image, type = nil)
-    image&.url(type)
-  end
-
   def preview_cover_image_url(cover_image, type = nil)
     return if cover_image.nil?
 
@@ -22,7 +18,6 @@ module ApplicationHelper
 
   def preview_project_image_url(project, type)
     preview_cover_image_url(project.cover_images.first, type) ||
-      preview_image_url(project.images.first, type) ||
       'nopreviewnormal.png'
   end
 
@@ -33,13 +28,6 @@ module ApplicationHelper
 
   def w3c_date(date)
     date.utc.strftime('%Y-%m-%dT%H:%M:%S+00:00')
-  end
-
-  def setup_project(project)
-    project.tap do |p|
-      p.images.build while p.images.length < 4
-      p.build_archive if p.archive.nil?
-    end
   end
 
   def has_role?(role)

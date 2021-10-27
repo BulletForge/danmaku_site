@@ -35,10 +35,6 @@ BulletForge::Application.routes.draw do
 
   get '/login' => 'user_sessions#new', :as => :login
   get '/logout' => 'user_sessions#destroy', :as => :logout
-
-  post '/upload/archive' => 'archives#create', :as => :upload_archive
-  post '/upload/image' => 'images#create', :as => :upload_image
-
   get '/search' => 'search#advanced_search', :as => :search
 
   root to: 'home#show'

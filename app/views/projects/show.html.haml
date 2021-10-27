@@ -32,8 +32,7 @@
             = render 'projects/project_info'
         .card-footer.bg-white
           .d-grid.gap-2
-            - url = @project.script_archive.blank? ? user_project_archive_path(@user, @project) : url_for(@project.script_archive)
-            = link_to url, class: 'btn btn-primary' do
+            = link_to user_project_archive_path(@user, @project), class: 'btn btn-primary' do
               %i.fas.fa-download.fa-fw
               Download Now
 

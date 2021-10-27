@@ -16,4 +16,14 @@ class Archive < Asset
   def destroy_s3_data
     s3_archive.delete if s3_archive.exists?
   end
+
+  private
+
+  def s3_archive
+    @s3_archive ||= begin
+      s3 = Aws::S3::Resource.new(region: ENV['AWS_REGION'])
+      bucket = s3.bucket(ENV['AWS_BUCKET'])
+      bucket.object(s3_key)
+    end
+  end
 end

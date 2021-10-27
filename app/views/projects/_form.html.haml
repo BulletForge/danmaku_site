@@ -4,7 +4,7 @@
   = f.text_field :version_number
   = f.collection_select :category_id, Category.all, :id, :name
   = f.text_area :description, rows: 8
-  = f.text_field :tag_list, label: "Tags", help: "Tags are separated by commas"
+  = f.text_field :tag_list, value: @project.tag_list.to_s, label: "Tags", help: "Tags are separated by commas"
   .mb-3
     = f.check_box :unlisted, label: "Unlisted?"
     %small.form-text.text-muted

@@ -1,4 +1,4 @@
-.carousel.carousel-dark.slide{'data-bs-ride': 'carousel', id: "project-#{@project.id}-carousel"}
+.carousel.slide{'data-bs-ride': 'carousel', id: "project-#{@project.id}-carousel"}
   - media = @project.cover_images.present? ? @project.cover_images.map { |image| { type: :image, url: image.representation(resize_to_fill: [960, 720]) } } : @project.images.map { |image| { type: :image, url: image.url(:normal) } }
   .carousel-indicators
     - media.each_with_index do |_, index|

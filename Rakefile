@@ -6,7 +6,7 @@ Rails.application.load_tasks
 
 namespace :assets do
   task migrate_to_active_storage: :environment do
-    Project.where(soft_deleted: false).order(downloads: :desc).find_each do |project|
+    Project.find_each do |project|
       MigrateProjectsToActiveStorageJob.perform_later project.id
     end
   end

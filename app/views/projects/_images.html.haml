@@ -1,6 +1,0 @@
-- unless project.images.empty?
-  %ul.thumbnails
-    - project.images.each do |image|
-      %li.span3
-        %a.thumbnail{ :href => preview_image_url(image) }
-          = image_tag preview_image_url(image, :normal)

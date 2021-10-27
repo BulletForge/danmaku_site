@@ -9,7 +9,7 @@ gem 'aws-sdk-s3'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'cancancan'
 gem 'formtastic', '~> 4.0.0'
-gem 'haml-rails'
+gem 'haml'
 gem 'image_processing', '~> 1.2'
 gem 'inherited_resources'
 gem 'jbuilder', '~> 2.7'

@@ -1,18 +1,3 @@
 %h1.mb-4.h-3 Create A New Danmaku Project
 
-= bootstrap_form_with model: @project, url: user_projects_path(@user), local: true do |f|
-  = f.text_field :title
-  = f.collection_select :danmakufu_version_id, DanmakufuVersion.all, :id, :name
-  = f.text_field :version_number
-  = f.collection_select :category_id, Category.all, :id, :name
-  = f.text_area :description, rows: 8
-  = f.text_field :tag_list, label: "Tags", help: "Tags are separated by commas"
-  .mb-3
-    = f.check_box :unlisted, label: "Unlisted?"
-    %small.form-text.text-muted
-      Unlisted projects will not show up in search or on the front page.
-  = f.file_field :script_archive, direct_upload: true, label: "Danmaku Script", help: "Valid formats: .zip, .7z, .rar, .tar, .gz"
-  = f.file_field :cover_images, direct_upload: true, multiple: true, label: "Images", help: "Multiples are allowed. Valid formats: .jpeg, .png"
-  .d-grid
-    = f.submit "Submit Project", class: 'btn btn-outline-primary'
-
+= render 'form'

@@ -1,0 +1,13 @@
+
+%span.badge.rounded-pill.bg-secondary{ 'data-bs-toggle': 'tooltip', 'data-bs-placement': 'top', title: "Danmakufu Version: #{@project.danmakufu_version.name}" }
+  %i.fas.fa-torii-gate
+  %span.ps-1
+    = @project.danmakufu_version.name
+%span.badge.rounded-pill.bg-secondary{ 'data-bs-toggle': 'tooltip', 'data-bs-placement': 'top', title: "Category: #{@project.category.name}" }
+  %i.fas.fa-gamepad
+  %span.ps-1
+    = @project.category.name
+%span.badge.rounded-pill.bg-secondary{ 'data-bs-toggle': 'tooltip', 'data-bs-placement': 'top', title: "Downloads: #{@project.downloads}" }
+  %i.fas.fa-download
+  %span.ps-1
+    = @project.downloads

@@ -1,0 +1,6 @@
+= link_to user_path(@user), class: 'text-capitalize fw-normal' do
+  %i.fas.fa-user-circle.fa-fw
+  %span>= @project.user.login
+%span.text-muted
+  published on
+  = time_tag @project.created_at.to_date

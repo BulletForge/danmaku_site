@@ -1,0 +1,4 @@
+%p
+  %i.fas.fa-tags.fa-fw
+  - @project.tags.map do |tag|
+    = link_to(tag.name, projects_path(search_type: :tags, search: { tagged_with: tag.name }))

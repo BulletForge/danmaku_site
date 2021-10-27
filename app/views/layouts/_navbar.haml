@@ -1,10 +1,22 @@
-.navbar.navbar-fixed-top
-  .navbar-inner
-    .container
-      = link_to "BulletForge", root_path, :class => "brand"
-      %ul.nav
-        %li= link_to "Browse", projects_path
-        %li= link_to "Users", users_path
-        %li= link_to "Adv. Search", search_path
-      = render :partial => "layouts/search"
+%nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+  .container-fluid
+    = link_to "BulletForge", root_path, :class => "navbar-brand"
+    %button.navbar-toggler{
+      type: "button",
+      "data-bs-toggle": "collapse",
+      "data-bs-target": "#navbarSupportedContent",
+      "aria-controls": "navbarSupportedContent",
+      "aria-expanded": "false",
+      "aria-label": "Toggle navigation"
+    }
+      %span.navbar-toggler-icon
+
+
+    #navbarSupportedContent.collapse.navbar-collapse
+      %ul.navbar-nav.me-auto.mb-2.mb-lg-0
+        %li.nav-item= link_to "Projects", projects_path, class: 'nav-link'
+        %li.nav-item= link_to "Users", users_path, class: 'nav-link'
+        %li.nav-item= link_to "Search", search_path, class: 'nav-link'
+
+
       = render :partial => "layouts/login"

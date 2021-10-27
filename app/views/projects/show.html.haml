@@ -1,45 +1,43 @@
 - if @project.soft_deleted
-
-  .page-header
-    %h1
-      = h(@project.title)
+  %h1.text-capitalize.text-truncate
+    = @project.title
   %h2
     This project is no longer available.
-  %br
   %p
     This project has been deleted for the following reason:
   %p
-    = h(@project.deleted_reason)
+    = @project.deleted_reason
 
 - else
+  .row.project
+    .col-md-12
+      .d-flex.align-items-center.mb-2
+        %h1.flex-fill.text-capitalize.text-truncate.fs-3.mb-0.me-2{ title: @project.title }
+          = @project.title
+        = link_to "Edit", edit_user_project_path(@user, @project) if can?(:update, @project)
 
-  = render :partial => 'management_toolbar', :locals => {:user => @user, :project => @project}
+      %section.author-info.mb-2
+        = render 'projects/author_info'
 
-  %section#project-show
-    .page-header
-      %h1
-        = h(@project.title)
-        %small
-          version
-          = h(@project.version_number)
+      - if @project.tags.present?
+        %section.project-tags.mb-2
+          = render 'projects/tags'
 
-    %ul.nav.nav-tabs
-      %li.active
-        %a{ :href => "#details", :"data-toggle" => "tab" }
-          Details
-      %li
-        %a{ :href => "#images", :"data-toggle" => "tab" }
-          Images
-      %li
-        %a{ :href => "#video", :"data-toggle" => "tab" }
-          Video
+    .col-md-4
+      %section.card.text-center.mb-3
+        .rounded-top.overflow-hidden
+          = render 'projects/media'
+        .card-body
+          %section.project-info
+            = render 'projects/project_info'
+        .card-footer.bg-white
+          .d-grid.gap-2
+            - url = @project.script_archive.blank? ? user_project_archive_path(@user, @project) : url_for(@project.script_archive)
+            = link_to url, class: 'btn btn-primary' do
+              %i.fas.fa-download.fa-fw
+              Download Now
 
-    .tab-content
-      #details.tab-pane.active
-        = render :partial => "details", :locals => {:user => @user, :project => @project}
-
-      #images.tab-pane
-        = render :partial => "images", :locals => {:project => @project}
-
-      #video.tab-pane
-        = render :partial => "youtube", :locals => {:project => @project}
+    .col-md-8
+      %section.description.bg-white.rounded.p-3.mb-2
+        %h3.fs-4 Description
+        = simple_format @project.description

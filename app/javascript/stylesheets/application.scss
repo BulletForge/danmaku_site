@@ -1,1 +1,63 @@
+/*
+ * Font Awesome Configs
+ */
+$fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
+
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/brands';
+
+
+/*
+ * Bootstrap 5 Configs
+ */
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+
+$body-color: $gray-800;
+$font-weight-base: $font-weight-light;
+$headings-font-weight: $font-weight-light;
+$body-bg: $gray-100;
+$input-focus-box-shadow: none;
+$link-color: $gray-900;
+$link-decoration: none;
+$link-hover-color: $primary;
+$link-hover-decoration: underline;
+
+$container-max-widths: (
+  sm: 420px,
+  md: 720px,
+  lg: 960px
+);
+
 @import '~bootstrap/scss/bootstrap';
+
+/*
+ * Overrides
+ */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.card-img-top {
+  width: 100%;
+  aspect-ratio: 4/3;
+  height: auto;
+  object-fit: cover;
+}
+
+
+.rails-bootstrap-forms-date-select select,
+.rails-bootstrap-forms-time-select select,
+.rails-bootstrap-forms-datetime-select select {
+  display: inline-block;
+  width: auto;
+}
+
+.rails-bootstrap-forms-error-summary {
+  margin-top: 10px;
+}
+
+@import './direct-upload'

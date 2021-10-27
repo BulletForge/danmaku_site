@@ -1,0 +1,22 @@
+<section class="text-center">
+  <div class="mt-5">
+    <%= render "shared/search" %>
+  </div>
+
+  <div class="mt-5 mb-2">
+    <% if can?(:destroy, UserSession) %>
+      <%= link_to "Publish Danmaku Project", new_user_project_path(current_user), class: "btn btn-outline-primary btn-lg" %>
+    <% else %>
+      <div>
+        <%= link_to "Sign In to Publish", login_path, class: "btn btn-outline-primary btn-lg me-2" %>
+      </div>
+
+      <h5 class="text-muted fw-light my-2">or</h5>
+
+      <div>
+        <%= link_to "Sign Up", new_user_path %>
+      </div>
+    <% end %>
+  </div>
+</section>
+

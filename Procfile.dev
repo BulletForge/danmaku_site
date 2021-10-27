@@ -1,2 +1,3 @@
 web: bundle exec rails server -p $PORT
-webpacker:  ./bin/webpack-dev-server
+worker: bundle exec sidekiq
+webpacker: ./bin/webpack-dev-server

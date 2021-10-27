@@ -1,39 +1,21 @@
-- if !p.soft_deleted || can?(:manage, p)
-  .row{ :style => "padding-top:10px; padding-bottom:10px;" }
-    .span12
-      %h2
-        = link_to h((p.soft_deleted ? "[DELETED BY ADMIN] " : "") + p.title), user_project_path(p.user, p)
-        %small
-          by
-          = link_to p.user.login, user_path(p.user)
-  .row{ :style => "padding-bottom:10px;" }
-    .span3{ :style => "text-align:center;"}
-      = preview_image p, :thumb
-    .span9
-      .row
-        .span3
-          %strong
-            Version:
-          = h p.version_number
-          %br
-          %strong
-            Downloads:
-          = p.downloads
-        .span6
-          %strong
-            Category:
-          = p.category.name
-          %br
-          %strong
-            Danmakufu Version:
-          = p.danmakufu_version.name
-          %br
-          %strong
-            Tags:
-          = tag_list(p)
-          %br
-          %br
-          - if !p.description.blank?
-            %p= truncate strip_tags(p.description), :length => 300
-          - else
-            %p No description
+- if !project.soft_deleted || can?(:manage, p)
+  .card.mb-2
+    .position-relative
+      = preview_project_image project, :normal, image_options: { class: 'card-img-top' }
+      .position-absolute.bottom-0.start-0.p-2.text-center.w-100
+        %span.badge.rounded-pill.bg-secondary{ 'data-bs-toggle': 'tooltip', 'data-bs-placement': 'top', title: "Danmakufu Version: #{project.danmakufu_version.name}" }
+          %i.fas.fa-torii-gate
+          %span.ps-1
+            = project.danmakufu_version.name
+        %span.badge.rounded-pill.bg-secondary{ 'data-bs-toggle': 'tooltip', 'data-bs-placement': 'top', title: "Category: #{project.category.name}" }
+          %i.fas.fa-gamepad
+          %span.ps-1
+            = project.category.name
+        %span.badge.rounded-pill.bg-secondary{ 'data-bs-toggle': 'tooltip', 'data-bs-placement': 'top', title: "Downloads: #{project.downloads}" }
+          %i.fas.fa-download
+          %span.ps-1
+            = project.downloads
+
+    .card-body.text-center
+      %h4.card-title.text-capitalize.text-truncate.fs-6{ title: project.title }
+        = link_to project.soft_deleted ? "[DELETED BY ADMIN]" : project.title, user_project_path(project.user, project)

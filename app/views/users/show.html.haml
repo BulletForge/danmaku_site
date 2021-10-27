@@ -1,20 +1,27 @@
-.page-header
-  %h1= @user.login
-
-.btn-group
-  %div= button_to "Edit Account", edit_user_path(@user), method: :get, class: 'btn' if can?(:update, @user)
-  %div= button_to "Delete Account", user_delete_path(@user), method: :get, class: 'btn btn-danger' if can?(:destroy, @user)
-
-#project-list
-  - if can?(:update, @user) && !@user.projects.where(:unlisted => true).empty?
-    %h2{ :style => "margin-top: 20px;"}
-      Unlisted Projects
-    -@user.projects.where(:unlisted => true).each do |p|
-      = render :partial => 'shared/project', :locals => {:p => p}
-
-  %h2{ :style => "margin-top: 20px;"}
+.d-flex.mb-3
+  %h1.text-capitalize.flex-fill.mb-0
+    %i.fas.fa-user-circle.fa-fw
     = @user.login
-    's Projects
-  - @user.projects.where(:unlisted => false).limit(5).each do |p|
-    = render :partial => 'shared/project', :locals => {:p => p}
-  = link_to "See all of "+@user.login+"'s projects", user_projects_path(@user)
+  = link_to "Settings", edit_user_path(@user), class: 'd-block' if can?(:update, @user)
+
+- if can?(:update, @user) && !@user.projects.where(:unlisted => true).empty?
+  %section.mb-3
+    %h2 Unpublished Projects
+    .row.row-cols-3
+      - @user.projects.where(:unlisted => true).each do |p|
+        .col
+          = render partial: 'shared/project', locals: { project: p }
+
+%section.mb-3
+  - if @user.projects.where(:unlisted => false).count > 0
+    %h2 Published Projects
+    .row.row-cols-3
+      - @user.projects.where(:unlisted => false).each do |p|
+        .col
+          = render partial: 'shared/project', locals: { project: p }
+    .text-end
+      = link_to "more...", user_projects_path(@user)
+  - else
+    .alert.alert-secondary
+      = @user.login
+      has not published any projects yet.

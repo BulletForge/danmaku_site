@@ -16,6 +16,11 @@ class Image < Asset
   validates_attachment_content_type :attachment, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"]
 
   def url(style=:normal)
-    attachment.url(style).gsub("http://", "https://")
+    style = :normal if style == :cover
+    attachment.url(style, escape: false).gsub("//", "https://")
+  end
+
+  def s3_key
+    "images/#{id}/original#{File.extname(attachment_file_name)}"
   end
 end

@@ -4,31 +4,30 @@ class UserSessionsController < ApplicationController
   actions :new, :create, :destroy
 
   # preload all resource / collection in before filter
-  before_action :collection, :only =>[:index]
-  before_action :resource, :only => [:show, :edit, :update, :destroy]
-  before_action :build_resource, :only => [:new, :create, :index]
+  before_action :collection, only: [:index]
+  before_action :resource, only: %i[show edit update destroy]
+  before_action :build_resource, only: %i[new create index]
 
   authorize_resource
 
   create! do |success, failure|
-    success.html {
+    success.html do
       user = UserSession.find.record
       user.ip_address = current_ip_address
       user.save
-      flash[:notice] = "Successfully logged in!"
+      flash[:notice] = 'Successfully logged in!'
       redirect_back_or_default root_path
-    }
-    failure.html {
-      flash[:error] = "Incorrect username or password"
-      render :action => :new
-    }
+    end
+    failure.html do
+      render action: :new
+    end
   end
 
   destroy! do |format|
-    format.html {
-      flash[:notice] = "Successfully logged out!"
+    format.html do
+      flash[:notice] = 'Successfully logged out!'
       redirect_back_or_default root_path
-    }
+    end
   end
 
   protected

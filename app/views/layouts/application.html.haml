@@ -4,39 +4,32 @@
     - if no_bot_index?
       %meta{:name => "robots", :content => "noindex"}
 
+    %meta{charset: "UTF-8"}
+    %meta{name: "viewport", content: "width=device-width, initial-scale=1.0"}
     %meta{"http-equiv" => 'Content-Type', :content => 'text/html;charset=utf-8'}
     %title= h(@title || "BulletForge")
     %meta{ :name => "keywords", :content => "danmakufu scripts, danmakufu projects, danmakufu, shmup, game scripts" }
     %meta{ :name => "description", :content => "Dedicated Danmakufu Project Hosting" }
+    = csrf_meta_tags
 
-    - if Time.now.month == 4 && Time.now.day == 1
-      = stylesheet_link_tag '/stylesheets/geo-bootstrap'
-    - else
-      = stylesheet_link_tag '/stylesheets/bootstrap'
-    = stylesheet_link_tag '/stylesheets/formtastic'
-    = stylesheet_link_tag '/stylesheets/formtastic-overrides'
-
-    = javascript_include_tag '/javascripts/jquery.min', '/javascripts/jquery.metadata', '/javascripts/jquery_ujs'
-    = javascript_include_tag '/javascripts/json2', '/javascripts/s3_upload.js', '/javascripts/s3_upload_callbacks.js'
-    = javascript_include_tag '/javascripts/bootstrap-alert', '/javascripts/bootstrap-tab', '/javascripts/application'
-  %body
-
-    = render :partial => 'layouts/navbar'
-
-    .container{ :style => "padding-top: 80px;"}
+    = stylesheet_pack_tag 'application', media: 'all'
+    = javascript_pack_tag 'application'
+  %body.vh-100.d-flex.flex-column
+    %header.flex-shrink-0
+      = render :partial => 'layouts/navbar'
+    %main.flex-grow-1
       - if flash[:notice]
-        .alert.alert-success.fade.in
-          %a.close{ :"data-dismiss" => "alert", :href => "#" } ×
+        .alert.alert-success.alert-dismissible{role: 'alert'}
           = flash[:notice]
+          %button.btn-close{ 'data-bs-dismiss': 'alert', 'aria-label': 'Close' }
       - if flash[:error]
-        .alert.alert-error.fade.in
-          %a.close{ :"data-dismiss" => "alert", :href => "#" } ×
+        .alert.alert-danger.alert-dismissible{role: 'alert'}
           = flash[:error]
-
-      = yield
-
-      %br
-      %br
+          %button.btn-close{ 'data-bs-dismiss': 'alert', 'aria-label': 'Close' }
+      .container-lg.pt-5
+        = yield
+    %footer.flex-shrink-0
+      = render :partial => 'layouts/footer'
 
     - if Rails.env.production?
       :javascript

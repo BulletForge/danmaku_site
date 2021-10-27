@@ -1,0 +1,22 @@
+.carousel.carousel-dark.slide{'data-bs-ride': 'carousel', id: "project-#{@project.id}-carousel"}
+  - media = @project.cover_images.present? ? @project.cover_images.map { |image| { type: :image, url: image.representation(resize_to_fill: [960, 720]) } } : @project.images.map { |image| { type: :image, url: image.url(:normal) } }
+  .carousel-indicators
+    - media.each_with_index do |_, index|
+      %button{
+        class: "#{ 'active' if index == 0}",
+        type: 'button',
+        'data-bs-target': "#project-#{@project.id}-carousel",
+        'data-bs-slide-to': "#{index}",
+        'aria-current': "true",
+        'aria-label': "Slide #{index + 1}"
+      }
+  .carousel-inner
+    - media.each_with_index do |image, i|
+      .carousel-item{ class: "#{'active' if i == 0}" }
+        = image_tag(image[:url], class: 'd-block card-img-top')
+  %button.carousel-control-prev{ type: 'button', 'data-bs-target': "#project-#{@project.id}-carousel", 'data-bs-slide': 'prev' }
+    %span.carousel-control-prev-icon{ 'aria-hidden': 'true' }
+    %span.visually-hidden Previous
+  %button.carousel-control-next{ type: 'button', 'data-bs-target': "#project-#{@project.id}-carousel", 'data-bs-slide': 'next' }
+    %span.carousel-control-next-icon{ 'aria-hidden': 'true' }
+    %span.visually-hidden Next

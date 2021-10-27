@@ -1,25 +1,15 @@
-.page-header
-  %h1
-    Editing
-    = @project.title
-.row
-  = semantic_form_for setup_project(@project), :url => user_project_path(@user, @project), :html => { :multipart => true } do |form|
-    = form.inputs do
-      = form.input :title, :required => true
-      = form.input :version_number, :required => true
-      = form.input :danmakufu_version
-      = form.input :category
-      = form.input :description
-      = form.input :youtube_video_id, :hint => "e.g. if the url is 'http://www.youtube.com/watch?v=skocYq7gPFs', then the video id is 'skocYq7gPFs'", :label => "Youtube Video ID"
-      = form.input :tag_list, :label => "Tags", :hint => "Tags are separated by commas"
-      = form.input :unlisted, :hidden_fields => false
-    %br
-    = form.semantic_fields_for :images do |image|
-      = image.inputs do
-        - if image.object.new_record?
-          = image.input :attachment, :label => "Image attachment"
-        - else
-          = image_tag image.object.attachment.url(:thumb)
-          = image.input :_destroy, :label => "Remove", :as => :boolean
-    = form.actions
+%h1.mb-4.h-3 Edit Project
 
+%section.mb-4
+  = render 'form'
+
+- if can?(:destroy, @project)
+  %section.mt-4.pt-4
+    %h3.text-danger.mb-3
+      %i.fas.fa-exclamation-triangle.fa-fw
+      Irreversable Action
+
+    .mb-2.card.border-danger
+      .card-body.text-danger
+        .d-grid.gap-2
+          = link_to "Permanently Delete Project", user_project_path(@user, @project), method: :delete, data: {confirm: "Are you sure you want to delete this project?"}, class: 'btn btn-danger'

@@ -1,16 +1,15 @@
-.page-header
-  %h1 Deleting Account 
+%h1.text-danger.mb-4
+  %i.fas.fa-exclamation-triangle.fa-fw
+  Permanently Delete User:
+  %span.text-capitalize= @user.login
 
-%h3 Are you sure you want to delete this account?
-
-- if current_user == @user
-  %p Please type in your password and click Confirm to delete this account.
-  = form_tag user_path(@user), :method => "delete" do
-    = password_field_tag :password
-    %br/
-    = submit_tag "Cancel"
-    = submit_tag "Confirm"
-- else
-  = form_tag user_path(@user), :method => "delete" do
-    = submit_tag "Cancel"
-    = submit_tag "Confirm"
+%section.alert.alert-danger.bg-white
+  %p Are you sure you want to delete this account?
+  = form_tag user_path(@user), method: 'delete' do
+    .row.g3.mb-2
+      - if current_user == @user
+        .col-auto
+          = password_field_tag :password, '', class: 'form-control', placeholder: 'Type in your password...'
+      .col-auto
+        = submit_tag 'Delete Account!', class: 'btn btn-danger'
+        = submit_tag 'Cancel', class: 'btn btn-outline-secondary'

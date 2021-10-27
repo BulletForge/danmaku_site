@@ -1,26 +1,25 @@
-%section#user-list
-  .page-header
-    %h1
-      Users
+%h1 Users
 
-  = will_paginate @users, :inner_window => 2
+.mb-4
+  .my-2
+    = paginate @users, theme: 'bootstrap-5', pagination_class: "pagination-sm flex-wrap justify-content-center"
+  .my-2.d-flex.justify-content-center
+    %label.fw-normal Order:
+    = order @user, by: :created_at, as: "Join Date", class: "mx-1"
+    = order @user, by: :login, as: "Username", class: "mx-1"
+    = order @user, by: :projects_count, as: "Project Count", class: "mx-1"
 
-  Order: &nbsp
-  = order @user, :by => :created_at, :as => "Join Date"
-  &nbsp
-  = order @user, :by => :login, :as => "Username"
-  &nbsp
-  = order @user, :by => :projects_count, :as => "Project Count"
-
-  %table.table{ :style => "margin-top:15px;"}
+%table.table.table-hover.mb-4
+  %tr
+    %th{scope: 'col'} Username
+    %th{scope: 'col'} Join Date
+    %th{scope: 'col'} Project Count
+  - @users.each do |user|
     %tr
-      %th Username
-      %th Join Date
-      %th Project Count
-    - @users.each do |user|
-      %tr
-        %td= link_to user.login, user_path(user)
-        %td= user.created_at.strftime('%b %d %Y, %I:%m %p')
-        %td= user.projects.count
+      %td= link_to user.login, user_path(user)
+      %td= user.created_at.strftime('%b %d %Y, %I:%m %p')
+      %td= user.projects.count
 
-  = will_paginate @users, :inner_window => 2
+.mb-4
+  = paginate @users, theme: 'bootstrap-5', pagination_class: "my-2 pagination-sm flex-wrap justify-content-center"
+

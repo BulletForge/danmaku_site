@@ -1,4 +1,16 @@
 %h1.mb-4.h-3
-  Update Profile
+  Settings
 
-= render partial: 'form'
+%section.mb-4
+  = render partial: 'form'
+
+- if can?(:destroy, @user)
+  %section.mt-4.pt-4
+    %h3.text-danger.mb-3
+      %i.fas.fa-exclamation-triangle.fa-fw
+      Irreversable Actions
+
+    .mb-2.card.border-danger
+      .card-body.text-danger
+        .d-grid.gap-2
+          = link_to "Permanently Delete Account", user_delete_path(@user), method: :get, class: 'btn btn-danger'

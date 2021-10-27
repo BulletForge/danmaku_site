@@ -1,25 +1,29 @@
-%section#project-search
-  .page-header
-    %h1
-      Projects
-      - if @user
-        %small
-          by
-          = @user.login
+%h1
+  Projects
+  - if @user
+    %small.text-muted
+      by
+      = @user.login
 
-  = will_paginate @projects, :inner_window => 2
+- if @projects.size > 0
+  .mb-4
+    .my-2
+      = paginate @projects, theme: 'bootstrap-5', pagination_class: "pagination-sm flex-wrap justify-content-center"
+    .my-2.d-flex.justify-content-center
+      %label.fw-normal Order:
+      = order @search, by: :created_at, as: "Created Date", class: "mx-1"
+      = order @search, by: :updated_at, as: "Updated Date", class: "mx-1"
+      = order @search, by: :title, as: "Title", class: "mx-1"
+      = order @search, by: :downloads, as: "Downloads", class: "mx-1"
 
-  Order: &nbsp
-  = order @search, :by => :created_at, :as => "Created Date"
-  &nbsp
-  = order @search, :by => :updated_at, :as => "Updated Date"
-  &nbsp
-  = order @search, :by => :title, :as => "Title"
-  &nbsp
-  = order @search, :by => :downloads, :as => "Downloads"
+  .row.row-cols-3
+    - @projects.each_with_index do |p, i|
+      .col
+        = render partial: 'shared/project', locals: { project: p }
 
-  - @projects.each_with_index do |p, i|
-    = render :partial => 'shared/project', :locals => {:p => p}
-    = "<hr />".html_safe unless i == 9
-
-  = will_paginate @projects, :inner_window => 2
+  = paginate @projects, theme: 'bootstrap-5', pagination_class: "my-2 pagination-sm flex-wrap justify-content-center"
+- else
+  .mb-4
+    .alert.alert-secondary
+      = @user.login
+      has not published any projects yet.

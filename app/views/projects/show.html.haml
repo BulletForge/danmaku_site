@@ -11,16 +11,16 @@
 - else
   .row.project
     .col-md-12
-      .d-flex.align-items-center
+      .d-flex.align-items-center.mb-2
         %h1.flex-fill.text-capitalize.text-truncate.fs-3.mb-0.me-2{ title: @project.title }
           = @project.title
         = link_to "Edit", edit_user_project_path(@user, @project)
 
-      %section.author-info
+      %section.author-info.mb-2
         = render 'projects/author_info'
 
       - if @project.tags.present?
-        %section.project-tags
+        %section.project-tags.mb-2
           = render 'projects/tags'
 
     .col-md-4
@@ -37,10 +37,17 @@
               %i.fas.fa-download.fa-fw
               Download Now
 
-
-
     .col-md-8
-      %section.description
+      %section.description.bg-white.rounded.p-3.mb-2
         %h3.fs-4 Description
         = simple_format @project.description
+
+    .col-md-12
+      %section.mb-2.card.border-danger
+        .card-header.text-danger
+          %i.fas.fa-exclamation-triangle.fa-fw
+          Dangerous Actions
+        .card-body.text-danger
+          .d-grid.gap-2
+            = link_to "Permanently Delete Project", user_project_path(@user, @project), method: :delete, data: {confirm: "Are you sure you want to delete this project?"}, class: 'btn btn-danger'
 

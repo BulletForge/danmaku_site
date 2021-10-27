@@ -1,5 +1,5 @@
 ---
-:concurrency:  <%= ENV.fetch("SIDEKIQ_MAX_THREADS") { 5 } %>
+:concurrency:  <%= ENV.fetch("SIDEKIQ_MAX_THREADS") { 4 } %>
 :queues:
   - critical
   - default

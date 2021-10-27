@@ -1,4 +1,21 @@
 class Project < ApplicationRecord
+  SCRIPT_ARCHIVE_CONTENT_TYPES = %w[
+    application/zip
+    application/x-rar-compressed
+    application/x-7z-compressed
+    application/gzip
+    application/x-tar
+    application/x-bzip2
+    application/x-gtar
+  ].join(',')
+
+  COVER_IMAGE_CONTENT_TYPES = %w[
+    image/webp
+    image/jpeg
+    image/png
+    image/gif
+  ].join(',')
+
   belongs_to :user, counter_cache: true
   belongs_to :category
   belongs_to :danmakufu_version
@@ -15,9 +32,6 @@ class Project < ApplicationRecord
   #
   has_one_attached :script_archive, dependent: :purge_later
   has_many_attached :cover_images, dependent: :purge_later
-
-  validates :script_archive, attached: true, content_type: [:zip, :rar, :'7z', :gz, :tar]
-  validates :cover_images, attached: true, content_type: [:png, :jpg, :jpeg]
 
   #
   # Decrecated

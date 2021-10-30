@@ -16,7 +16,7 @@
       = order @search, by: :title, as: "Title", class: "mx-1"
       = order @search, by: :downloads, as: "Downloads", class: "mx-1"
 
-  .row.row-cols-3
+  .row.row-cols-sm-1.row-cols-md-2.row-cols-lg-3
     - @projects.each_with_index do |p, i|
       .col
         = render partial: 'shared/project', locals: { project: p }

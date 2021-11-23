@@ -1,11 +1,11 @@
-%w[
-  Single
-  Plural
-  Stage
-  Full Game
-  Player
-  Library
-  Shot Definition
+[
+  'Single',
+  'Plural',
+  'Stage',
+  'Full Game',
+  'Player',
+  'Library',
+  'Shot Definition'
 ].each do |category|
   Category.find_or_create_by!(name: category)
 end

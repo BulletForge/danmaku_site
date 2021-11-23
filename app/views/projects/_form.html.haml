@@ -3,7 +3,14 @@
   = f.collection_select :danmakufu_version_id, DanmakufuVersion.all, :id, :name
   = f.text_field :version_number
   = f.collection_select :category_id, Category.all, :id, :name
-  = f.text_area :description, rows: 8
+  = f.text_area :description, label: 'Description (Markdown Syntax)', rows: 8, id: 'easymde'
+  :javascript
+    new EasyMDE({
+      autoDownloadFontAwesome: false,
+      element: document.getElementById('easymde'),
+      minHeight: '300px',
+      spellChecker: false
+    });
   = f.text_field :tag_list, value: @project.tag_list.to_s, label: "Tags", help: "Tags are separated by commas"
   .mb-3
     = f.check_box :unlisted, label: "Unlisted?"

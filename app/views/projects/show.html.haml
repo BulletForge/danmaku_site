@@ -39,4 +39,10 @@
     .col-md-8
       %section.description.bg-white.rounded.p-3.mb-2
         %h3.fs-4 Description
-        = simple_format @project.description
+        #project-description{'data-markdown': @project.description}
+
+:javascript
+  const el = document.getElementById('project-description');
+  const md = el.getAttribute('data-markdown');
+  el.innerHTML = window.marked(md);
+

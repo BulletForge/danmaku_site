@@ -17,3 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
     new bootstrap.Tooltip(el)
   })
 })
+
+window.EasyMDE = require("easymde")
+window.marked = require("marked")

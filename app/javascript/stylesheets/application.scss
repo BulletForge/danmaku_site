@@ -60,4 +60,9 @@ body {
   margin-top: 10px;
 }
 
-@import './direct-upload'
+@import './direct-upload';
+@import '~easymde/dist/easymde.min';
+
+.CodeMirror-cursor {
+  border-color: var(--color-text) !important;
+}

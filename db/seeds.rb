@@ -1,16 +1,29 @@
-Category.create(:name => "Single")
-Category.create(:name => "Plural")
-Category.create(:name => "Stage")
-Category.create(:name => "Full Game")
-Category.create(:name => "Player")
+%w[
+  Single
+  Plural
+  Stage
+  Full Game
+  Player
+  Library
+  Shot Definition
+].each do |category|
+  Category.find_or_create_by!(name: category)
+end
 
-DanmakufuVersion.create(:name => "0.12m")
-DanmakufuVersion.create(:name => "ph3")
+%w[
+  0.12m
+  ph3
+  woo
+  ph3sx
+  r:dnh
+].each do |engine|
+  DanmakufuVersion.find_or_create_by!(name: engine)
+end
 
-User.create(
-  :login => "Blargel",
-  :email => "LargeBagel@gmail.com",
-  :password => "asdfjkl;",
-  :password_confirmation => "asdfjkl;",
-  :admin => true
+User.find_by(login: 'Blargel') || User.create!(
+  login: 'Blargel',
+  email: 'LargeBagel@gmail.com',
+  password: 'asdfjkl;',
+  password_confirmation: 'asdfjkl;',
+  admin: true
 )

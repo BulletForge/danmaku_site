@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_27_084708) do
+ActiveRecord::Schema.define(version: 2021_11_24_232708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,7 +87,6 @@ ActiveRecord::Schema.define(version: 2021_10_27_084708) do
     t.integer "fail_votes", default: 0
     t.integer "danmakufu_version_id", default: 1
     t.boolean "unlisted", default: false
-    t.string "version_number", limit: 255
     t.text "description"
     t.boolean "soft_deleted", default: false
     t.string "deleted_reason", limit: 255

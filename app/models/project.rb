@@ -24,7 +24,6 @@ class Project < ApplicationRecord
   has_permalink :title, update: true, unique: false
 
   validates_presence_of :title, message: 'Title is required.'
-  validates_presence_of :version_number, message: 'Version number is required.'
   validate :title_excludes_new_by_permalink, :title_is_unique_by_permalink
 
   #

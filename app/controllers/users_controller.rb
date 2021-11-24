@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   include PermalinkResources
 
   # preload all resource / collection in before filter
+  before_action :set_title_description
   before_action :collection, only: [:index]
   before_action :resource, only: %i[show edit update destroy]
   before_action :build_resource, only: %i[new create index]
@@ -55,6 +56,19 @@ class UsersController < ApplicationController
   end
 
   protected
+
+  def set_title_description
+    case params[:action]
+    when 'index'
+      @title = 'BulletForge - Users'
+    when 'show'
+      @title = "BulletForge - #{resource.login}'s Projects"
+    when 'new'
+      @title = 'BulletForge - Register'
+    when 'edit'
+      @title = 'BulletForge - Settings'
+    end
+  end
 
   def permitted_params
     params.permit({ user: %i[login email password password_confirmation admin] }, :"g-recaptcha-response")

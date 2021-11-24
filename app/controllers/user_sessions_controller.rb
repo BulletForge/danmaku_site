@@ -4,6 +4,7 @@ class UserSessionsController < ApplicationController
   actions :new, :create, :destroy
 
   # preload all resource / collection in before filter
+  before_action :set_title_description
   before_action :collection, only: [:index]
   before_action :resource, only: %i[show edit update destroy]
   before_action :build_resource, only: %i[new create index]
@@ -31,6 +32,13 @@ class UserSessionsController < ApplicationController
   end
 
   protected
+
+  def set_title_description
+    case params[:action]
+    when 'new'
+      @title = 'BulletForge - Sign In'
+    end
+  end
 
   def resource
     current_user_session

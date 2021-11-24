@@ -5,6 +5,7 @@ class ProjectsController < ApplicationController
   belongs_to :user, finder: :find_by_permalink!, optional: true
 
   # preload all resource / collection in before filter
+  before_action :set_title_description
   before_action :collection, only: [:index]
   before_action :resource, only: %i[show edit update destroy]
   before_action :build_resource, only: %i[new create index]
@@ -18,6 +19,20 @@ class ProjectsController < ApplicationController
   end
 
   private
+
+  def set_title_description
+    case params[:action]
+    when 'index'
+      @title = 'BulletForge - Projects'
+    when 'show'
+      @title = "BulletForge - #{resource.title}"
+      @description = resource.description
+    when 'new'
+      @title = 'BulletForge - New Project'
+    when 'edit'
+      @title = 'BulletForge - Edit Project'
+    end
+  end
 
   def permitted_params
     params.permit(

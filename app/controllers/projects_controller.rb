@@ -25,7 +25,6 @@ class ProjectsController < ApplicationController
         [
           :title,
           :danmakufu_version_id,
-          :version_number,
           :category_id,
           :description,
           :tag_list,

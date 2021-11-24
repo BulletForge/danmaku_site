@@ -1,7 +1,6 @@
 = bootstrap_form_with model: [@user, @project], local: true do |f|
   = f.text_field :title
   = f.collection_select :danmakufu_version_id, DanmakufuVersion.all, :id, :name
-  = f.text_field :version_number
   = f.collection_select :category_id, Category.all, :id, :name
   = f.text_area :description, label: 'Description (Markdown Syntax)', rows: 8, id: 'easymde'
   :javascript

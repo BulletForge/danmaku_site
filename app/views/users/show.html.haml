@@ -8,7 +8,7 @@
   %section.mb-3
     %h2 Unpublished Projects
     .row.row-cols-sm-1.row-cols-md-2.row-cols-lg-3
-      - @user.projects.where(:unlisted => true).each do |p|
+      - @user.projects.where(:unlisted => true).includes(:user, :category, :danmakufu_version, cover_images_attachments: :blob).each do |p|
         .col
           = render partial: 'shared/project', locals: { project: p }
 
@@ -16,7 +16,7 @@
   - if @user.projects.where(:unlisted => false).count > 0
     %h2 Published Projects
     .row.row-cols-sm-1.row-cols-md-2.row-cols-lg-3
-      - @user.projects.where(:unlisted => false).each do |p|
+      - @user.projects.where(:unlisted => false).includes(:user, :category, :danmakufu_version, cover_images_attachments: :blob).each do |p|
         .col
           = render partial: 'shared/project', locals: { project: p }
     .text-end

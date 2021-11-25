@@ -45,3 +45,5 @@ group :development do
   gem 'spring-watcher-listen'
   gem 'web-console'
 end
+
+gem "rack-host-redirect", "~> 1.3"

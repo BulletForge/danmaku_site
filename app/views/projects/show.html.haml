@@ -47,7 +47,8 @@
   el.innerHTML = window.marked(md);
 
 - content_for :social_header do
-  - cover_image_url = full_url_for(@project.cover_images.first.representation(resize_to_fill: [1200, 630]))
+  - image = @project.cover_images.first
+  - cover_image_url = image ? full_url_for(representation(resize_to_fill: [1200, 630])) : asset_url('logo.svg')
   = tag :meta, property: "og:title", content: @title
   = tag :meta, property: 'og:description', content: @description
   = tag :meta, property: 'og:image', content: cover_image_url

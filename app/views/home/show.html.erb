@@ -21,3 +21,10 @@
   </div>
 </section>
 
+<% content_for :social_header do %>
+  <%= tag :meta, property: "og:title", content: @title %>
+  <%= tag :meta, property: 'og:description', content: @description %>
+  <%= tag :meta, property: 'og:image', content: asset_url('logo.svg') %>
+  <%= tag :meta, property: 'twitter:card', content: "summary_large_image" %>
+  <%= tag :meta, property: 'twitter:image', content: asset_url('logo.svg') %>
+<% end %>

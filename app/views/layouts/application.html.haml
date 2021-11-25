@@ -10,6 +10,7 @@
     %title= @title || "BulletForge"
     %meta{ :name => "keywords", :content => "danmakufu scripts, danmakufu projects, danmakufu, shmup, game scripts" }
     %meta{ :name => "description", :content => @description || "Dedicated Danmakufu Project Hosting" }
+    = yield :social_header
     = csrf_meta_tags
 
     = stylesheet_pack_tag 'application', media: 'all'

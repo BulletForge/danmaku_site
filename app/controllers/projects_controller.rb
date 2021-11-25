@@ -20,13 +20,21 @@ class ProjectsController < ApplicationController
 
   private
 
+  def parse_description(text)
+    text
+      .split("\n")
+      .map(&:strip)
+      .reject(&:blank?)
+      .find { |paragraph| paragraph.strip.match(/^\w+/) }
+  end
+
   def set_title_description
     case params[:action]
     when 'index'
       @title = 'BulletForge - Projects'
     when 'show'
       @title = "BulletForge - #{resource.title}"
-      @description = resource.description
+      @description = parse_description(resource.description)
     when 'new'
       @title = 'BulletForge - New Project'
     when 'edit'

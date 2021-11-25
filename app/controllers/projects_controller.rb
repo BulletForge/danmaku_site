@@ -53,7 +53,10 @@ class ProjectsController < ApplicationController
 
   # Filter, order, and paginate the collection
   def _collection
-    @search = end_of_association_chain.where(soft_deleted: false)
+    @search =
+      end_of_association_chain
+      .where(soft_deleted: false)
+      .includes(:user, :category, :danmakufu_version, cover_images_attachments: :blob)
 
     unlisted =
       if current_user&.admin? && params[:search]

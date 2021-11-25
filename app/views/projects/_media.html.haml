@@ -1,5 +1,5 @@
 .carousel.slide{'data-bs-ride': 'carousel', id: "project-#{@project.id}-carousel"}
-  - media = @project.cover_images.map { |image| { type: :image, url: image.representation(resize_to_fill: [960, 720]) } }
+  - media = @project.cover_images.includes(:blob).map { |image| { type: :image, url: image.representation(resize_to_fill: [960, 720]) } }
   .carousel-indicators
     - media.each_with_index do |_, index|
       %button{

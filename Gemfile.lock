@@ -199,7 +199,7 @@ GEM
       ast (~> 2.4.1)
     permalink_fu (1.0.0)
     pg (1.2.3)
-    puma (5.5.2)
+    puma (5.6.2)
       nio4r (~> 2.0)
     raabro (1.4.0)
     racc (1.6.0)
